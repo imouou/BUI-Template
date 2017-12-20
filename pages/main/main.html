@@ -3,89 +3,18 @@
     <header class="bui-bar">
         <div class="bui-bar-left">
             <!-- 左边有图标示例 -->
-            <a class="bui-btn"><i class="icon-menu"></i></a>
+            <div class="bui-btn"><i class="icon-back"></i></div>
         </div>
-        <div class="bui-bar-main">单页路由</div>
+        <div class="bui-bar-main">单页开发工程模板</div>
         <div class="bui-bar-right">
             <!-- 右边有图标示例 -->
-            <a class="bui-btn"><i class="icon-search"></i></a>
+            <div class="bui-btn"><i class="icon-search"></i></div>
         </div>
     </header>
     <main>
-        <h3 class="section-title">单页路由的说明</h3>
-        <div class="container">第一次打开首页,便会加载 main 模块, 
-        模块需要通过define定义, 一个js只能有一个define. 
-        默认main是在pages/main/目录下, 一个main模块,包含 main.html(模板), main.js (业务逻辑) ,如果需要修改路径,则通过 router.map 方法修改. 其它保持跟多页的开发方式保持一致.
-        </div>
-        <h3 class="section-title">load 页面跳转,更多参数用法请参考 bui.router 的 api</h3>
-        <div class="bui-panel">
-            <div class="bui-panel-head">示例:</div>
-            <div class="bui-panel-main">
-                <div class="container">
-                    <xmp>
-bui.load({ url: "pages/page2/page2.html ", param: {} });
-或者
-router.load({ url: "pages/page2/page2.html ", param: {} });
-                    </xmp>
-                    
-                </div>
-            </div>
-        </div>
-        <h3 class="section-title">back 页面后退,支持后退多层及回调</h3>
-        <div class="bui-panel">
-            <div class="bui-panel-head">示例:</div>
-            <div class="bui-panel-main">
-                <div class="container">
-                    <xmp>
-bui.back();
-或者
-router.back();
-                    </xmp>
-                    
-                </div>
-            </div>
-        </div>
-        <h3 class="section-title">refresh 页面刷新</h3>
-        <div class="bui-panel">
-            <div class="bui-panel-head">示例:</div>
-            <div class="bui-panel-main">
-                <div class="container">
-                    <xmp>
-bui.refresh();
-或者
-router.refresh();
-                    </xmp>
-                    
-                </div>
-            </div>
-        </div>
-        <h3 class="section-title">getPageParams 获取页面参数</h3>
-        <div class="bui-panel">
-            <div class="bui-panel-head">示例:</div>
-            <div class="bui-panel-main">
-                <div class="container">
-                    <xmp>
-bui.getPageParams();
-或者
-router.getPageParams();
-                    </xmp>
-                    
-                </div>
-            </div>
-        </div>
-        <h3 class="section-title">replace 替换当前页面,之前的历史记录会丢弃</h3>
-        <div class="bui-panel">
-            <div class="bui-panel-head">示例:</div>
-            <div class="bui-panel-main">
-                <div class="container">
-                    <xmp>
-bui.load({ url: "pages/page2/page2.html ", param: {}, replace: true });
-或者
-router.replace({ url: "pages/page2/page2.html ", param: {} });
-                    </xmp>
-                    
-                </div>
-            </div>
-        </div>
+        <!-- 中间内容 -->
     </main>
+    <footer>
+        <!-- 底部内容 -->
+    </footer>
 </div>

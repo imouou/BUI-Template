@@ -1,9 +1,6 @@
 
 // 第2步: 开启单页路由
 window.router = bui.router();
-// 把模块的常用方法,赋给window变量
-window.define = loader.define;
-window.require = loader.require;
 
 bui.ready(function(){
     // 第3步: 初始化路由
