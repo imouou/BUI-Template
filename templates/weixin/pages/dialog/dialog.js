@@ -2,7 +2,8 @@ loader.define(function(require,exports,module) {
     
     //静态自定义对话框
     var dialog = bui.dialog({
-            id: "#dialog3"
+            id: "#dialog3",
+            mask: false
         });
     $('#btnOpen').on("click",function (argument) {
         dialog.open();
