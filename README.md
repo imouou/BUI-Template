@@ -10,6 +10,20 @@
 buijs create demo 
 ```
 
+### 创建底部TAB模板工程 (demo 为工程名称, 单页工程)
+
+```bash
+
+buijs create demo -t tab
+
+```
+### 创建侧边栏模板工程 (demo 为工程名称, 单页工程)
+
+```bash
+
+buijs create demo -t sidebar
+
+```
 ### 创建微信示例工程 (demo 为工程名称, 单页工程)
 
 ```bash
