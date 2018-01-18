@@ -24,18 +24,17 @@ bui.on("pageinit",function(){
 })
 
 
-// H5 plus事件处理
-function plusReady(){
-	// 隐藏滚动条
-	plus.webview.currentWebview().setStyle({scrollIndicator:'none'});
-
-    // 监听后退按钮
+// 针对原生的操作
+document.addEventListener("deviceready", function () {
+   
+   // 监听后退按钮
    var flag = 0,
        quickClick = 0,
        timeout;
-   plus.key.addEventListener('backbutton', function(){
+   document.addEventListener("backbutton", function() {
+
     if( router.getHistory().length > 1 ){
-        // 防止快速点击导致历史记录错乱
+      // 防止快速点击导致历史记录错乱
       if( quickClick == 0 ){
         bui.back();
         quickClick = 1;
@@ -49,22 +48,13 @@ function plusReady(){
          bui.hint("再按一次就退出应用了!");
          flag = flag + 1;
          //2s后重新设置回去
-         timeout = setTimeout(function() {
+        timeout = setTimeout(function() {
           flag = 0;
          }, 2000);
         } else if (flag == 1) {
-          plus.runtime.quit();
-         
+         app.exit();
         }
     }
     
    }, false);
-
-}
-if(window.plus){
-	plusReady();
-}else{
-	document.addEventListener('plusready',plusReady,false);
-}
-
-    
+}, false);

@@ -7,7 +7,11 @@ bui.on("pageinit",function(){
         id: "#bui-router"
     })
 
-    // 绑定示例页面的按钮带href跳转
-    bui.btn({id:"#bui-router",handle:".bui-btn"}).load();
-
+    bind();
+    
+    function bind() {
+        // 绑定页面的按钮带href跳转
+        bui.btn({id:"#bui-router",handle:".bui-btn"}).load();
+    }
+    
 })

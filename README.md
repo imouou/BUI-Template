@@ -4,7 +4,7 @@
 
 >通过安装该工具,可以快速创建 bui的常用模板, 具体请查看 [buijs-cli](https://github.com/imouou/buijs-cli)默认为单页模板
 
-### 创建默认工程 (demo 为工程名称, 单页工程)
+### 创建默认Webapp工程 (demo 为工程名称, 单页工程)
 
 ```bash
 buijs create demo 
@@ -34,12 +34,6 @@ buijs create demo -t weixin
 
 ```bash
 buijs create demo -t link
-```
-
-### 创建Bingotouch模板工程 (demo 为工程名称, 多页工程)
-
-```bash
-buijs create demo -t bingotouch
 ```
 
 ### 创建指定版本工程 (demo 为工程名称) 
