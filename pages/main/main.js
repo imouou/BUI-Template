@@ -1,7 +1,16 @@
 // 默认已经定义了main模块
 loader.define(function(require,exports,module) {
-    // 这里写main模块的业务
+
+    var pageview = {};
     
+    // 模块初始化定义    
+    pageview.init = function () {
+        
+    }
     
-    return {};
+    // 初始化
+    pageview.init();
+
+    // 输出模块
+    module.exports = pageview;
 })

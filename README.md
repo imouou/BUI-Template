@@ -11,6 +11,7 @@
 ![buijs 创建工程预览](http://www.easybui.com/docs/images/router/buijs-create-demo_low.gif)
 
 ### 创建默认Webapp工程 (demo 为工程名称)
+![默认模板](https://raw.githubusercontent.com/imouou/BUI-Template/master/preview.png)
 
 ```bash
 buijs create demo 
