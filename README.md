@@ -9,6 +9,23 @@ BUI官网还有更多模板, 需要手动下载 [进入官网预览模板](http:
 
 ![buijs 创建工程预览](http://www.easybui.com/docs/images/router/buijs-create-demo_low.gif)
 
+
+## 创建某个模板工程 
+
+可以先查看有什么模板 `buijs list-template`, [BUI模板图片预览](https://github.com/imouou/BUI-Template/)
+
+```bash
+
+buijs create demo -t main-tab
+
+```
+> demo 为工程目录 main-tab 为模板名称
+
+> <strong style="color:red">注意:</strong>
+1. 同一个工程可以多次创建模板;
+模板名以 `main-`开头 会覆盖 main 模块, 例如: 模板名 `main-tab` 预览地址 `index.html`
+模板名以 `page-`开头 会新增模块, 例如: 模板名 `page-sidebar` 预览地址 `index.html#pages/sidebar/sidebar`
+
 # 模板预览
 
 <table>
