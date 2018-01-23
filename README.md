@@ -48,9 +48,9 @@ buijs create demo -t main-tab -p link
 # 模板预览
 <table>
     <tr>
-        <td><div>![默认模板](https://raw.githubusercontent.com/imouou/BUI-Template/master/preview.png)</div> <div style="font-size: 12px;">模板名称: 默认</div> <div style="font-size: 12px;">预览地址: index.html</div></td>
-        <td><div>![底部动态加载导航](https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/main-tab/preview.png)</div> <div style="font-size: 12px;">模板名称: main-tab</div> <div style="font-size: 12px;">预览地址: index.html</div></td>
-        <td><div>![图标导航模板](https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/page-icon/preview.png)</div> <div style="font-size: 12px;">模板名称: page-icon</div> <div style="font-size: 12px;">预览地址: index.html#pages/icon/icon</div></td>
+        <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/preview.png" alt=""></div> <div style="font-size: 12px;">模板名称: 默认</div> <div style="font-size: 12px;">预览地址: index.html</div></td>
+        <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/main-tab/preview.png" alt=""></div> <div style="font-size: 12px;">模板名称: main-tab</div> <div style="font-size: 12px;">预览地址: index.html</div></td>
+        <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/page-icon/preview.png" alt=""></div> <div style="font-size: 12px;">模板名称: page-icon</div> <div style="font-size: 12px;">预览地址: index.html#pages/icon/icon</div></td>
     </tr>
     <tr>
         <td><div>![头部动态加载导航](https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/page-tab-head/preview.png)</div> <div style="font-size: 12px;">模板名称: page-tab-head</div> <div style="font-size: 12px;">预览地址: index.html#pages/tab-head/index</div></td>
