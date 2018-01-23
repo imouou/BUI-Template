@@ -1,0 +1,115 @@
+<style>
+.page-chat main {
+  background: #F4F5F7; }
+
+.chat-panel {
+  padding: 0 .1rem;
+  border-top:0;
+  background: #F4F5F7; }
+  .chat-panel .time {
+    margin: .2rem 0;
+    padding: 0 .2rem;
+    height: .3rem;
+    border-radius: .15rem;
+    background: #d8d8d8;
+    color: #fff;
+    font-size: .18rem; }
+  .chat-panel .chat-icon {
+    width: .6rem;
+    height: .6rem; }
+  .chat-panel .bui-box-align-top {
+    margin-bottom: .2rem; }
+  .chat-panel .chat-content {
+    display: inline-block;
+    background: #fff;
+    -webkit-border-radius: .05rem;
+    border-radius: .05rem;
+    position: relative;
+    padding: .15rem; }
+  .chat-panel .chat-target .chat-content {
+    margin-right: 1.4rem;
+    margin-left: .2rem; }
+    .chat-panel .chat-target .chat-content.bui-arrow-left:before {
+      border: none; }
+    .chat-panel .chat-target .chat-content.bui-arrow-left:before, .chat-panel .chat-target .chat-content.bui-arrow-left:after {
+      top: .1rem;
+      margin-top: 0; }
+  .chat-panel .chat-mine .chat-content {
+    margin-left: 1.4rem;
+    margin-right: .2rem;
+    background: #B3EAFF; }
+    .chat-panel .chat-mine .chat-content.bui-arrow-right:before, .chat-panel .chat-mine .chat-content.bui-arrow-right:after {
+      top: .1rem;
+      margin-top: 0;
+      border-left-color: #B3EAFF; }
+    .chat-panel .chat-mine .chat-content.bui-arrow-right:before {
+      border: none; }
+
+.chatbar {
+  padding: .12rem; }
+  .chatbar .bui-input i {
+    width: .7rem;
+    height: .46rem; 
+    line-height: .46rem; 
+    font-size: .46rem; }
+  .chatbar .bui-input .bui-btn {
+    display: inline-block;
+    padding-left:0; 
+    padding-right:0; 
+    width: .7rem;
+    border:0;
+  }
+  .chatbar .bui-input input {
+    border: 1px solid #dedede;
+    margin: 0 .12rem 0 0;
+    padding: .2rem;
+    -webkit-border-radius: .05rem;
+    border-radius: .05rem;
+    padding-right: .1rem;
+    padding-left: .1rem; }
+footer {
+    background: #fff;
+}
+</style>
+<div class="bui-page page-chat">
+    <header class="bui-bar">
+        <div class="bui-bar-left">
+            <a class="bui-btn btn-back"><i class="icon-back"></i></a>
+        </div>
+        <div class="bui-bar-main">
+            聊天详情
+        </div>
+        <div class="bui-bar-right">
+            <a class="bui-btn"><i class="icon-face"></i>
+            </a>
+        </div>
+    </header>
+    <main>
+        <div class="bui-panel chat-panel">
+            <div class="bui-box-center">
+                <div class="time">5月11日 08:30</div>
+            </div>
+            <div class="bui-box-align-top chat-target">
+                <div class="chat-icon"><img src="images/applogo.png" alt=""></div>
+                <div class="chat-content bui-arrow-left">你好!</div>
+            </div>
+            <div class="bui-box-align-top chat-mine">
+                <div class="span1">
+                </div>
+                <div class="chat-content bui-arrow-right">你好！</div>
+                <div class="chat-icon"><img src="images/applogo.png" alt=""></div>
+            </div>
+            <div class="bui-box-align-top chat-target">
+                <div class="chat-icon"><img src="images/applogo.png" alt=""></div>
+                <div class="chat-content bui-arrow-left">喜欢BUI,请为我们疯狂打Call吧!</div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="chatbar">
+            <div class="bui-input">
+                <textarea id="chatInput"></textarea><span id="btnSend" class="bui-btn round disabled">发送</span>
+            </div>
+        </div>
+    </footer>
+</div>

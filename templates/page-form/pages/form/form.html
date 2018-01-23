@@ -1,0 +1,222 @@
+<style>
+    
+.bui-list .vcode {
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-right: 0;
+}
+.bui-list .vcode img {
+    height: .62rem;
+}
+
+.upload-image {
+    position: relative;
+    width: 1rem;
+    height: 1rem;
+    line-height: 1rem;
+    margin: 0 auto;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    background-image: url(images/applogo.png);
+}
+.upload-image img{
+    width: 100%;
+}
+.upload-add {
+    width: 1rem;
+    height: 1rem;
+    line-height: 1rem;
+    margin: 0 auto;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+.upload-add i{
+    font-size: .6rem;
+    color: #999;
+}
+.panel-upload .bui-panel-main {
+    padding-top: .2rem;
+}
+.panel-upload .upload-image {
+    margin-bottom: .2rem;
+}
+</style>
+<div class="bui-page">
+    <header class="bui-bar">
+        <div class="bui-bar-left">
+            <a class="bui-btn btn-back"><i class="icon-back"></i></a>
+        </div>
+        <div class="bui-bar-main">表单</div>
+        <div class="bui-bar-right">
+        </div>
+    </header>
+    <main>
+        <h3 class="section-title">表单展示</h3>
+        <div class="bui-list">
+            <label class="bui-btn bui-box">
+                <div class="bui-label">身份证号码</div>
+                <div class="span1">
+                    <div class="bui-value">44058319000101XXXX</div>
+                </div>
+            </label>
+            <label class="bui-btn bui-box">
+                <div class="bui-label">姓名</div>
+                <div class="span1">
+                    <div class="bui-value">王小o</div>
+                </div>
+            </label>
+            <label class="bui-btn bui-box">
+                <div class="bui-label">手机号码</div>
+                <div class="span1">
+                    <div class="bui-value">13800138000</div>
+                </div>
+            </label>
+            <label class="bui-btn bui-box">
+                <div class="bui-label">邮箱</div>
+                <div class="span1">
+                    <div class="bui-value">XXX@qq.com</div>
+                </div>
+            </label>
+            <label class="bui-btn bui-box">
+                <div class="bui-label">公司</div>
+                <div class="span1">
+                    <div class="bui-value">广州品高软件开发股份有限公司</div>
+                </div>
+            </label>
+        </div>
+        <h3 class="section-title">表单填写</h3>
+        <div class="bui-list">
+            <div class="bui-btn bui-box clearactive">
+                <div class="bui-label"><label for="username">帐号</label></div>
+                <div class="span1">
+                    <input id="username" type="text" class="bui-input" value="" placeholder="请输入帐号">
+                </div>
+            </div>
+            <div class="bui-btn bui-box clearactive">
+                <div class="bui-label"><label for="password">密码</label></div>
+                <div class="span1">
+                    <input id="password" type="password" class="bui-input" value="" placeholder="请输入密码">
+                </div>
+            </div>
+            <div class="bui-btn bui-box clearactive vcode">
+                <div class="bui-label"><label for="code">验证码</label></div>
+                <div class="span1">
+                    <input id="code" type="password" class="bui-input" value="" placeholder="请输入验证码">
+                </div>
+                <img src="images/vcode.jpg" alt="">
+            </div>
+            <div class="bui-btn bui-box clearactive vcode">
+                <div class="bui-label"><label for="code">验证码</label></div>
+                <div class="span1">
+                    <input id="code" type="password" class="bui-input" value="" placeholder="请输入验证码">
+                </div>
+                <i class="icon-infofill danger"></i>
+                <img src="images/vcode.jpg" alt="">
+            </div>
+            <div class="bui-btn bui-box">
+                <div class="bui-label">区域查询</div>
+                <div class="span1">
+                    <div id="select" class="bui-select">
+                    </div>
+                </div>
+                <i class="icon-listright"></i>
+            </div>
+            <div class="bui-btn bui-box">
+                <div class="bui-label">日期选择</div>
+                <div class="span1">
+                    <input type="text" id="datepicker_input" readonly>
+                </div>
+                <i class="icon-listright"></i>
+            </div>
+            <div class="bui-btn bui-box clearactive">
+                <div class="bui-label">多选择题</div>
+                <div class="span1">
+                    <label><input type="checkbox" class="bui-checkbox">选项一</label>
+                    <label><input type="checkbox" class="bui-checkbox">选项二</label>
+                </div>
+            </div>
+            <div class="bui-btn bui-box clearactive">
+                <div class="bui-label">单选择题</div>
+                <div class="span1">
+                    <label><input type="radio" class="bui-checkbox" name="danxuan">选项一</label>
+                    <label><input type="radio" class="bui-checkbox" name="danxuan">选项二</label>
+                </div>
+            </div>
+        </div>
+        <h3 class="section-title">单选列表</h3>
+        <div class="bui-list">
+            <div class="bui-btn bui-btn-line bui-box">
+                <div class="span1"><label for="interest123">单选</label></div>
+                <input id="interest123" type="radio" class="bui-choose" name="interest2" value="1" checked="checked">
+            </div>
+            <div class="bui-btn bui-btn-line bui-box">
+                <div class="span1"><label for="interest345">单选</label></div>
+                <input id="interest345" type="radio" class="bui-choose" name="interest2" value="2">
+            </div>
+        </div>
+        <h3 class="section-title">多选列表</h3>
+        <div class="bui-list">
+            <div class="bui-btn bui-btn-line bui-box">
+                <div class="span1"><label for="interest23">多选</label></div>
+                <input id="interest23" type="checkbox" class="bui-choose" name="interest" value="2">
+            </div>
+            <div class="bui-btn bui-btn-line bui-box">
+                <div class="span1"><label for="interest789">多选</label></div>
+                <input id="interest789" type="checkbox" class="bui-choose" name="interest" value="2">
+            </div>
+        </div>
+        <h3 class="section-title">订阅提醒</h3>
+        <div class="bui-list">
+            <div class="bui-btn bui-btn-line bui-box-align-middle">
+                <div class="span1"><label for="more">违章提醒</label></div>
+                <input id="more" type="checkbox" class="bui-switch" value="1" checked="checked">
+            </div>
+        </div>
+        <h3 class="section-title">文本域</h3>
+        <div class="bui-list">
+            <div class="bui-btn bui-box-align-middle clearactive">
+                <textarea name="" class="bui-input" id="" cols="30" rows="4" placeholder="请输入文本"></textarea>
+            </div>
+        </div>
+        <h3 class="section-title">上传</h3>
+        <div class="bui-panel panel-upload">
+            <div class="bui-panel-head bui-box">
+                <div class="span1">图片上传</div>
+                0/2
+            </div>
+            <div class="bui-panel-main">
+                <div class="bui-fluid-space">
+                    <div class="span3">
+                        <div class="upload-image"></div>
+                    </div>
+                    <div class="span3">
+                        <div class="upload-image"></div>
+                    </div>
+                    <div class="span3">
+                        <div class="upload-image"></div>
+                    </div>
+                    <div class="span3">
+                        <div class="upload-image"></div>
+                    </div>
+                    <div class="span3">
+                        <div class="upload-image"><div class="bui-mask">50%</div></div>
+                    </div>
+                    <div class="span3">
+                        <div class="upload-image"><div class="bui-mask"><i class="icon-infofill danger"></i></div></div>
+                    </div>
+                    <div class="span3">
+                        <div class="upload-image"><div class="bui-mask"><i class="icon-successfill success"></i></div></div>
+                    </div>
+                    <div class="span3">
+                        <div class="upload-add"><i class="icon-plus"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container-xy">
+            <div class="bui-btn round success">确定</div>
+        </div>
+    </main>
+</div>

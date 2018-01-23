@@ -1,0 +1,441 @@
+<style>
+    /* 快捷入口导航 */
+    .shortcut-nav{
+        margin-top: 0.2rem;
+    }
+    .shortcut-nav [class*=bui-btn]{
+        padding: 0.15rem 0;
+        border: none;
+    }
+    .shortcut-nav [class*=bui-btn] .icon{
+        color: #ffffff;
+        height: 0.7rem;
+        width: 0.7rem;
+        border-radius: 50%;
+        line-height: 0.7rem;
+        margin: 0.1rem 0;
+        font-size: .5rem;
+    }
+    .short1{
+        background-color: #1896d6;
+    }
+    .short2{
+        background-color: #cf85c6;
+    }
+    .short3{
+        background-color: #40afcc;
+    }
+    .short4{
+        background-color: #ed758e;
+    }
+    
+    /*滑动图标*/
+    .bui-slide .bui-slide-head {
+        bottom: 0;
+    }
+    .slide-nav{
+        margin-bottom: .2rem;
+        background-color: #ffffff;
+    }
+    .slide-nav .bui-btn {
+        border: 0;
+    }
+    .slide-nav .icons-round {
+        width: 0.7rem;
+        height: 0.7rem;
+        line-height: 0.7rem;
+        text-align: center;
+        /*background: #01a5e4;*/
+        border-radius : .15rem;
+        margin: 0.15rem auto;
+    }
+    .slide-nav .icons-round i{
+        font-size: 0.4rem;
+        color: #fff;
+        margin: 0;
+    }
+    .slide-nav .span1{
+        margin-bottom: 0.1rem;
+    }
+    .slide-nav .bui-slide-head {
+        text-align: center;
+        background: #fff;
+        width: 100%;
+        text-align: center;
+        height: 0.4rem;
+    }
+    .bui-slide .bui-slide-head ul li{
+        float: none;
+        display: inline-block;
+        background: #0072c5;
+        width: 0.15rem;
+        height: 0.15rem;
+        margin-bottom: 0;
+    }
+
+    .btn-blue{
+        background-color: #00a5e2;
+    }
+    .btn-red{
+        background-color: #f57070;
+    }
+    .btn-orange{
+        background-color: #ffb33e;
+    }
+    .btn-green{
+        background-color: #6cc96c;
+    }
+    .btn-thinblue{
+        background-color: #6cc96c;
+    }
+
+    /*横向排版*/
+    .index-menu {
+        background: #fff;
+        border-top: 1px solid #eee;
+        font-size:.24rem;
+    }
+    .index-menu .span6 {
+        padding-top: .25rem;
+        padding-bottom: .25rem;
+        border-bottom: 1px solid #eee;
+        border-right: 1px solid #eee;
+    }
+    .index-menu .ring {
+        border: 2px solid #4ad1dd;
+        width: .6rem;
+        height: .6rem;
+        line-height: .54rem;
+        margin-left: .4rem;
+        margin-right: .15rem;
+    }
+    .index-menu .ring .icon{
+        font-size: .32rem;
+        color: #4ad1dd;
+    }
+    .index-menu .ring02 {
+        border-color: #49bc4a;
+    }
+    .index-menu .ring02 .icon{
+        color: #49bc4a;
+    }
+    .index-menu .ring03 {
+        border-color: #fda10d;
+    }
+    .index-menu .ring03 .icon{
+        color: #fda10d;
+    }
+    .index-menu .ring04 {
+        border-color: #f7696c;
+    }
+    .index-menu .ring04 .icon{
+        color: #f7696c;
+    }
+    
+    /*底部导航*/
+    .footer-nav {
+        background :#fff;
+    }
+    .footer-nav .bui-btn .icon {
+        height: 0.42rem;
+    }
+    .footer-nav .bui-btn{
+        background-color: transparent;
+    }
+    .footer-nav .big-btn .icon{
+        color: #ffffff;
+        border-radius: 50%;
+        background-color: #0aa9e3;
+        height: 0.625rem;
+        width: 0.625rem;
+        line-height: 0.625rem;
+        font-size: 0.55rem;
+    }
+    
+    /*图标多行*/
+    .exammine{
+        margin: 0.2rem 0;
+        padding: 0.25rem 0;
+        background-color: #ffffff;
+    }
+    .exammine>[class*=bui-btn]{
+        border: none;
+        padding: 0 0.15rem;
+        border-right: 1px solid #f5f5f5;
+    }
+    .activity .icon,
+    .exammine .icon{
+        color:#fff;
+    }
+    .exammine li .span1 h3{
+        font-size: 0.38rem;
+        text-align: right;
+    }
+    .exammine li .span1 h3.approve{
+        color: #9bbd32;
+    }
+    .exammine li .span1 h3.respond{
+        color: #70b4e1;
+    }
+    .exammine li .span1 h3.due{
+        color: #f16a7a;
+    }
+    .exammine li .span1 p{
+        font-size: 0.18rem;
+        text-align: right;
+    }
+    .exammine>[class*=bui-btn]:last-child{
+        border: none;
+    }
+
+    .exammine .thumbnail{
+        line-height: 0.65rem;
+        height: 0.65rem;
+        width: 0.65rem;
+        text-align: center;
+        border-radius: 50%;
+        margin-right: 0;
+        color: #ffffff;
+    }
+    .exammine .thumbnail.approve{
+        background-color: #9bbd32;
+    }
+    .exammine .thumbnail.respond{
+        background-color: #70b4e1;
+    }
+    .exammine .thumbnail.due{
+        background-color: #f16a7a;
+    }
+    .exammine [class*=bui-btn] .icon{
+        font-size: 0.4rem;
+        margin: 0;
+    }
+    .activity{
+        border-top: none;
+        margin-top: 0.2rem;
+        padding: 0 0.2rem;
+        background-color: #ffffff;
+    }
+    .activity .bui-btn{
+        padding-top: .2rem;
+        padding-bottom: .2rem;
+        padding-left: 0;
+        padding-right: 0;
+    }
+</style>
+<div class="bui-page">
+    <header class="bui-bar">
+        <div class="bui-bar-left">
+            <a class="bui-btn btn-back"><i class="icon-back"></i></a>
+        </div>
+        <div class="bui-bar-main">图标模板</div>
+        <div class="bui-bar-right">
+        </div>
+    </header>
+    <main>
+
+        <!-- 头部图片轮播 -->
+        <div id="slideIcon" class="bui-slide slide-nav">
+            <div id="slidemain" class="bui-slide-main">
+                <ul>
+                    <li>
+                        <ul class="index-nav bui-fluid">
+                            <li class="bui-btn bui-box-vertical span3">
+                                <div class="icons-round btn-blue">
+                                    <i class="icon">&#xe67b;</i>
+                                </div>
+                                <div class="span1">客服大学</div>
+                            </li>
+                            <li class="bui-btn bui-box-vertical span3">
+                                <div class="icons-round btn-red">
+                                    <i class="icon">&#xe658;</i>
+                                </div>
+                                <div class="span1">休假管理</div>
+                            </li>
+                            <li class="bui-btn bui-box-vertical span3">
+                                <div class="icons-round btn-orange">
+                                    <i class="icon">&#xe665;</i>
+                                </div>
+                                <div class="span1">班表管理</div>
+                            </li>
+                            <li class="bui-btn bui-box-vertical span3">
+                                <div class="icons-round btn-green">
+                                    <i class="icon">&#xe62a;</i>
+                                </div>
+                                <div class="span1">岗位培训</div>
+                            </li>
+                            <li class="bui-btn bui-box-vertical span3">
+                                <div class="icons-round btn-green">
+                                    <i class="icon">&#xe62d;</i>
+                                </div>
+                                <div class="span1">问卷调查</div>
+                            </li>
+                            <li class="bui-btn bui-box-vertical span3">
+                                <div class="icons-round btn-orange">
+                                    <i class="icon">&#xe633;</i>
+                                </div>
+                                <div class="span1">平台故障</div>
+                            </li>
+                            <li class="bui-btn bui-box-vertical span3">
+                                <div class="icons-round btn-thinblue">
+                                    <i class="icon">&#xe662;</i>
+                                </div>
+                                <div class="span1">服务号</div>
+                            </li>
+                            <li class="bui-btn bui-box-vertical span3">
+                                <div class="icons-round btn-blue">
+                                    <i class="icon">&#xe631;</i>
+                                </div>
+                                <div class="span1">应用市场</div>
+                            </li>
+                        </ul>
+                        
+                    </li>
+                    <li>
+                        <ul class="index-nav bui-fluid">
+                            <li class="bui-btn bui-box-vertical span3">
+                                <div class="icons-round btn-blue">
+                                    <i class="icon">&#xe67b;</i>
+                                </div>
+                                <div class="span1">客服大学</div>
+                            </li>
+                            <li class="bui-btn bui-box-vertical span3">
+                                <div class="icons-round btn-red">
+                                    <i class="icon">&#xe658;</i>
+                                </div>
+                                <div class="span1">休假管理</div>
+                            </li>
+                            <li class="bui-btn bui-box-vertical span3">
+                                <div class="icons-round btn-orange">
+                                    <i class="icon">&#xe665;</i>
+                                </div>
+                                <div class="span1">班表管理</div>
+                            </li>
+                            <li class="bui-btn bui-box-vertical span3">
+                                <div class="icons-round btn-green">
+                                    <i class="icon">&#xe62a;</i>
+                                </div>
+                                <div class="span1">岗位培训积分</div>
+                            </li>
+                            <li class="bui-btn bui-box-vertical span3">
+                                <div class="icons-round btn-green">
+                                    <i class="icon">&#xe62d;</i>
+                                </div>
+                                <div class="span1">问卷调查</div>
+                            </li>
+                            <li class="bui-btn bui-box-vertical span3">
+                                <div class="icons-round btn-orange">
+                                    <i class="icon">&#xe633;</i>
+                                </div>
+                                <div class="span1">平台故障</div>
+                            </li>
+                            <li class="bui-btn bui-box-vertical span3">
+                                <div class="icons-round btn-thinblue">
+                                    <i class="icon">&#xe662;</i>
+                                </div>
+                                <div class="span1">服务号</div>
+                            </li>
+                            <li class="bui-btn bui-box-vertical span3">
+                                <div class="icons-round btn-blue">
+                                    <i class="icon">&#xe631;</i>
+                                </div>
+                                <div class="span1">应用市场</div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="bui-slide-head">
+                <ul >
+                    <li></li>
+                    <li></li>
+                </ul>
+            </div>
+        </div>
+        <!-- 图标多行 -->
+        <ul class="bui-list bui-fluid exammine">
+            <li class="bui-btn bui-box span4">
+                <div class="thumbnail approve"><i class="icon">&#xe665;</i></div>
+                <div class="span1">
+                    <h3 class="item-title approve">8</h3>
+                    <p class="item-text">待审批</p>
+                </div>
+            </li>
+            <li class="bui-btn bui-box span4">
+                <div class="thumbnail respond"><i class="icon">&#xe62d;</i></div>
+                <div class="span1">
+                    <h3 class="item-title respond">1</h3>
+                    <p class="item-text">待响应</p>
+                </div>
+            </li>
+            <li class="bui-btn bui-box span4">
+                <div class="thumbnail due"><i class="icon">&#xe63f;</i></div>
+                <div class="span1">
+                    <h3 class="item-title due">20</h3>
+                    <p class="item-text">到期</p>
+                </div>
+            </li>
+        </ul>
+        <!-- 快捷入口 -->
+        <ul class="bui-nav shortcut-nav">
+            <li class="bui-btn bui-box-vertical"><i class="icon short1">&#xe65c;</i><div class="span1">快捷入口</div></li>
+            <li class="bui-btn bui-box-vertical"><i class="icon short2">&#xe65c;</i><div class="span1">快捷入口</div></li>
+            <li class="bui-btn bui-box-vertical"><i class="icon short3">&#xe65c;</i><div class="span1">快捷入口</div></li>
+            <li class="bui-btn bui-box-vertical"><i class="icon short4">&#xe65c;</i><div class="span1">快捷入口</div></li>
+        </ul>
+
+        <!-- 报名按钮 -->
+        <ul class="index-menu bui-fluid">
+            <li class="span6">
+                <div class="bui-box-align-middle">
+                    <div class="ring ring01">
+                        <i class="icon">&#xe62d;</i>
+                    </div>
+                    <div class="span1">
+                        申请报名
+                    </div>
+                </div>
+            </li>
+            <li class="span6">
+                <div class="bui-box-align-middle">
+                    <div class="ring ring02">
+                        <i class="icon">&#xe606;</i>
+                    </div>
+                    <div class="span1">
+                        报名结果
+                    </div>
+                </div>
+            </li>
+            <li class="span6">
+                <div class="bui-box-align-middle">
+                    <div class="ring ring03">
+                        <i class="icon">&#xe63a;</i>
+                    </div>
+                    <div class="span1">
+                        签到
+                    </div>
+                </div>
+            </li>
+            <li class="span6">
+                <div class="bui-box-align-middle">
+                    <div class="ring ring04">
+                        <i class="icon">&#xe62a;</i>
+                    </div>
+                    <div class="span1">
+                        评分
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </main>
+    <footer>
+        <!-- 底部导航栏 -->
+        <ul class="bui-nav footer-nav">
+            <li class="bui-btn bui-box-vertical active"><i class="icon">&#xe659;</i><div class="span1">首页</div></li>
+            <li class="bui-btn bui-box-vertical"><i class="icon">&#xe62d;</i><div class="span1">通讯录</div></li>
+            <li class="bui-btn bui-box-vertical big-btn"><i class="icon">&#xe61d;</i></li>
+            <li class="bui-btn bui-box-vertical"><i class="icon">&#xe65b;</i><div class="span1">应用</div></li>
+            <li class="bui-btn bui-box-vertical"><i class="icon">&#xe67a;</i><div class="span1">我的</div></li>
+        </ul>
+    </footer>
+</div>

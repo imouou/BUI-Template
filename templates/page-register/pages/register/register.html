@@ -1,0 +1,62 @@
+
+<style>
+    /*防止动态增加图标时抖动*/
+    .register-page .bui-input {
+        height: .6rem;
+    }
+    .btn-send{
+        display: inline-block;
+        color: #52a4ff;
+        font-size: 0.2rem;
+        padding: 0 0.1rem;
+        min-height: .4rem;
+        height: .5rem;
+        line-height: .5rem;
+        border: 1px solid #52a4ff;
+    }
+    .btn-send.disabled {
+        border: 1px solid #dedede;
+    }
+</style>
+<div class="bui-page register-page">
+    <header class="bui-bar">
+        <div class="bui-bar">
+            <div class="bui-bar-left">
+                <a class="bui-btn btn-back"><i class="icon-back"></i></a>
+            </div>
+            <div class="bui-bar-main">注册</div>
+            <div class="bui-bar-right">
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="section-title">请填写信息</div>
+        <ul class="bui-list">
+            <li class="bui-btn bui-box clearactive">
+                <label class="bui-label" for="phone">手机号码</label>
+                <div class="span1">
+                    <div class="bui-input phone-input">
+                        <input id="phone" type="number" placeholder="请输入你的手机号码">
+                    </div>
+                </div>
+            </li>
+            <li class="bui-btn bui-box clearactive">
+                <label class="bui-label" for="password">验证码</label>
+                <div class="span1">
+                    <div class="bui-box">
+                        <div class="span1">
+                            <div class="bui-input code-input">
+                                <input id="code" type="text" placeholder="请输入验证码" maxlength="4">
+                            </div>
+                        </div>
+                        <div class="bui-btn round btn-send">发送验证码</div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="container-xy">
+          <div class="bui-btn round primary">注册</div>
+        </div>
+    </main>
+
+</div>

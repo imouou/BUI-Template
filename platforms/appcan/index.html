@@ -6,7 +6,8 @@
     <meta name="format-detection" content="telephone=no" />
     <meta name="keywords" content="BUI框架Demo,BUI Demo,BUI演示,BUI控件">
     <meta name="description" content="BUI 有着丰富的控件,通过demo便可以了解到各个控件的效果及使用方法">
-    <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="css/bui.css" />
     <style>
         /* appcan 必须清除 */
         * {
@@ -17,8 +18,13 @@
 </head>
 
 <body>
-    <div id="frame"></div>
+    <!-- 第1步: 开启单页路由 -->
+    <div id="bui-router"></div>
     <script src="js/platform/appcan.js"></script>
+    <script src="js/zepto.js"></script>
+    <script src="js/plugins/fastclick.js"></script>
+    <script src="js/bui.js"></script>
+    <!-- 初始化单页 -->
     <script src="index.js"></script>
 </body>
 

@@ -1,0 +1,119 @@
+<style type="text/css">
+    .personal-header{
+        background-color: #7cb8e9;
+        background-image: linear-gradient(to bottom, #7cb8e9, #89bfe3, #72a8d7, #89b5d8, #92bbda);
+        padding-top: .3rem;
+        padding-bottom: .3rem;
+    }
+    .personal-header .personal-img{
+        width: 1.2rem;
+        height: 1.2rem;
+        border-radius: 50%;
+        border: 3px solid #fff;
+        overflow: hidden;
+        margin: 0 auto .2rem auto;
+        text-align: center;
+    }
+    .personal-header .personal-img img{
+        width: 100%;
+    }
+    .personal-header p{
+        text-align: center;
+        color: #ffffff;
+        margin-bottom: 0.1rem;
+    }
+    .personal-header .name{
+        font-size: 0.26rem;
+    }
+    .personal-header .grade{
+        font-size: 0.2rem;
+    }
+    .nav-list{
+        border-top: none;
+        margin-top: 0.2rem;
+        padding: 0 0.2rem;
+        background-color: #ffffff;
+    }
+    .nav-list .bui-btn{
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .nav-list li:first-child{
+        border-top: none;
+    }
+    .nav-list .icon i{
+        font-size: 0.4rem;
+    }
+    .nav-list .icon{
+        height: 0.42rem;
+    }
+    .nav-list .bui-btn{
+        border: none;
+        border-top: 1px solid #efefef;
+    }
+    
+    .icon-yellow{
+        color: #ffad03;
+    }
+    .icon-thinblue{
+        color: #56ced5;
+    }
+    .icon-green{
+        color: #6ed046;
+    }
+    .icon-red{
+        color: #fd8886;
+    }
+</style>
+
+<div class="bui-page">
+    <header class="bui-bar">
+        <div class="bui-bar">
+            <div class="bui-bar-left">
+                <a class="bui-btn btn-back"><i class="icon-back"></i></a>
+            </div>
+            <div class="bui-bar-main">我的</div>
+            <div class="bui-bar-right">
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="personal-header">
+            <div class="personal-img">
+                <img src="images/applogo.png">
+            </div>
+            <p class="name">张三李四</p>
+            <p class="grade">积分：2988</p>
+        </div>
+        <ul class="bui-list nav-list">
+            <li class="bui-btn bui-box ">
+                <div class="icon"><i class="icon-favfill icon-yellow"></i></div>
+                <div class="span1">我的收藏</div>
+                <i class="icon-listright"></i>
+            </li>
+            <li class="bui-btn bui-box">
+                <div class="icon"><i class="icon icon-thinblue">&#xe64f;</i></div>
+                <div class="span1">播放记录</div>
+                <i class="icon-listright"></i>
+            </li>
+            <li class="bui-btn bui-box">
+                <div class="icon"><i class="icon icon-green">&#xe62d;</i></div>
+                <div class="span1">测试记录</div>
+                <i class="icon-listright"></i>
+            </li>
+            <li class="bui-btn bui-box">
+                <div class="icon"><i class="icon icon-red">&#xe666;</i></div>
+                <div class="span1">我的下载</div>
+                <i class="icon-listright"></i>
+            </li>
+        </ul>
+    </main>
+    <footer>
+        <!-- 底部d导航栏 -->
+        <ul class="bui-nav footer-nav">
+            <li class="bui-btn bui-box-vertical"><i class="icon">&#xe664;</i><div class="span1">精选课程</div></li>
+            <li class="bui-btn bui-box-vertical"><i class="icon">&#xe659;</i><div class="span1">全部课程</div></li>
+            <li class="bui-btn bui-box-vertical active"><i class="icon">&#xe67a;</i><div class="span1">我的</div></li>
+        </ul>
+    </footer>
+</div>

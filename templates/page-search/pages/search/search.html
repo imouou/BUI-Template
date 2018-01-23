@@ -1,0 +1,226 @@
+
+<style>
+    /**头部**/
+    .search-bar {
+        background-color: #7cb8e9;
+        background-image: linear-gradient(to bottom, #7cb8e9, #89bfe3, #72a8d7, #89b5d8, #92bbda);
+    }
+
+    .search-bar .bui-bar {
+        background-color: transparent;
+    }
+
+    .search-bar .wrap-search {
+        padding: .4rem .2rem;
+        background-color: transparent;
+    }
+
+    .search-bar .wrap-search .wrap-input {
+        -webkit-border-radius: .05rem;
+        -moz-border-radius: .05rem;
+        border-radius: .05rem;
+    }
+
+    .bui-bar .add-bar-width {
+        width: 1rem;
+    }
+
+    .bui-bar .add-bar-width .bui-btn {
+        width: 1.1rem;
+    }
+
+    .add-bar-width .bui-btn .name {
+        vertical-align: top;
+    }
+
+    /*内容区**/
+    .search-main .search-panel {
+        margin-top: .18rem;
+        border: none;
+
+    }
+
+    .search-main .search-panel .data-panel {
+        padding-top: .13rem;
+        padding-bottom: .13rem;
+        font-size: .2rem;
+        color: #999;
+    }
+
+    .search-main .bui-panel-head {
+        padding-top: .13rem;
+        padding-bottom: .13rem;
+        font-size: .22rem;
+        border-bottom-width: 1px;
+    }
+
+    .search-main .bui-panel-foot {
+        padding:0;
+        padding-top: .2rem;
+        padding-bottom: .2rem;
+        text-align: center;
+    }
+    .search-main .bui-panel-foot .bui-btn{
+        border:0;
+        padding:0;
+        min-height: .2rem;
+    }
+
+    .lists-panel {
+        margin: .12rem .2rem;
+        border: none;
+    }
+
+    .lists-panel .bui-panel-head {
+        padding-top: .2rem;
+        padding-bottom: .2rem;
+        font-size: .22rem;
+        border-bottom: none;
+    }
+
+    .lists-panel .bui-panel-main {
+        padding: 0 .2rem .2rem;
+        border-bottom:none;
+    }
+
+    .lists-panel .bui-panel-main .span4 {
+        padding: 0 .05rem .1rem;
+        text-align: center;
+
+    }
+
+    .lists-panel .bui-panel-main .lists-tag {
+        display: inline-block;
+        width: 100%;
+        padding: .08rem 0;
+        font-size: .2rem;
+        color: #666;
+        background-color: #ebf9ff;
+        -webkit-border-radius: .2rem;
+        -moz-border-radius: .1rem;
+        border-radius: .2rem;
+
+    }
+    .search-nav{
+        border-top:1px solid #cccccc;
+    }
+    .search-nav .bui-btn{
+        border:none;
+        background-color:#f8f8f8;
+    }
+    .search-nav .active-nav{
+        color:#0072c5;
+    }
+    .btn-search {
+        color: #fff;
+    }
+</style>
+
+<div class="bui-page">
+    <header class="search-bar">
+        <div class="bui-bar">
+            <div class="bui-bar-left bui-bar-text">
+                <a class="bui-btn btn-back">
+                    <i class="icon-back"></i>返回
+                </a>
+            </div>
+            <div class="bui-bar-main">
+                搜索
+            </div>
+            <div class="bui-bar-right bui-bar-text">
+
+            </div>
+        </div>
+        <!-- 搜索条控件结构 -->
+        <div id="uiSearchbar" class="bui-searchbar bui-box wrap-search">
+            <div class="span1">
+                <div class="bui-input">
+                    <i class="icon-search"></i>
+                    <input type="search" value="" placeholder="请输入关键字"/>
+                </div>
+            </div>
+            <div class="btn-search">搜索</div>
+        </div>
+    </header>
+    <main>
+        <div class="bui-box-space search-main">
+            <div class="span1">
+                <div class="bui-panel search-panel">
+                    <div class="bui-panel-head">搜索历史</div>
+                    <div class="bui-panel-main">
+                        <ul class="bui-list">
+                            <li class="bui-btn bui-box data-panel">
+
+                                OA在线办公系统
+
+                            </li>
+                            <li class="bui-btn bui-box data-panel">
+                                融合通信
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bui-panel-foot">
+                        <div class="bui-btn search-remove">
+                            <i class="icon-">&#xe639;</i><span>删除历史记录</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="bui-panel  lists-panel">
+            <div class="bui-panel-head">
+                搜索热词
+            </div>
+            <div class="bui-panel-main">
+                <div class="bui-fluid">
+                    <div class="span4">
+                        <span class="lists-tag">OA办公</span>
+                    </div>
+                    <div class="span4">
+                        <span class="lists-tag">医疗医生</span>
+                    </div>
+                    <div class="span4">
+                        <span class="lists-tag">融合通信</span>
+                    </div>
+                    <div class="span4">
+                        <span class="lists-tag">通信办公系统</span>
+                    </div>
+                    <div class="span4">
+                        <span class="lists-tag">移动办公</span>
+                    </div>
+                    <div class="span4">
+                        <span class="lists-tag">优惠</span>
+                    </div>
+                    <div class="span4">
+                        <span class="lists-tag">OA办公</span>
+                    </div>
+                    <div class="span4">
+                        <span class="lists-tag">医疗医生</span>
+                    </div>
+                    <div class="span4">
+                        <span class="lists-tag">融合通信</span>
+                    </div>
+                    <div class="span4">
+                        <span class="lists-tag">通信办公系统</span>
+                    </div>
+                    <div class="span4">
+                        <span class="lists-tag">移动办公</span>
+                    </div>
+                    <div class="span4">
+                        <span class="lists-tag">优惠</span>
+                    </div>
+                    <div class="span4">
+                        <span class="lists-tag">OA办公</span>
+                    </div>
+                    <div class="span4">
+                        <span class="lists-tag">医疗医生</span>
+                    </div>
+                    <div class="span4">
+                        <span class="lists-tag">融合通信</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

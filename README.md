@@ -18,19 +18,14 @@ buijs create demo
 ```
 
 ### 创建某个模板工程 ( tab 为模板名称)
-> 可以先查看有什么模板 `buijs list-template`
+> 可以先查看有什么模板 `buijs list-template`, 
+**注意:** 
+main 开头创建的模板每次都会覆盖 main 模块, 双击根目录 index.html 就可以预览;
+page 开头的模板会往pages增加文件夹, 预览地址 index.html#pages/list/list ;
 
 ```bash
 
-buijs create demo -t tab
-
-```
-
-### 创建侧边栏模板工程
-
-```bash
-
-buijs create demo -t sidebar
+buijs create demo -t main-tab
 
 ```
 
@@ -42,18 +37,29 @@ buijs create demo -t sidebar
 buijs create demo -p dcloud
 ```
 
-
 ### 创建某个平台下的某个模板工程
 
 ```bash
-buijs create demo -t sidebar -p link
-```
-
-### 创建指定版本工程
-> 可以先查看有什么版本 `buijs list`
-
-```bash
-buijs create demo v1.0
+buijs create demo -t main-tab -p link
 ```
 
 更多使用方法请查看 [buijs-cli](https://github.com/imouou/buijs-cli)
+
+# 模板预览
+<table>
+    <tr>
+        <td><div>![默认模板](https://raw.githubusercontent.com/imouou/BUI-Template/master/preview.png)</div> <div style="font-size: 12px;">模板名称: 默认</div> <div style="font-size: 12px;">预览地址: index.html</div></td>
+        <td><div>![底部动态加载导航](https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/main-tab/preview.png)</div> <div style="font-size: 12px;">模板名称: main-tab</div> <div style="font-size: 12px;">预览地址: index.html</div></td>
+        <td><div>![图标导航模板](https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/page-icon/preview.png)</div> <div style="font-size: 12px;">模板名称: page-icon</div> <div style="font-size: 12px;">预览地址: index.html#pages/icon/icon</div></td>
+    </tr>
+    <tr>
+        <td><div>![头部动态加载导航](https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/page-tab-head/preview.png)</div> <div style="font-size: 12px;">模板名称: page-tab-head</div> <div style="font-size: 12px;">预览地址: index.html#pages/tab-head/index</div></td>
+        <td><div>![中间动态加载导航](https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/page-tab-main/preview.png)</div> <div style="font-size: 12px;">模板名称: page-tab-main</div> <div style="font-size: 12px;">预览地址: index.html#pages/tab-main/index</div></td>
+        <td><div>![中间滚动动态加载导航](https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/page-tab-scroll/preview.png)</div> <div style="font-size: 12px;">模板名称: page-tab-scroll</div> <div style="font-size: 12px;">预览地址: index.html#pages/tab-scroll/index</div></td>
+    </tr>
+    <tr>
+        <td><div>![头部动态加载导航](https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/page-tab-head/preview.png)</div> <div style="font-size: 12px;">模板名称: page-tab-head</div> <div style="font-size: 12px;">预览地址: index.html#pages/tab-head/index</div></td>
+        <td><div>![中间动态加载导航](https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/page-tab-main/preview.png)</div> <div style="font-size: 12px;">模板名称: page-tab-main</div> <div style="font-size: 12px;">预览地址: index.html#pages/tab-main/index</div></td>
+        <td><div>![中间滚动动态加载导航](https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/page-tab-scroll/preview.png)</div> <div style="font-size: 12px;">模板名称: page-tab-scroll</div> <div style="font-size: 12px;">预览地址: index.html#pages/tab-scroll/index</div></td>
+    </tr>
+</table>

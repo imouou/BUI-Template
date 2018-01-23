@@ -1,0 +1,209 @@
+<style>
+    .list-photo {
+        border-top: 0;
+    }
+    .list-photo .bui-btn {
+        padding: .1rem .2rem;
+    }
+    .list-photo .photo-title {
+        line-height: 1.5;
+        margin-bottom: .1rem;
+        color: #333;
+        /*超出两行截取*/
+        overflow: hidden; 
+        display: -webkit-box;
+        display: box;
+        text-overflow: ellipsis; 
+        -webkit-line-clamp: 2; 
+        -webkit-box-orient: vertical;
+    }
+    .list-photo .bui-box-space{
+        margin-left: -.2rem;
+        margin-right: -.2rem;
+        width: auto;
+    }
+    .list-photo .photo-title {
+        margin: .1rem 0;
+    }
+    .list-photo .photo-item {
+        margin: .1rem 0;
+        background: #efefef;
+        min-height: 1rem;
+    }
+    .list-photo .photo-item img{
+        width: 100%;
+        height: auto;
+    }
+    .list-photo .photo-desc {
+        margin: .1rem 0;
+        text-align: left;
+    }
+    .list-photo .thumbnail {
+        margin: .1rem .2rem;
+        margin-left: 0;
+        width: 1.2rem;
+        height: 1rem;
+        background: #efefef;
+    }
+    .list-photo .span1 ~ .thumbnail {
+        margin-right: 0;
+    }
+    .list-photo .photo-cover  {
+        padding: 0;
+        position: relative;
+        display: block;
+        height: 3rem;
+        width: 100%;
+        overflow: hidden;
+        background: #e1e1e1;
+    }
+    .list-photo .photo-cover .photo-img {
+        margin: 0;
+        background: none;
+        height: 100%;
+    }
+    .list-photo .photo-cover .photo-img img{
+        /*height: 100%;*/
+        width: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+    .list-photo .photo-cover .photo-title {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 5;
+        width: 100%;
+        margin: 0;
+        padding:0 .2rem;
+        padding-top: .1rem;
+        padding-bottom: .1rem;
+        line-height: 1.7;
+        color: #fff;
+    }
+</style>
+<div class="bui-page">
+    <header class="bui-bar">
+        <div class="bui-bar-left">
+            <a class="bui-btn btn-back"><i class="icon-back"></i></a>
+        </div>
+        <div class="bui-bar-main">图片列表模板</div>
+        <div class="bui-bar-right">
+        </div>
+    </header>
+    <main>
+
+        <ul class="bui-list list-photo">
+            <li class="bui-btn photo-cover">
+                <div class="photo-img">
+                    <img src="" alt="">
+                </div>
+                <div class="photo-info">
+                    <h3 class="photo-title">马航MH370残骸搜寻家：“机长自杀论”不成立马航MH370残骸搜寻家：“机长自杀论”不成立马航MH370残骸搜寻家：“机长自杀论”不成立马航MH370残骸搜寻家：“机长自杀论”不成立</h3>
+                </div>
+            </li>
+            <li class="bui-btn">
+                <div class="bui-box-space">
+                    <div class="span1">
+                        <div class="photo-item">
+                            <img src="" alt="">
+                        </div>
+                        <div class="photo-info">
+                            <h3 class="photo-title">马航MH370残骸搜寻家：“机长自杀论”不成立马航MH370残骸搜寻家：“机长自杀论”不成立马航MH370残骸搜寻家：“机长自杀论”不成立马航MH370残骸搜寻家：“机长自杀论”不成立</h3>
+                            <div class="photo-desc">
+                                <span class="time">2018-01-22</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="bui-btn">
+                <div class="bui-box-space">
+                    <div class="span1">
+                        <div class="photo-item">
+                            <img src="" alt="">
+                        </div>
+                        <div class="photo-info">
+                            <h3 class="photo-title">马航MH370残骸搜寻家：“机长自杀论”不成立马航MH370残骸搜寻家：“机长自杀论”不成立马航MH370残骸搜寻家：“机长自杀论”不成立马航MH370残骸搜寻家：“机长自杀论”不成立</h3>
+                            <div class="photo-desc">
+                                <span class="time">2018-01-22</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="span1">
+                        <div class="photo-item">
+                            <img src="" alt="">
+                        </div>
+                        <div class="photo-info">
+                            <h3 class="photo-title">马航MH370残骸搜寻家：“机长自杀论”不成立马航MH370残骸搜寻家：“机长自杀论”不成立马航MH370残骸搜寻家：“机长自杀论”不成立马航MH370残骸搜寻家：“机长自杀论”不成立</h3>
+                            <div class="photo-desc">
+                                <span class="time">2018-01-22</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="bui-btn bui-box-vertical">
+                <h3 class="photo-title">马航MH370残骸搜寻家：“机长自杀论”不成立马航MH370残骸搜寻家：“机长自杀论”不成立马航MH370残骸搜寻家：“机长自杀论”不成立马航MH370残骸搜寻家：“机长自杀论”不成立</h3>
+                <div class="span1">
+                    <div class="bui-box-space">
+                        <div class="span1">
+                            <div class="photo-item">
+                                <img src="" alt="">
+                            </div>
+                        </div>
+                        <div class="span1">
+                            <div class="photo-item">
+                                <img src="" alt="">
+                            </div>
+                        </div>
+                        <div class="span1">
+                            <div class="photo-item">
+                                <img src="" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="bui-btn bui-box">
+                <div class="span1">
+                    <div class="photo-info">
+                        <h3 class="photo-title">马航MH370残骸搜寻家：“机长自杀论”不成立马航MH370残骸搜寻家：“机长自杀论”不成立马航MH370残骸搜寻家：“机长自杀论”不成立马航MH370残骸搜寻家：“机长自杀论”不成立</h3>
+                        <div class="photo-desc">
+                            <span class="time">2018-01-22</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="thumbnail">
+                    <img src="" alt="">
+                </div>
+            </li>
+            <li class="bui-btn bui-box">
+                <div class="thumbnail">
+                    <img src="" alt="">
+                </div>
+                <div class="span1">
+                    <div class="photo-info">
+                        <h3 class="photo-title">马航MH370残骸搜寻家：“机长自杀论”不成立马航MH370残骸搜寻家：“机长自杀论”不成立马航MH370残骸搜寻家：“机长自杀论”不成立马航MH370残骸搜寻家：“机长自杀论”不成立</h3>
+                        <div class="photo-desc">
+                            <span class="time">2018-01-22</span>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="bui-btn bui-box-vertical">
+                <h3 class="photo-title">马航MH370残骸搜寻家：“机长自杀论”不成立马航MH370残骸搜寻家：“机长自杀论”不成立马航MH370残骸搜寻家：“机长自杀论”不成立马航MH370残骸搜寻家：“机长自杀论”不成立</h3>
+                <div class="span1">
+                    <div class="bui-box-space">
+                        <div class="span1">
+                            <div class="photo-item">
+                                <img src="" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </main>
+</div>
