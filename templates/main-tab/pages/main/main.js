@@ -15,7 +15,7 @@ loader.define(function(require,exports,module) {
     // 底部导航
     function navTab() {
         
-        //按钮在tab外层,需要传id
+        //menu在tab外层,menu需要传id
         var tab = bui.slide({
             id:"#tabDynamic",
             menu:"#tabDynamicNav",
