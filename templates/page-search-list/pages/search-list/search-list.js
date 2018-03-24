@@ -80,5 +80,5 @@ loader.define(function(require,exports,module) {
     pageview.init();
 
     // 输出模块
-    module.exports = pageview;
+    return pageview;
 })
