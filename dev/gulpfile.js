@@ -1,14 +1,18 @@
 // 获取默认配置
 var package = require("./package.json"),
     
-    devServer = package.devServer && package.devServer || {},
+    devServer = package.devServer || {},
 
     // 服务器根目录
-    serverRoot = devServer.root || 'dist',
+    serverRoot = devServer.root || '',
     // 服务器端口
     serverPort = devServer.port || 8000 ,
     // 源文件目录
-    sourcePath = devServer.source || 'src',
+    sourcePath = devServer.source || '',
+    // 源文件目录
+    sourceBuild = devServer.build || 'dist',
+    // 模块的脚本存放的目录,默认只编译该模块下的脚本 src/pages
+    sourceModules = devServer.modules || 'pages',
     // 接口域名
     proxyUrl = package.proxy && package.proxy.host || '',
     // 接口目录
@@ -34,31 +38,26 @@ var config = {
             // 源文件目录
             root: sourcePath,
             // 源文件样式目录
-            css: sourcePath+'/css/**',
-            // 源文件字体目录
-            font: sourcePath+"/font/*.{eot,svg,ttf,woff}",
-            // scss源文件目录
+            css: sourcePath+'/css',
+            // style.css 源文件目录
             scss: sourcePath+'/scss/style.scss',
-            // 源文件脚本目录
-            script: sourcePath+'/js/**',
             // 源文件图片目录
-            images: sourcePath+'/**/*.{png,jpg,gif,ico}',
+            images: sourcePath+'/images/**/*.{png,jpg,gif,ico}',
         },
+        // 编译的输出路径
+        build: sourceBuild,
         // 输出配置 
         output: {
             // 输出的根目录
-            root: serverRoot,
+            root: sourceBuild,
             // 输出的样式目录
-            css: serverRoot+'/css',
-            // 输出的字体目录
-            font: serverRoot+'/font',
-            // 输出的脚本目录
-            script: serverRoot+'/js',
+            css: sourceBuild+'/css',
+            images: sourcePath+'/images'
         },
         watcher : {
             rootRule: [sourcePath+'/**'],
-            scssRule: [sourcePath+'/**/*.scss','!'+sourcePath+'/scss/*.scss'],
-            jsRule: [sourcePath+'/**/*.{js,json}','!'+sourcePath+'/**/*.min.js','!'+sourcePath+'/js/**/*.js','!/**/gulpfile.js','!/**/package.json'],
+            scssRule: [sourcePath+'/**/*.scss'],
+            jsRule: [sourcePath+'/**/*.js','!'+sourcePath+'/**/*.min.js','!'+sourcePath+'/js/**/*.js'],
             htmlRule: [sourcePath+'/**/*.html'],
         }
 }
@@ -109,13 +108,6 @@ gulp.task('server', function() {
             }
 
             return proxys;
-            // return [
-            //     proxy(config.api.path ,  {
-            //         target: config.api.host ,
-            //         changeOrigin:true,
-            //         secure: false,
-            //     })
-            // ]
         }
 
     });
@@ -134,6 +126,8 @@ gulp.task('scss', function() {
     .pipe(sass({ outputStyle: 'compressed'}).on('error', sass.logError))
     // .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest(config.output.css))
+    // 输出多一份编译的在源码里
+    .pipe(gulp.dest(config.source.css))
 
 })
 
@@ -157,30 +151,25 @@ gulp.task('scripts',function () {
         }))
         .pipe(gulp.dest(config.output.root));
 });
-// move file 
+
+// move all file except pages/js/** .sass .md 
 gulp.task('move',function () {
-    // move bui.css
-    gulp.src(config.source.css)
-        .pipe(gulp.dest(config.output.css));
-    // move bui.js
-    gulp.src(config.source.script)
-        .pipe(gulp.dest(config.output.script));
-    // move bui font
-    gulp.src(config.source.font)
-        .pipe(gulp.dest(config.output.font));
+    gulp.src([config.source.root+'/**','!**/*.{md,png,jpg,gif,ico}','!'+config.source.root+'/'+sourceModules+'/**/*.js','!'+config.source.root+'/index.js','!'+config.source.root+'/scss/','!'+config.source.root+'/**/*.scss','!**/package.json','!**/gulpfile.js'])
+        .pipe(gulp.dest(config.output.root));
+
 });
 
 // compress html
 gulp.task('html', function () {
     var options = {
-        removeComments: true,//清除HTML注释
-        collapseWhitespace: false,//压缩HTML
-        collapseBooleanAttributes: false,//省略布尔属性的值 <input checked="true"/> ==> <input />
-        removeEmptyAttributes: false,//删除所有空格作属性值 <input id="" /> ==> <input />
-        removeScriptTypeAttributes: true,//删除<script>的type="text/javascript"
-        removeStyleLinkTypeAttributes: true,//删除<style>和<link>的type="text/css"
-        minifyJS: true,//压缩页面JS
-        minifyCSS: true//压缩页面CSS
+        removeComments: true,
+        collapseWhitespace: false,
+        collapseBooleanAttributes: false,
+        removeEmptyAttributes: false,
+        removeScriptTypeAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        minifyJS: true,
+        minifyCSS: true
     };
     gulp.src(config.watcher.htmlRule)
         .pipe(plumber())
@@ -197,7 +186,7 @@ gulp.task('images', function () {
             interlaced: true, //类型：Boolean 默认：false 隔行扫描gif进行渲染
             multipass: true //类型：Boolean 默认：false 多次优化svg直到完全优化
         })))
-        .pipe(gulp.dest(config.output.root));
+        .pipe(gulp.dest(config.output.images));
 });
 
 
@@ -207,12 +196,16 @@ var watcher = gulp.task('watch', function() {
     // livereload.listen();
     // 监听scss变化
     gulp.watch(config.watcher.scssRule,['scss']);
+    gulp.watch(config.source.scss,['scss']);
     // 监听脚本变化
     gulp.watch(config.watcher.jsRule,['scripts']);
     // 监听html变化
     gulp.watch(config.watcher.htmlRule,['html']);
     // 改变的时候刷新更改
     // gulp.watch(config.watcher.rootRule).on('change', livereload.changed);
+    gulp.watch(config.watcher.rootRule).on('change', function (res) {
+        console.log('file '+res.type+' '+res.path)
+    });
 
 })
 
@@ -222,7 +215,7 @@ watcher.on('change', function(event) {
 });
 
 // 编译任务以后,缺省任务的服务才能跑起来
-gulp.task('build', ['move','html','scss','scripts','images' ]);
+gulp.task('build', ['move','images','html','scss','scripts']);
 
 // 注册缺省任务,启动服务,并且监听文件修改并且编译过去
-gulp.task('default', ['server','watch' ]);
+gulp.task('default', ['server','watch']);

@@ -3,7 +3,8 @@
   "devServer": {
     "port" : 8000,
     "root": "dist",
-    "source": "src"
+    "source": "src",
+    "build": "dist"
   },
   "proxy": {
     "/demo": {

@@ -15,16 +15,23 @@ BUI官网还有更多模板, 需要手动下载 [进入官网预览模板](http:
 可以先查看有什么模板 `buijs list-template`, [BUI模板图片预览](https://github.com/imouou/BUI-Template/)
 
 ```bash
+# 进入工程目录
+$ cd demo
 
-buijs create demo -t main-tab
+# 默认创建webapp工程模板
+$ buijs create -t main-tab
 
 ```
-> demo 为工程目录 main-tab 为模板名称
+> main-tab 为模板名称
 
 > <strong style="color:red">注意:</strong>
 1. 同一个工程可以多次创建模板;
 模板名以 `main-`开头 会覆盖 main 模块, 例如: 模板名 `main-tab` 预览地址 `index.html`
-模板名以 `page-`开头 会新增模块, 例如: 模板名 `page-sidebar` 预览地址 `index.html#pages/sidebar/sidebar`
+模板名以 `page-`开头 会新增页面, 例如: 模板名 `page-login` 预览地址 `index.html#pages/login/login`;
+2. `main-`开头的模板会覆盖main页面, `page-`开头的模板是新增页面;
+3. 同一个工程只能创建一个平台, 多次创建会相互覆盖;
+
+更多 [buijs使用说明](https://github.com/imouou/buijs-cli) ;
 
 # 模板预览
 
