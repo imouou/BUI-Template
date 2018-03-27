@@ -3,6 +3,7 @@ var package = require("./package.json"),
     
     devServer = package.devServer || {},
 
+    isLivereload = devServer.livereload,
     // 服务器根目录
     serverRoot = devServer.root || '',
     // 服务器端口
@@ -40,7 +41,7 @@ var config = {
             // 源文件样式目录
             css: sourcePath+'/css',
             // style.css 源文件目录
-            scss: sourcePath+'/scss/style.scss',
+            scss: [sourcePath+'/scss/**/*.scss'],
             // 源文件图片目录
             images: sourcePath+'/images/**/*.{png,jpg,gif,ico}',
         },
@@ -56,7 +57,7 @@ var config = {
         },
         watcher : {
             rootRule: [sourcePath+'/**'],
-            scssRule: [sourcePath+'/**/*.scss'],
+            scssRule: [sourcePath+'/**/*.scss','!'+sourcePath+'/scss/**/*.scss'],
             jsRule: [sourcePath+'/**/*.js','!'+sourcePath+'/**/*.min.js','!'+sourcePath+'/js/**/*.js'],
             htmlRule: [sourcePath+'/**/*.html'],
         }
@@ -92,7 +93,7 @@ gulp.task('server', function() {
     connect.server({
         root: config.server.root,
         port: config.server.port,
-        livereload: false,
+        livereload: isLivereload,
         middleware: function(connect, opt) {
             // 请求代理, 多个不同地址接口在package.proxy 里面新增多个
 
@@ -154,7 +155,7 @@ gulp.task('scripts',function () {
 
 // move all file except pages/js/** .sass .md 
 gulp.task('move',function () {
-    gulp.src([config.source.root+'/**','!**/*.{md,png,jpg,gif,ico}','!'+config.source.root+'/'+sourceModules+'/**/*.js','!'+config.source.root+'/index.js','!'+config.source.root+'/scss/','!'+config.source.root+'/**/*.scss','!**/package.json','!**/gulpfile.js'])
+    gulp.src([config.source.root+'/**','!**/*.{md,png,jpg,gif,ico}','!'+config.source.root+'/'+sourceModules+'/**/*.js','!'+config.source.root+'/index.js','!'+config.source.root+'/scss','!'+config.source.root+'/**/*.scss','!**/package.json','!**/gulpfile.js'])
         .pipe(gulp.dest(config.output.root));
 
 });
@@ -191,9 +192,9 @@ gulp.task('images', function () {
 
 
 // 实时监听 scss, html, js 等的修改
-var watcher = gulp.task('watch', function() {
+gulp.task('watch', function() {
     // 使用自动刷新会导致BUI调试时,页面无法后退,所以这里默认是关闭的
-    // livereload.listen();
+    isLivereload && livereload.listen();
     // 监听scss变化
     gulp.watch(config.watcher.scssRule,['scss']);
     gulp.watch(config.source.scss,['scss']);
@@ -202,17 +203,13 @@ var watcher = gulp.task('watch', function() {
     // 监听html变化
     gulp.watch(config.watcher.htmlRule,['html']);
     // 改变的时候刷新更改
-    // gulp.watch(config.watcher.rootRule).on('change', livereload.changed);
-    gulp.watch(config.watcher.rootRule).on('change', function (res) {
-        console.log('file '+res.type+' '+res.path)
+    isLivereload && gulp.watch(config.watcher.rootRule).on('change', livereload.changed);
+    !isLivereload && gulp.watch(config.watcher.rootRule).on('change', function (e) {
+        console.log(e.path+' '+e.type);
     });
 
 })
 
-// 监听改变输出
-watcher.on('change', function(event) {
-    console.log(event.path + event.type );
-});
 
 // 编译任务以后,缺省任务的服务才能跑起来
 gulp.task('build', ['move','images','html','scss','scripts']);
