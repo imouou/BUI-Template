@@ -1,0 +1,49 @@
+{
+  "distServer": {
+    "root": "dist"
+  },
+  "devServer": {
+    "root": "src",
+    "livereload": true,
+    "watchfile": "html,js,scss,css"
+  },
+  "proxy": {
+    "/demo": {
+      "target": "http://www.easybui.com",
+      "changeOrigin": true,
+      "ssl": false
+    }
+  },
+  "sass": {
+    "outputStyle": "compressed"
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  },
+  "uglify": {
+    "compress": {
+      "drop_debugger": false
+    },
+    "preserveComments": "some",
+    "mangle": true
+  },
+  "htmlmin": {
+    "removeComments": true,
+    "collapseWhitespace": false,
+    "collapseBooleanAttributes": false,
+    "removeEmptyAttributes": false,
+    "removeScriptTypeAttributes": true,
+    "removeStyleLinkTypeAttributes": true,
+    "minifyJS": true,
+    "minifyCSS": true
+  },
+  "imagemin": {
+    "optimizationLevel": 5,
+    "progressive": true,
+    "interlaced": true,
+    "multipass": true
+  },
+  "license": "ISC"
+}

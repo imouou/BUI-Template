@@ -1,40 +1,37 @@
 {
   "main": "gulpfile.js",
-  "devServer": {
-    "port" : 8000,
-    "root": "dist",
-    "source": "src",
-    "build": "dist",
-    "livereload" : false
-  },
-  "proxy": {
-    "/demo": {
-      "target": "http://www.easybui.com",  
-      "changeOrigin":true  
-    }
-  },
   "dependencies": {},
   "devDependencies": {
     "babel-preset-es2015": "^6.18.0",
+    "fs-extra": "^5.0.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.1",
     "gulp-babel": "^6.1.2",
-    "gulp-cache": "^0.4.5",
+    "gulp-batch": "^1.0.5",
+    "gulp-changed": "^3.2.0",
     "gulp-concat": "^2.6.1",
     "gulp-connect": "^5.5.0",
     "gulp-htmlmin": "^3.0.0",
     "gulp-imagemin": "^3.1.1",
     "gulp-livereload": "^3.8.1",
+    "gulp-minify-css": "^1.2.4",
     "gulp-plumber": "^1.1.0",
     "gulp-rename": "~1.2.2",
     "gulp-sass": "^3.1.0",
+    "gulp-sequence": "^1.0.0",
     "gulp-sourcemaps": "~1.6.0",
     "gulp-uglify": "^2.0.0",
-    "http-proxy-middleware": "^0.18.0"
+    "gulp-watch": "^5.0.0",
+    "gulp-watch-sass": "^1.4.1",
+    "http-proxy-middleware": "^0.18.0",
+    "open": "0.0.5",
+    "path": "^0.12.7"
   },
   "scripts": {
-    "dev": "gulp",
+    "dev": "gulp dev",
     "server": "gulp server",
+    "start": "gulp dev",
+    "dist": "gulp distserver",
     "build": "gulp build"
   },
   "author": "imouou@hotmail.com",
