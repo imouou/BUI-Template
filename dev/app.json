@@ -4,7 +4,7 @@
   },
   "devServer": {
     "root": "src",
-    "livereload": true,
+    "livereload": false,
     "watchfile": "html,js,scss,css"
   },
   "proxy": {
