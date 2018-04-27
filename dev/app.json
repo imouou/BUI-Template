@@ -1,11 +1,11 @@
 {
   "distServer": {
-    "root": "dist"
+    "root": "dist",
+    "livereload": true
   },
   "devServer": {
     "root": "src",
-    "livereload": false,
-    "watchfile": "html,js,scss,css"
+    "livereload": false
   },
   "proxy": {
     "/demo": {
@@ -17,6 +17,13 @@
   "sass": {
     "outputStyle": "compressed"
   },
+  "cleanCss": {
+    "compatibility": "ie8"
+  },
+  "autoprefixer": {
+      "browsers": ["last 2 versions"],
+      "cascade": false
+  },
   "babel": {
     "presets": [
       "es2015"
@@ -25,6 +32,9 @@
   "uglify": {
     "compress": {
       "drop_debugger": false
+    },
+    "output": {
+      "max_line_len": false
     },
     "preserveComments": "some",
     "mangle": true

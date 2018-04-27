@@ -13,7 +13,7 @@ bui.on("pageinit",function(){
 
     function bind() {
         // 绑定页面的所有按钮有href跳转
-        bui.btn({id:"#bui-router",handle:".bui-btn"}).load();
+        bui.btn({id:"#bui-router",handle:".bui-btn,a"}).load();
 
         // 统一绑定页面所有的后退按钮
         $("#bui-router").on("click",".btn-back",function (e) {

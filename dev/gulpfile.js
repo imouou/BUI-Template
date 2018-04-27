@@ -3,8 +3,6 @@
 var gulp = require('gulp'),
     // 生成css,js map图
     sourcemaps = require('gulp-sourcemaps'),
-    // 实时刷新,在BUI中,实时刷新会导致不能后退
-    livereload = require('gulp-livereload'),
     // 错误处理
     plumber = require('gulp-plumber'),
     // html压缩
@@ -13,7 +11,8 @@ var gulp = require('gulp'),
     imagemin = require('gulp-imagemin'),
     // CSS编译
     sass = require('gulp-sass'),
-    minifycss = require('gulp-minify-css'),
+    minifycss = require('gulp-clean-css'),
+    autoprefixer = require('gulp-autoprefixer'),
     // 脚本压缩
     uglify = require('gulp-uglify'),
     // 静态服务器
@@ -22,8 +21,6 @@ var gulp = require('gulp'),
     proxy = require('http-proxy-middleware'),
     // ES6 转ES5
     babel = require('gulp-babel'),
-    // 打开浏览器
-    open = require("open"),
     // 读写保存配置
     fs = require("fs-extra"),
     // 配合fs
@@ -36,8 +33,16 @@ var gulp = require('gulp'),
     sequence = require('gulp-sequence'),
     // 只修改改动的文件
     changed = require('gulp-changed'),
+    // 生成样式脚本?的引入
+    md5 = require('gulp-md5-assets'),
+    // 删除文件
+    del = require('del');
     // 用于获取本机信息
-    os=require('os');
+    // os=require('os');
+
+// 同步刷新
+var browserSync = require('browser-sync').create();
+var reload      = browserSync.reload;
 
 // 获取默认配置
 var configName = "app.json",
@@ -47,9 +52,9 @@ var configName = "app.json",
     // 开发服务配置
     devServer = app.devServer || {},
     // 实时刷新,仅在开发模式
-    isLivereload = devServer.livereload,
+    isDevLivereload = devServer.livereload == false ? false : true,
     // 实时刷新,仅在编译模式
-    isDistLivereload = distServer.livereload || false,
+    isDistLivereload = distServer.livereload == false ? false : true,
     // 源文件目录
     sourcePath = devServer.root || '',
     // 源文件目录
@@ -79,8 +84,8 @@ var config = {
         },
         watcher : {
             rootRule: sourcePath+'/**',
-            scssRule: [sourcePath+'/**/*.scss','!'+sourcePath+'/scss/**/*.scss','!'+sourcePath+'/scss/**/_*.scss'],
-            jsRule: sourcePath+'/**/*.js',
+            scssRule: [sourcePath+'/**/*.scss','!'+sourcePath+'/scss/**/_*.scss'],
+            jsRule: [sourcePath+'/**/*.js','!'+sourcePath+'/js/bui.js','!'+sourcePath+'/js/platform/*.js'],
             htmlRule: [sourcePath+'/**/*.html'],
         }
 }
@@ -109,13 +114,13 @@ function getRandomPort() {
     return randomPort;
 }
 
-// 获取端口
+// 获取端口并写入配置
 function getServerPort() {
 
     // 开发版运行端口
     let devPort = getRandomPort();
     // 编译版运行端口
-    let distPort = devPort+1;
+    let distPort = devPort+2;
     // 写入端口
     if( !devServer.port ){
         app.devServer.port = devPort;
@@ -132,105 +137,74 @@ function getServerPort() {
     }
 }
 
-// 启动开发服务并且允许处理接口跨域
-gulp.task('server', function() {
-    
-    // 获取端口
-    var portObj = getServerPort(),
-        network = getNetwork(),
-        ip = network["en0:1"] || "localhost";
-    // console.log(ip["en0:1"])
 
-    connect.server({
-        root: app.devServer.root,
-        port: portObj.devPort,
-        host: '0.0.0.0',
-        livereload: isLivereload,
-        middleware: function(connect, opt) {
-
-            // 请求代理, 多个不同地址接口在app.proxy 里面新增多个
-            open("http://"+ip+":"+portObj.devPort);
-
-            let proxys = [];
-            if( "proxy" in app){
-                let proxyObj = app["proxy"];
-                let keys = Object.keys(proxyObj);
-
-                keys.forEach(function (item,i) {
-                    let proxyItem = proxy(item , proxyObj[item])
-                    proxys.push(proxyItem);
-                })
-            }
-
-            return proxys;
-        }
-
-    });
-
+// 清空文件,在最后构建的时候才加入这部
+gulp.task('clean-dist', cb => {
+   return del([sourceBuild+'/**/*'], cb);
 });
 
-// 启动编译的服务器
-gulp.task('distserver', function() {
-    
-    // 获取端口
-    var portObj = getServerPort(),
-        network = getNetwork(),
-        ip = network["en0:1"] || "localhost";
-
-    connect.server({
-        root: app.distServer.root,
-        port: portObj.distPort,
-        livereload: isDistLivereload,
-        host: '0.0.0.0',
-        middleware: function(connect, opt) {
-            // 请求代理, 多个不同地址接口在app.proxy 里面新增多个
-            open("http://"+ip+":"+portObj.distPort);
-
-            let proxys = [];
-            if( "proxy" in app){
-                let proxyObj = app["proxy"];
-                let keys = Object.keys(proxyObj);
-
-                keys.forEach(function (item,i) {
-                    let proxyItem = proxy(item , proxyObj[item])
-                    proxys.push(proxyItem);
-                })
-            }
-
-            return proxys;
-        }
-
-    });
-});
-
-// sass 编译
+// sass 实时编译, 并生成sourcemap 便于调试
 gulp.task('scss', function() {
-// 编译模块里的scss文件
-// 编译style.scss文件
-  gulp.src(config.source.scss)
-    .pipe(changed(config.source.css))
-    // 生成css对应的sourcemap 
-    // .pipe(sourcemaps.init())
-    .pipe(sass(app.sass).on('error', sass.logError))
-    // .pipe(sourcemaps.write('./'))
-    // 输出多一份编译的在源码里
-    .pipe(gulp.dest(config.source.css))
 
-})
+    return gulp.src(sourcePath+"/scss/*.scss")
+        .pipe(changed(sourceBuild+'/css/'))
+        // 生成css对应的sourcemap 
+        .pipe(sourcemaps.init())
+        .pipe(sass(app.sass).on('error', sass.logError))
+        .pipe(autoprefixer(app.autoprefixer))
+        .pipe(sourcemaps.write('./'))
+        .pipe(gulp.dest(sourceBuild+"/css"))
+        .pipe(reload({stream: true}));
+});
 
 // sass 编译
 gulp.task('css', function() {
 // 编译style.scss文件
-  gulp.src(sourcePath+"/css/**")
-    .pipe(changed(config.output.css))
-    .pipe(minifycss())
+  return gulp.src(sourcePath+"/css/**/*.css")
+    .pipe(changed(sourceBuild+'/css/'))
+    .pipe(sourcemaps.init())
+    .pipe(minifycss(app.cleanCss))
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest(config.output.css))
-
+    .pipe(md5(10, sourceBuild+"/**/*.html"))
+    .pipe(reload({stream: true}));
 })
 
+gulp.task('css-minify', function() {
+// 编译style.scss文件
+  return gulp.src(sourcePath+"/css/**/*.css")
+    .pipe(changed(sourceBuild+'/css/'))
+    .pipe(minifycss(app.cleanCss))
+    .pipe(gulp.dest(config.output.css))
+    .pipe(md5(10, sourceBuild+"/**/*.html"))
+    .pipe(reload({stream: true}));
+})
+
+// 处理完JS文件后返回流
+gulp.task('js-babel', function () {
+    
+    return gulp.src(config.watcher.jsRule)
+        .pipe(changed(config.output.root))
+        // error end task
+        .pipe(plumber({
+            errorHandler : function (error) {
+                console.log(error)
+                this.emit('end');
+            }
+        }))
+        // translate es5
+        .pipe(babel(app.babel))
+        // compress script
+        // mangle: true,//类型：Boolean 默认：true 是否修改变量名
+        // compress: true,//类型：Boolean 默认：true 是否完全压缩
+        // .pipe(uglify(app.uglify))
+        .pipe(gulp.dest(config.output.root))
+        .pipe(reload({stream: true}))
+        .pipe(md5(10, sourceBuild+'/**/*.html'));
+});
 // 脚本 编译
-gulp.task('js',function () {
-    gulp.src(config.watcher.jsRule)
+gulp.task('js-minify',function () {
+    return gulp.src(config.watcher.jsRule)
         .pipe(changed(config.output.root))
         // error end task
         .pipe(plumber({
@@ -245,59 +219,173 @@ gulp.task('js',function () {
         // mangle: true,//类型：Boolean 默认：true 是否修改变量名
         // compress: true,//类型：Boolean 默认：true 是否完全压缩
         .pipe(uglify(app.uglify))
-        .pipe(gulp.dest(config.output.root));
+        .pipe(gulp.dest(config.output.root))
+        .pipe(md5(10, sourceBuild+'/**/*.html'));
 });
 
+
+// 把bui需要的文件移动过去
+gulp.task('move-bui', function () {
+    
+    gulp.src([sourcePath+'/css/bui.css'])
+        .pipe(gulp.dest(sourceBuild+'/css/'))
+    gulp.src([sourcePath+'/js/bui.js'])
+        .pipe(gulp.dest(sourceBuild+'/js/'))
+    gulp.src([sourcePath+'/js/platform/*.js'])
+        .pipe(gulp.dest(sourceBuild+'/js/platform/'))
+});
 // move all file except pages/js/** .sass .md 
 gulp.task('move',function () {
-    gulp.src([config.source.root+'/**','!**/*.{html,css,js,scss,less,md,png,jpg,gif,ico}','!'+config.source.root+'/scss'])
+    return gulp.src([config.source.root+'/**','!**/*.{html,css,js,scss,less,md,png,jpg,gif,ico}','!'+config.source.root+'/scss'])
         .pipe(changed(config.watcher.rootRule))
         .pipe(gulp.dest(config.output.root));
-
 });
 
 // compress html
 gulp.task('html', function () {
     var options = app.htmlmin;
-    gulp.src(config.watcher.htmlRule)
+    return gulp.src(config.watcher.htmlRule)
         .pipe(changed(sourceBuild))
         .pipe(plumber())
         .pipe(htmlmin(options))
-        .pipe(gulp.dest(sourceBuild));
+        .pipe(gulp.dest(sourceBuild))
+        .pipe(md5(10))
+        .pipe(reload({stream: true}))
 });
 
 // compress image
 gulp.task('images',function () {
-    gulp.src(config.source.images)
+    return gulp.src(config.source.images)
         .pipe(changed(config.output.images))
         .pipe(gulp.dest(config.output.images));
 });
 
 
-// 实时监听 scss, html, js 等的修改
-gulp.task('watch', function() {
-    // 使用自动刷新会导致BUI调试时,页面无法后退,所以这里默认是关闭的
-    isLivereload && livereload.listen();
+// 同步服务
+gulp.task('server-sync', ['server-build'], function() {
+    var portObj = getServerPort();
 
-    // 实时编译样式
-    gulp.watch(sourcePath+"/scss/*.scss",['scss']);
-    // 编译整个工程目录会导致服务器很卡
-    // gulp.watch(sourcePath+"/**/*.js",['js']);
-    // gulp.watch(sourcePath+"/**/*.html",['html']);
 
-    // 触发自动刷新
-    isLivereload && gulp.watch([sourcePath+"/**/*.{"+devServer.watchfile+"}"]).on('change', livereload.changed);
-})
+    let proxys = [];
+    if( "proxy" in app){
+        let proxyObj = app["proxy"];
+        let keys = Object.keys(proxyObj);
+
+        keys.forEach(function (item,i) {
+            let proxyItem = proxy(item , proxyObj[item])
+            proxys.push(proxyItem);
+        })
+    }
+
+    // 起一个同步服务
+    browserSync.init({
+        ui: {
+            port: portObj.distPort+1
+        },
+        server: {
+            baseDir: app.distServer.root,
+            middleware: proxys
+        },
+        port:portObj.distPort,
+        ghostMode: false,
+        notify: false,
+        codeSync: isDistLivereload,
+        // 同步开启多个窗口同步
+        // ghostMode: {
+        //         clicks: false,
+        //         forms: false,
+        //         scroll: false
+        //     }
+        // logLevel: "info",
+        // reloadDebounce: 0,
+        // injectChanges: true,// css 注入修改
+        // timestamps: true
+        // plugins: [
+        //     {
+        //         module: "bs-html-injector",
+        //         options: {
+        //             files: [sourcePath+"/**/*.html"]
+        //         }
+        //     }
+        // ] 
+    });
+
+    // 监听文件修改
+    gulp.watch(sourcePath+"/scss/**/*.scss", ['scss']);
+    gulp.watch(sourcePath+"/css/**/*.css", ['css']);
+    gulp.watch([sourcePath+"/**/*.js"],['js-babel']);
+    gulp.watch([sourcePath+"/**/*.html"],['html']);
+
+    // 新增删除由插件负责
+    watch(config.watcher.rootRule)
+        .on('add', addFile)
+        // .on('change', changeFile)
+        .on('unlink', function(file){
+            //删除文件
+            let distFile = './'+sourceBuild+'/' + path.relative('./'+sourcePath, file); //计算相对路径
+            fs.existsSync(distFile) && fs.unlink(distFile);
+            console.warn(file,"deleted")
+        });
+    
+});
+
+// 起一个src目录的server
+gulp.task('server', function() {
+    var portObj = getServerPort();
+
+    let proxys = [];
+    if( "proxy" in app){
+        let proxyObj = app["proxy"];
+        let keys = Object.keys(proxyObj);
+
+        keys.forEach(function (item,i) {
+            let proxyItem = proxy(item , proxyObj[item])
+            proxys.push(proxyItem);
+        })
+    }
+
+    // 起一个同步服务
+    browserSync.init({
+        ui: {
+            port: portObj.devPort+1
+        },
+        server: {
+            baseDir: app.devServer.root,
+            middleware: proxys
+        },
+        port:portObj.devPort,
+        ghostMode: false,
+        codeSync: isDevLivereload
+    });
+
+});
+
+// 监测新增
+function addFile(file){
+    console.log(file,"added");
+    gulp.src(file, {base : './'+sourcePath}) //指定这个文件
+        .pipe(gulp.dest('./'+sourceBuild))
+        .pipe(reload({stream: true}))
+
+}
+// 监测新增
+
+function changeFile(file){
+    console.info(file,"changed");
+    gulp.src(file, {base : './'+sourcePath}) //指定这个文件
+        .pipe(gulp.dest('./'+sourceBuild))
+        .pipe(reload({stream: true}))
+
+}
 
 
 // 编译任务以后,缺省任务的服务才能跑起来
-gulp.task('build', sequence('move',['images','html','js','scss'],'css' ) );
+gulp.task('build', sequence('clean-dist','move','move-bui',['html'],['images','scss'],['css-minify'],['js-minify']  ) );
 
+// 先编译再起服务,不需要每次都清除文件夹的内容
+gulp.task('server-build', sequence('move','move-bui',['html'],['images','scss'],['css'],['js-babel'] ) );
 
 // 注册缺省任务,启动服务,并且监听文件修改并且编译过去
-gulp.task('dev', ['server','watch']);
-
-// 用于预览编译后的文件
-gulp.task('dist', ['distserver']);
+gulp.task('dev', ['server-sync']);
 
 gulp.task('default', ['dev']);

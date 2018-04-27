@@ -1,2 +1,8 @@
 @charset "utf-8";
 
+/*  导入示例:
+    加载其它css或scss文件,用@import导入;
+    下划线开头的scss文件默认只在导入的时候生成例如: _main.scss;
+
+    @import "_main.scss";
+*/
