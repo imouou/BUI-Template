@@ -25,8 +25,8 @@ loader.define(function(require,exports,module) {
             // 1: 声明是动态加载的tab
             autoload: true,
         })
-        // 2: 监听加载后的事件, load 只加载一次
-        tab.on("load",function (res) {
+        // 2: 监听加载后的事件
+        tab.on("to",function (res) {
             var index = $(this).index();
             switch(index){
                 case 0:
@@ -42,7 +42,7 @@ loader.define(function(require,exports,module) {
                 loader.require(["pages/main/setting"])
                 break;
             }
-        })
+        }).to(0);
     }
 
     // 初始化
