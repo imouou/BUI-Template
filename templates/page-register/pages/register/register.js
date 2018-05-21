@@ -80,7 +80,7 @@ loader.define(function(require,exports,module) {
 
         // 自执行
         timeout = setTimeout(function() { 
-            arg.callee(_self) 
+            countdown(_self) 
         },1000) 
     } 
     /**

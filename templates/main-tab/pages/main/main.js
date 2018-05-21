@@ -30,9 +30,13 @@ loader.define(function(require,exports,module) {
             var index = $(this).index();
             switch(index){
                 case 0:
-                loader.require(["pages/main/home"])
+                loader.require(["pages/main/home"],function () {
+                    // 有回调的话是每次切换都会触发
+                    module.init();
+                })
                 break;
                 case 1:
+                    // 这里是加载脚本第一次的时候触发
                 loader.require(["pages/main/news"])
                 break;
                 case 2:
