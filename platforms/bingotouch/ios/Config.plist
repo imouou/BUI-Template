@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plist version="1.0">
+<dict>
+<key>AppID</key>
+<string>com.bingo.daily</string>
+<key>AppName</key>
+<string>每日提醒</string>
+<key>AppVersionName</key>
+<string>1.0</string>
+<key>AppVersionCode</key>
+<string>1</string>
+<key>StartPage</key>
+<string>index.html</string>
+<key>BuildType</key>
+<string>enterprise</string>
+</dict>
+</plist>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget>
+    <content src="index.html"/>
+    <preference name="AutoHideSplashScreen" value="true" />
+    <preference name="enableRotateToLandscape" value="true" />
+    <preference name="BackupWebStorage" value="cloud" />
+    <preference name="DisallowOverscroll" value="false" />
+    <preference name="EnableViewportScale" value="true" />
+    <preference name="FadeSplashScreen" value="true" />
+    <preference name="FadeSplashScreenDuration" value=".25" />
+    <preference name="HideKeyboardFormAccessoryBar" value="false" />
+    <preference name="KeyboardDisplayRequiresUserAction" value="true" />
+    <preference name="KeyboardShrinksView" value="false" />
+    <preference name="MediaPlaybackRequiresUserAction" value="true" />
+    <preference name="AllowInlineMediaPlayback" value="true" />
+    <preference name="ShowSplashScreenSpinner" value="false" />
+    <preference name="SuppressesIncrementalRendering" value="false" />
+    <preference name="TopActivityIndicator" value="gray" />
+    <preference name="SsoServerUrl" value="https://sso.bingosoft.net" />
+    <preference name="HideStatusBar" value="false"/>
+    
+    <plugins>
+        <plugin name="Device" value="CDVDevice" />
+        <plugin name="Logger" value="CDVLogger" />
+        <plugin name="Compass" value="CDVLocation" />
+        <plugin name="Accelerometer" value="CDVAccelerometer" />
+        <plugin name="Camera" value="CDVCamera" />
+        <plugin name="NetworkStatus" value="CDVConnection" />
+        <plugin name="Contacts" value="CDVContacts" />
+        <plugin name="Debug Console" value="CDVDebugConsole" />
+        <plugin name="Echo" value="CDVEcho" />
+        <plugin name="File" value="CDVFile" />
+        <plugin name="FileTransfer" value="CDVFileTransfer" />
+        <plugin name="Geolocation" value="CDVLocation" />
+        <plugin name="Notification" value="CDVNotification" />
+        <plugin name="Media" value="CDVSound" />
+        <plugin name="Capture" value="CDVCapture" />
+        <plugin name="SplashScreen" value="CDVSplashScreen" />
+        <plugin name="Battery" value="CDVBattery" />
+        <plugin name="Globalization" value="CDVGlobalization" />
+        <plugin name="InAppBrowser" value="CDVInAppBrowser" />
+        <plugin name="Page" value="CDVPage"/>
+        <plugin name="ExtendApp" value="CDVExtendApp" />
+        <plugin name="WheelSelectPlugin" value="FormatDatePicker" />
+        <plugin name="WheelSelectPluginFormat" value="FormatDatePicker" />
+        <plugin name="HttpRequest" value="HttpRequestPlugin" />
+        <plugin name="Setting" value="CDVSettingPlugin" />
+        <plugin name="SSOPlugin" value="CDVSSOPlugin" />
+        <plugin name="PhonePlugin" value="CDVPhonePlugin" />
+        <plugin name="LocationPlugin" value="LocationPlugin" />
+        <plugin name="HashMapFile" value="CDVHashmap" />
+        <plugin name="FilePlugin" value="FilePlugin" />
+        <plugin name="RotationPlugin" value="CDVRotation" />
+        <plugin name="BarcodeScanner" value="ScannerPlugin" />
+        <plugin name="TimeTask" value="TimeTaskPlugin" />
+        <plugin name="LocalNotification" value="LocalNotification" />
+    </plugins>
+    <access origin="*" />
+</widget>
