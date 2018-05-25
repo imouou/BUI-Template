@@ -12,26 +12,15 @@ android {
         versionName project.AppVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-    signingConfigs {
-        release {
-            File strFile = new File("../app.jks")
-            storeFile file(strFile)
-            storePassword "123456"
-            keyAlias "android"
-            keyPassword "123456"
-        }
-    }
     buildTypes {
         release {
             minifyEnabled false
             buildConfigField "String", "StartPage", "\"${StartPage}\""
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig  signingConfigs.release
         }
         debug {
             buildConfigField "String", "StartPage", "\"${StartPage}\""
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
         }
     }
     lintOptions {
