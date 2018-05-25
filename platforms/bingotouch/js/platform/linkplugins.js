@@ -1,6 +1,6 @@
 ﻿/**
  * Link平台功能接口，使用该模块必须先引入Cordova.js 和 bingotouch.js<br/>包含用户信息获取、通讯录、聊天、签到、应用、服务号等操作接口
- * v 4.0
+ * v 4.1
  * @module 平台接口
  */
 
@@ -1361,6 +1361,43 @@
         Cordova.exec(callback,null, "LinkPlugin", "chooseFile", []);
     }
 
+    /**
+     * 发起选择图片
+     * @method imagePicker
+     * @param {array} pathArr  已选择的图片路径 ,只需要 resourceLocal对应的路径即可
+     * @param {function} success [成功回调] [{"resourceSize":100kb,"resourceLocal":"/storage/emulated/0/xxxx"}]
+     * @param {function} fail    [失败回调]
+     */
+    app.link.imagePicker = function(success,fail,pathArr){
+     	var type = 1;
+    	Cordova.exec(success,fail,"LinkPlugin","selectResourceFiles",[type,pathArr]);
+    }
+
+
+    /**
+     * 压缩图片
+     * @method compressImage
+     * @param  {number} quality 图片压缩后的质量1~100,100为不压缩
+     * @param  {array} pathArr 图片路径，里面每个元素都是对象 {path:"...",width:200,height:300}
+     * @param  {function} success 成功回调函数
+     * @param  {function} fail    失败回调函数
+     */
+    app.link.compressImage = function(quality,pathArr,success,fail){
+    	Cordova.exec(success,fail,"LinkPlugin","compressImage",[quality,pathArr]);
+    }
+
+    /**
+     * 获取语言
+     * @param  {Function} callback 回调函数,返回 en, zh-cn
+     */
+    app.link.getLanguage = function(callback){
+    	Cordova.exec(success,fail,"LinkPlugin","getLanguage",[]);
+    }
+
+
 
 })(window);
+
+
+
 
