@@ -1,2 +1,14 @@
-
 *.svn
+*.iml
+*.gradle
+*.idea
+*.DS_Store
+*.log
+*/build
+
+*.xcworkspace
+*/Podfile.lock
+*/Pods
+*/build.xcconfig
+*/ExportOptions.plist
+*/ProvisionFile.plist
