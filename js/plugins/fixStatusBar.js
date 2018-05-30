@@ -1,3 +1,8 @@
+/* 
+ * 用于修复iPhoneX及iphone的全屏沉浸式打包,打包的时候在index.html引入脚本就可.
+ * 2018-05-30
+ */
+
 bui.on("pageinit",function () {
   fixStatusBar();
 })

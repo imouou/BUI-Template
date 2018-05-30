@@ -30,9 +30,9 @@ loader.define(function(require,exports,module) {
             var index = $(this).index();
             switch(index){
                 case 0:
-                loader.require(["pages/main/home"],function () {
+                loader.require(["pages/main/home"],function (mod) {
                     // 有回调的话是每次切换都会触发
-                    module.init();
+                    mod.init();
                 })
                 break;
                 case 1:
