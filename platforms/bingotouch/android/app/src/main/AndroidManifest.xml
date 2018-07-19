@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.bingo.touch">
 
 
@@ -44,11 +45,13 @@
         android:name="com.touchcore.core.GlobalApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:allowBackup="false"
+        tools:replace="android:allowBackup"
         android:theme="@style/AppTheme">
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="u91cPvSUevIzvOhBdBGU7iv5mSb6mHDs" >
+            android:value="${BAIDU_APPKEY_VALUE}" >
         </meta-data>
 
         <activity android:name=".MainActivity"
