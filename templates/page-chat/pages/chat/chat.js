@@ -44,6 +44,31 @@ loader.define(function(require,exports,module) {
 
             }
         },100))
+
+        // 为input绑定事件
+        $('.bui-input').on('click', function () {
+
+            // 使用定时器是为了延迟计算
+            setTimeout(function(){
+                bui.init({
+                    id: router.$(".bui-page")
+                })
+
+              router.$(".bui-page")[0].scrollIntoView();
+
+            },300);
+        });
+        $('#chatInput').on('blur', function () {
+            // 使用定时器是为了延迟计算
+            setTimeout(function(){
+                bui.init({
+                    id: router.$(".bui-page")
+                })
+
+              router.$(".bui-page")[0].scrollIntoView();
+
+            },300);
+        });
     }
 
     // 聊天模板

@@ -75,7 +75,7 @@ loader.define(function(require,exports,module) {
             return;
         }
         var $id = $(opt.id),
-            $target = $id.find(opt.target);
+            $target = $id.find(opt.target),
             iconClass = '.'+opt.icon;
 
         // 输入框监听延迟执行
