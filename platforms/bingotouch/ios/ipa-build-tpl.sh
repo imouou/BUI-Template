@@ -17,7 +17,6 @@ ProjectName="TouchCoreTemplate" #当前工程的名称，以最后生成的 Temp
 ##描述文件路径
 ProvisionFile="${ProjectPath}/app.mobileprovision" #描述文件
 
-
 WorkspacePath="${ProjectPath}/${ProjectName}.xcworkspace"
 ArchivePath="${ProjectPath}/build/${ProjectName}.xcarchive"
 Scheme="${ProjectName}"
@@ -25,16 +24,12 @@ InfoPlistPath="${ProjectPath}/${ProjectName}/Info.plist"
 OutputPath="${ProjectPath}/build/Release-iphoneos"
 ExportOptionsPath="${ProjectPath}/ExportOptions.plist"
 ProvisionPlistFile="${ProjectPath}/ProvisionFile.plist"
+
 ConfigPlist="${ProjectPath}/Config.plist" #抽象出来的配置文件
 
 ##输入
-BundleId=`defaults read "${ConfigPlist}" AppID` #你的Bundle ID
-AppName=`defaults read "${ConfigPlist}" AppName` #你的AppName,显示在桌面
-ShortVersion=`defaults read "${ConfigPlist}" AppVersionName` #short版本
-BuildVersion=`defaults read "${ConfigPlist}" AppVersionCode` #build版本
-BuildType=`defaults read "${ConfigPlist}" BuildType` #build method app-store or enterprise
-StartPage=`defaults read "${ConfigPlist}" StartPage` #启动页面
-
+BundleId={#BundleId#} #你的Bundle ID
+BuildType={#BuildType#} #build method app-store or enterprise
 
 ##第一步:将描述文件转成plist，并读取里面的关键字段
 security cms -D -i "${ProvisionFile}" > "${ProvisionPlistFile}"
@@ -93,20 +88,7 @@ cat>${ExportOptionsPath}<<EOF
 EOF
 # exit
 
-###第四步：修改Info.plist文件信息
-##通过defaults write 的方式会让plist变成乱码文件，但不影响使用
-##修改显示名称 => CFBundleDisplayName
-defaults write ${InfoPlistPath} "CFBundleDisplayName" "${AppName}"
-##修改短版本 => CFBundleShortVersionString
-defaults write ${InfoPlistPath} "CFBundleShortVersionString" "${ShortVersion}"
-##修改build版本 => CFBundleVersion
-defaults write ${InfoPlistPath} "CFBundleVersion" "${BuildVersion}"
-##修改 Bundle ID => CFBundleIdentifier
-defaults write ${InfoPlistPath} "CFBundleIdentifier" "${BundleId}"
-##修改 StartPage
-defaults write ${InfoPlistPath} "StartPage" "${StartPage}"
-
-###第五步：执行clean,archive,export
+###第四步：执行clean,archive,export
 ## clean project
 xcodebuild clean -workspace "${WorkspacePath}" -scheme "${Scheme}" -configuration Release
 ## archive project

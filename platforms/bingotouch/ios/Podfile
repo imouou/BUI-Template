@@ -1,7 +1,5 @@
 # Uncomment the next line to define a global platform for your project
 # platform :ios, '9.0'
-
-source 'https://git.bingosoft.net/link-ios/BingoSoftPods.git'  #我们自己的私有spec仓库的地址
 source 'https://github.com/CocoaPods/Specs.git'  #官方仓库的地址
 
 target 'TouchCoreTemplate' do
@@ -9,7 +7,7 @@ target 'TouchCoreTemplate' do
   pod 'AFNetworking', '~> 2.6.0'
   pod 'DYQRCodeDecoder'
   pod 'SLNPopupMenu'
-  pod 'CordovaLib', '~> 2.6.2'
   pod 'HooDatePicker', '~> 1.0'
-  pod 'TouchCore', '~> 1.9.1'
+  pod 'CordovaLib',:path => './Cordova'
+  pod 'TouchCore', :path => './TouchCore'
 end

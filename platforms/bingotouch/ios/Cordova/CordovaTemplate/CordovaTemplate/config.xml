@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+#
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+# 
+# http://www.apache.org/licenses/LICENSE-2.0
+# 
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+#  KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+#
+-->
+<widget>
+
+    <content src="index.html" />
+    <preference name="AllowInlineMediaPlayback" value="false" />
+    <preference name="AutoHideSplashScreen" value="true" />
+    <preference name="enableRotateToLandscape" value="false" />
+    <preference name="BackupWebStorage" value="cloud" />
+    <preference name="DisallowOverscroll" value="false" />
+    <preference name="EnableViewportScale" value="true" />
+    <preference name="FadeSplashScreen" value="true" />
+    <preference name="FadeSplashScreenDuration" value=".25" />
+    <preference name="HideKeyboardFormAccessoryBar" value="false" />
+    <preference name="KeyboardDisplayRequiresUserAction" value="true" />
+    <preference name="KeyboardShrinksView" value="false" />
+    <preference name="MediaPlaybackRequiresUserAction" value="false" />
+    <preference name="ShowSplashScreenSpinner" value="false" />
+    <preference name="SuppressesIncrementalRendering" value="false" />
+    <preference name="TopActivityIndicator" value="gray" />
+    <preference name="WebkitUserSelect" value="false"/>  
+    <preference name="WebkitTouchCallout" value="false"/>
+    <preference name="AnimationDuration" value="0.4" />
+    <preference name="AnimationDelay" value="0.4" />
+    <preference name="AppMode" value="debug" />
+    <preference name="SsoServerUrl" value="https://sso.bingosoft.net" />
+    <preference name="DefaultLoadUrl" value="" />
+    <preference name="SupportedDirection" value="" />
+    
+    <plugins>
+        <plugin name="Device" value="CDVDevice" />
+        <plugin name="Logger" value="CDVLogger" />
+        <plugin name="Compass" value="CDVLocation" />
+        <plugin name="Accelerometer" value="CDVAccelerometer" />
+        <plugin name="Camera" value="CDVCamera" />
+        <plugin name="NetworkStatus" value="CDVConnection" />
+        <plugin name="Contacts" value="CDVContacts" />
+        <plugin name="Debug Console" value="CDVDebugConsole" />
+        <plugin name="Echo" value="CDVEcho" />
+        <plugin name="File" value="CDVFile" />
+        <plugin name="FileTransfer" value="CDVFileTransfer" />
+        <plugin name="Geolocation" value="CDVLocation" />
+        <plugin name="Notification" value="CDVNotification" />
+        <plugin name="Media" value="CDVSound" />
+        <plugin name="Capture" value="CDVCapture" />
+        <plugin name="SplashScreen" value="CDVSplashScreen" />
+        <plugin name="Battery" value="CDVBattery" />
+        <plugin name="Globalization" value="CDVGlobalization" />
+        <plugin name="InAppBrowser" value="CDVInAppBrowser" />
+        <plugin name="Page" value="CDVPage"/>
+        <plugin name="ExtendApp" value="CDVExtendApp" />
+        
+        <plugin name="WheelSelectPlugin" value="CDVDatePicker" />
+        <plugin name="WheelSelectPluginFormat" value="FormatDatePicker" />
+        
+        <plugin name="HttpRequest" value="HttpRequestPlugin" />
+        <plugin name="Setting" value="CDVSettingPlugin" />
+        <plugin name="PhonePlugin" value="CDVPhonePlugin" />
+        <plugin name="LocationPlugin" value="LocationPlugin" />
+        <plugin name="HashMapFile" value="CDVHashmap" />
+        <plugin name="FilePlugin" value="FilePlugin" />
+        <plugin name="RotationPlugin" value="CDVRotation" />
+        <plugin name="BarcodeScanner" value="BarcodeScannerPlugin" />
+        <plugin name="ContractEx" value="ContactExPlugin" />
+        <plugin name="TimeTask" value="TimeTaskPlugin" />
+        <plugin name="LocalNotification" value="LocalNotification" />
+        <plugin name="SSOPlugin" value="CDVSSOPlugin"/>
+    </plugins>
+    <access origin="*" />
+</widget>

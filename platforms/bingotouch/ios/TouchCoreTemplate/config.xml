@@ -16,7 +16,7 @@
     <preference name="ShowSplashScreenSpinner" value="false" />
     <preference name="SuppressesIncrementalRendering" value="false" />
     <preference name="TopActivityIndicator" value="gray" />
-    <preference name="SsoServerUrl" value="https://sso.bingosoft.net" />
+    <preference name="SsoServerUrl" value="" />
     <preference name="HideStatusBar" value="false"/>
     
     <plugins>
