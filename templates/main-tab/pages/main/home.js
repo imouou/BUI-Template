@@ -7,14 +7,17 @@ loader.define(function(require,exports,module) {
     // 页面初始化
     pageview.init = function () {
         
-        // 初始化焦点图
-        uiSlide = bui.slide({
-            id:"#tabSlideImg",
-            height:200,
-            autoplay : true,
-            autopage: true,
-            zoom: true
-        })
+        if( !uiSlide ){
+           // 初始化焦点图
+           uiSlide = bui.slide({
+               id:"#tabSlideImg",
+               height:200,
+               autoplay : true,
+               autopage: true,
+               zoom: true
+           }) 
+        }
+        
 
         // 初始化列表刷新加载
         uiList = bui.list({
