@@ -1,0 +1,43 @@
+CACHE MANIFEST  
+#chrome浏览器支持
+#version 1.1  
+#author by bui  
+  
+#CACHE:其后列出的是需要缓存的内容  
+CACHE:  
+
+# 单页离线应用必须的文件
+images/applogo.png
+font/iconfont.eot
+font/iconfont.svg
+font/iconfont.ttf
+font/iconfont.woff
+index.html  
+index.js  
+css/bui.css  
+js/zepto.js  
+js/bui.js  
+pages/main/main.html
+pages/main/main.js
+
+# 单页离线非必须的文件
+pages/main/home.html
+pages/main/home.js
+pages/about/index.html
+pages/router/index.html
+pages/router/index.js
+pages/ui/index.html
+pages/ui/index.js
+pages/ui_method/index.html
+pages/ui_method/index.js
+pages/ui_event/index.html
+pages/ui_event/index.js
+pages/ui_controls/index.html
+pages/ui_controls/index.js
+  
+#NETWORK:其后列出的是不进行缓存的内容，每次都需要从服务器端获取  
+NETWORK:  
+* 
+  
+FALLBACK:  
+images/logo.png images/applogo.png    
