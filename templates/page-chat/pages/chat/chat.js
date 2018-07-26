@@ -77,18 +77,24 @@ loader.define(function(require,exports,module) {
         var type = type || 0;
         switch(type){
             case 0: 
-            html +='<div class="bui-box-align-top chat-mine">';
-            html +='    <div class="span1">';
-            html +='    </div>';
-            html +='    <div class="chat-content bui-arrow-right">'+con+'</div>';
-            html +='    <div class="chat-icon"><img src="../images/applogo.png" alt=""></div>';
-            html +='</div>';
+            html+='<div class="bui-box-align-top chat-mine">';
+            html+='    <div class="span1">';
+            html+='        <div class="bui-box-align-right">';
+            html+='            <div class="chat-content bui-arrow-right">';
+            html+=              con;
+            html+='            </div>';
+            html+='        </div>';
+            html+='    </div>';
+            html+='    <div class="chat-icon"><img src="../images/applogo.png" alt=""></div>';
+            html+='</div>';
             break;
             case 1: 
             html +='<div class="bui-box-align-top chat-target">';
             html +='    <div class="chat-icon"><img src="../images/applogo.png" alt=""></div>';
-            html +='    <div class="chat-content bui-arrow-left">'+con+'</div>';
             html +='    <div class="span1">';
+            html +='        <div class="chat-content bui-arrow-left">';
+            html +=             con;
+            html +='        </div>';
             html +='    </div>';
             html +='</div>';
             break;
