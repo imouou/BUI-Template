@@ -85,8 +85,7 @@ var config = {
         watcher : {
             rootRule: sourcePath+'/**',
             scssRule: [sourcePath+'/**/*.scss','!'+sourcePath+'/scss/**/_*.scss'],
-            jsonRule: [sourcePath+'/**/*.json'],
-            jsRule: [sourcePath+'/**/*.js','!'+sourcePath+'/js/bui.js','!'+sourcePath+'/js/plugins/**/*.js','!'+sourcePath+'/js/platform/*.js','!'+sourcePath+'/**/*.min.js'],
+            jsRule: [sourcePath+'/**/*.js','!'+sourcePath+'/js/bui.js','!'+sourcePath+'/js/platform/*.js'],
             htmlRule: [sourcePath+'/**/*.html'],
         }
 }
@@ -155,7 +154,6 @@ gulp.task('scss', function() {
         .pipe(autoprefixer(app.autoprefixer))
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest(sourceBuild+"/css"))
-        .pipe(md5(10, sourceBuild+"/**/*.html"))
         .pipe(reload({stream: true}));
 });
 
@@ -164,9 +162,9 @@ gulp.task('css', function() {
 // 编译style.scss文件
   return gulp.src(sourcePath+"/css/**/*.css")
     .pipe(changed(sourceBuild+'/css/'))
-    .pipe(sourcemaps.init())
+    // .pipe(sourcemaps.init())
     .pipe(minifycss(app.cleanCss))
-    .pipe(sourcemaps.write())
+    // .pipe(sourcemaps.write())
     .pipe(gulp.dest(config.output.css))
     .pipe(md5(10, sourceBuild+"/**/*.html"))
     .pipe(reload({stream: true}));
@@ -178,6 +176,8 @@ gulp.task('css-minify', function() {
     .pipe(changed(sourceBuild+'/css/'))
     .pipe(minifycss(app.cleanCss))
     .pipe(gulp.dest(config.output.css))
+    .pipe(md5(10, sourceBuild+"/**/*.html"))
+    .pipe(reload({stream: true}));
 })
 
 // 处理完JS文件后返回流
@@ -199,22 +199,8 @@ gulp.task('js-babel', function () {
         // compress: true,//类型：Boolean 默认：true 是否完全压缩
         // .pipe(uglify(app.uglify))
         .pipe(gulp.dest(config.output.root))
-        .pipe(md5(10, sourceBuild+'/**/*.html'))
-        .pipe(reload({stream: true}));
-});
-// 处理完JS文件后返回流
-gulp.task('json-min', function () {
-    
-    return gulp.src(config.watcher.jsonRule)
-        .pipe(changed(config.output.root))
-        .pipe(plumber({
-            errorHandler : function (error) {
-                console.log(error)
-                this.emit('end');
-            }
-        }))
-        .pipe(gulp.dest(config.output.root))
         .pipe(reload({stream: true}))
+        .pipe(md5(10, sourceBuild+'/**/*.html'));
 });
 // 脚本 编译
 gulp.task('js-minify',function () {
@@ -250,7 +236,7 @@ gulp.task('move-bui', function () {
 });
 // move all file except pages/js/** .sass .md 
 gulp.task('move',function () {
-    return gulp.src([config.source.root+'/**','!**/*.{html,scss,less,md,png,jpg,gif,ico}','!'+config.source.root+'/scss',sourcePath+'/**/*.min.js',sourcePath+'/**/*.min.css'])
+    return gulp.src([config.source.root+'/**','!**/*.{html,css,js,scss,less,md,png,jpg,gif,ico}','!'+config.source.root+'/scss'])
         .pipe(changed(config.watcher.rootRule))
         .pipe(gulp.dest(config.output.root));
 });
@@ -271,7 +257,6 @@ gulp.task('html', function () {
 gulp.task('images',function () {
     return gulp.src(config.source.images)
         .pipe(changed(config.output.images))
-        .pipe(imagemin(app.imagemin))
         .pipe(gulp.dest(config.output.images));
 });
 
@@ -279,6 +264,7 @@ gulp.task('images',function () {
 // 同步服务
 gulp.task('server-sync', ['server-build'], function() {
     var portObj = getServerPort();
+
 
     let proxys = [];
     if( "proxy" in app){
@@ -304,7 +290,6 @@ gulp.task('server-sync', ['server-build'], function() {
         ghostMode: false,
         notify: false,
         codeSync: isDistLivereload,
-        // browser: "google chrome",
         // 同步开启多个窗口同步
         // ghostMode: {
         //         clicks: false,
@@ -325,17 +310,10 @@ gulp.task('server-sync', ['server-build'], function() {
         // ] 
     });
 
-    // 监听文件修改
-    gulp.watch(sourcePath+"/scss/**/*.scss", ['scss']);
-    gulp.watch(sourcePath+"/css/**/*.css", ['css']);
-    gulp.watch([sourcePath+"/**/*.js"],['js-babel']);
-    gulp.watch([sourcePath+"/**/*.html"],['html']);
-    gulp.watch([sourcePath+"/**/*.json"],['json-min']);
-
     // 新增删除由插件负责
     watch(config.watcher.rootRule)
         .on('add', addFile)
-        // .on('change', changeFile)
+        .on('change', changeFile)
         .on('unlink', function(file){
             //删除文件
             let distFile = './'+sourceBuild+'/' + path.relative('./'+sourcePath, file); //计算相对路径
@@ -343,6 +321,12 @@ gulp.task('server-sync', ['server-build'], function() {
             console.warn(file,"deleted")
         });
     
+    // 监听文件修改
+    gulp.watch(sourcePath+"/scss/**/*.scss", ['scss']);
+    gulp.watch(sourcePath+"/css/**/*.css", ['css']);
+    gulp.watch([sourcePath+"/**/*.js"],['js-babel']);
+    gulp.watch([sourcePath+"/**/*.html"],['html']);
+
 });
 
 // 起一个src目录的server
@@ -381,16 +365,15 @@ function addFile(file){
     console.log(file,"added");
     gulp.src(file, {base : './'+sourcePath}) //指定这个文件
         .pipe(gulp.dest('./'+sourceBuild))
-        .pipe(reload({stream: true}))
 
 }
 // 监测新增
 
 function changeFile(file){
     console.info(file,"changed");
+
     gulp.src(file, {base : './'+sourcePath}) //指定这个文件
         .pipe(gulp.dest('./'+sourceBuild))
-        .pipe(reload({stream: true}))
 
 }
 
