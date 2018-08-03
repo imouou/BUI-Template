@@ -85,7 +85,7 @@ var config = {
         watcher : {
             rootRule: sourcePath+'/**',
             scssRule: [sourcePath+'/**/*.scss','!'+sourcePath+'/scss/**/_*.scss'],
-            jsRule: [sourcePath+'/**/*.js','!'+sourcePath+'/js/bui.js','!'+sourcePath+'/js/platform/*.js'],
+            jsRule: [sourcePath+'/**/*.js','!'+sourcePath+'/js/bui.js','!'+sourcePath+'/js/zepto.js','!'+sourcePath+'/js/platform/**/*.js','!'+sourcePath+'/js/plugins/**/*.js','!'+sourcePath+'/**/*.min.js'],
             htmlRule: [sourcePath+'/**/*.html'],
         }
 }
@@ -162,9 +162,6 @@ gulp.task('css', function() {
 // 编译style.scss文件
   return gulp.src(sourcePath+"/css/**/*.css")
     .pipe(changed(sourceBuild+'/css/'))
-    // .pipe(sourcemaps.init())
-    .pipe(minifycss(app.cleanCss))
-    // .pipe(sourcemaps.write())
     .pipe(gulp.dest(config.output.css))
     .pipe(md5(10, sourceBuild+"/**/*.html"))
     .pipe(reload({stream: true}));
@@ -176,8 +173,8 @@ gulp.task('css-minify', function() {
     .pipe(changed(sourceBuild+'/css/'))
     .pipe(minifycss(app.cleanCss))
     .pipe(gulp.dest(config.output.css))
-    .pipe(md5(10, sourceBuild+"/**/*.html"))
-    .pipe(reload({stream: true}));
+    // .pipe(md5(10, sourceBuild+"/**/*.html"))
+    // .pipe(reload({stream: true}));
 })
 
 // 处理完JS文件后返回流
@@ -236,7 +233,7 @@ gulp.task('move-bui', function () {
 });
 // move all file except pages/js/** .sass .md 
 gulp.task('move',function () {
-    return gulp.src([config.source.root+'/**','!**/*.{html,css,js,scss,less,md,png,jpg,gif,ico}','!'+config.source.root+'/scss'])
+    return gulp.src([config.source.root+'/**','!**/*.{html,css,scss,less,md,png,jpg,gif,ico}','!'+config.source.root+'/scss'])
         .pipe(changed(config.watcher.rootRule))
         .pipe(gulp.dest(config.output.root));
 });
@@ -257,6 +254,7 @@ gulp.task('html', function () {
 gulp.task('images',function () {
     return gulp.src(config.source.images)
         .pipe(changed(config.output.images))
+        .pipe(imagemin(app.imagemin))
         .pipe(gulp.dest(config.output.images));
 });
 
