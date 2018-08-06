@@ -3,7 +3,7 @@
 window.router = bui.router();
 
 // DOM准备完毕
-bui.on("pageinit",function(){
+bui.ready(function(){
 
     // 初始化路由, appcan不支持历史记录,所以这里syncHistory需要设置为false.
     router.init({

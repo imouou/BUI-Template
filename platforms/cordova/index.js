@@ -2,7 +2,7 @@
 // 开启单页路由
 window.router = bui.router();
 
-bui.on("pageinit",function(){
+bui.ready(function(){
     // 初始化路由
     router.init({
         id: "#bui-router"
