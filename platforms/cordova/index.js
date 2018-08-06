@@ -30,7 +30,7 @@ bui.ready(function(){
 
   bui.isWebapp = false;
 
-  bui.ready(function () {
+  bui.on("pageready",function () {
      
     // 绑定手机后退按键
     bindBack();

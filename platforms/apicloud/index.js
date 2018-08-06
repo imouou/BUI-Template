@@ -30,7 +30,7 @@ bui.ready(function(){
 /* 
   bui.isWebapp = false;
   // 在原生设备准备事件准备完成以后执行api监听方法
-  bui.ready(function () {
+  bui.on("pageready",function () {
     
     // 绑定手机后退按键
     bindBack();
