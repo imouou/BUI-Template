@@ -202,7 +202,7 @@ gulp.task('js-babel', function () {
 // 脚本 编译
 gulp.task('js-minify',function () {
     return gulp.src(config.watcher.jsRule)
-        .pipe(changed(config.output.root))
+        // .pipe(changed(config.output.root))
         // error end task
         .pipe(plumber({
             errorHandler : function (error) {
