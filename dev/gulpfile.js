@@ -108,7 +108,7 @@ function getNetwork() {
 
 // 获取随机端口
 function getRandomPort() {
-    let random = Math.random()*10000;
+    let random = Math.random()*10000+1000;
     let randomPort = parseInt(random);
 
     return randomPort;

@@ -45,27 +45,32 @@ loader.define(function(require,exports,module) {
             }
         },100))
 
+        var interval = null;
+        var count = 10;
         // 为input绑定事件
-        $('.bui-input').on('click', function () {
-
+        $chatInput.on('focus', function () {
+            var target = this;
+            // 键盘大小: iphonex: 333 iphone8p:271 iphone8:258 iphonese: 253 iphone6p: 292
             // 使用定时器是为了延迟计算
-            setTimeout(function(){
+            interval = setTimeout(function(){
+                var winHeight = $(window).height();
                 bui.init({
-                    id: router.$(".bui-page")
+                    id: router.$(".bui-page"),
+                    height: winHeight ,
                 })
-
-              router.$(".bui-page")[0].scrollIntoView();
+                router.$(".bui-page")[0].scrollIntoView(true);
 
             },300);
-        });
-        $('#chatInput').on('blur', function () {
+        }).on('blur', function () {
+            if( interval ){
+                clearTimeout(interval);
+            }
             // 使用定时器是为了延迟计算
-            setTimeout(function(){
+            interval = setTimeout(function(){
                 bui.init({
-                    id: router.$(".bui-page")
+                    id: router.$(".bui-page"),
                 })
-
-              router.$(".bui-page")[0].scrollIntoView();
+                router.$(".bui-page")[0].scrollIntoView(true);
 
             },300);
         });

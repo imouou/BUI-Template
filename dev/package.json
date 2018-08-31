@@ -32,7 +32,7 @@
   "scripts": {
     "dev": "gulp dev",
     "server": "gulp server",
-    "start": "gulp dev",
+    "start": "gulp server",
     "build": "gulp build"
   },
   "author": "imouou@hotmail.com",
