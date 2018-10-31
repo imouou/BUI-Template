@@ -16,18 +16,15 @@ loader.define(function(require,exports,module) {
     function navTab() {
         
         //menu在tab外层,menu需要传id
-        var tab = bui.slide({
+        var tab = bui.tab({
             id:"#tabDynamic",
             menu:"#tabDynamicNav",
-            children:".bui-tab-main ul",
-            scroll: true,
             animate: false,
             // 1: 声明是动态加载的tab
             autoload: true,
         })
         // 2: 监听加载后的事件
-        tab.on("to",function (res) {
-            var index = $(this).index();
+        tab.on("to",function (index) {
             switch(index){
                 case 0:
                 loader.require(["pages/main/home"],function (mod) {
