@@ -13,11 +13,11 @@ loader.define(function(require,exports,module) {
     }
     pageview.bind = function () {
             // 发送的内容
-        var $chatInput = $("#chatInput"),
+        var $chatInput = router.$("#chatInput"),
             // 发送按钮
-            $btnSend = $("#btnSend"),
+            $btnSend = router.$("#btnSend"),
             // 聊天的容器
-            $chatPanel = $(".chat-panel");
+            $chatPanel = router.$(".chat-panel");
 
         // 绑定发送按钮
         $btnSend.on("click",function (e) {
@@ -28,6 +28,11 @@ loader.define(function(require,exports,module) {
                 $chatPanel.append(tpl);
                 $chatInput.val('');
                 $(this).removeClass("primary").addClass("disabled");
+
+                // 跳到底部
+                var scrollObj = router.$("main")[0],
+                scrollHeight = scrollObj.scrollHeight ;
+                scrollObj.scrollTop = scrollHeight;
             }else{
                 return false;
             }
@@ -46,33 +51,43 @@ loader.define(function(require,exports,module) {
         },100))
 
         var interval = null;
-        var count = 10;
+        var count = 3;
+        // 安卓键盘弹出的时间较长;
+        var time = bui.platform.isIos() ? 200 : 400;
         // 为input绑定事件
         $chatInput.on('focus', function () {
-            var target = this;
-            // 键盘大小: iphonex: 333 iphone8p:271 iphone8:258 iphonese: 253 iphone6p: 292
-            // 使用定时器是为了延迟计算
-            interval = setTimeout(function(){
-                var winHeight = $(window).height();
-                bui.init({
-                    id: router.$(".bui-page"),
-                    height: winHeight ,
-                })
-                router.$(".bui-page")[0].scrollIntoView(true);
+            
+            var agent = navigator.userAgent.toLowerCase();
+            interval = setTimeout(function() {
+                if (agent.indexOf('safari') != -1 && agent.indexOf('mqqbrowser') == -1 &&
+                    agent.indexOf('coast') == -1 && agent.indexOf('android') == -1 &&
+                    agent.indexOf('linux') == -1 && agent.indexOf('firefox') == -1) { 
+                    //safari浏览器
+                    window.scrollTo(0, 1000000);
+                    setTimeout(function() {
+                        window.scrollTo(0, window.scrollY - 45);
+                    }, 50)
 
-            },300);
+                } else { 
+                    //其他浏览器
+                    window.scrollTo(0, 1000000);
+                }
+
+            }, time);
         }).on('blur', function () {
             if( interval ){
                 clearTimeout(interval);
             }
-            // 使用定时器是为了延迟计算
-            interval = setTimeout(function(){
-                bui.init({
-                    id: router.$(".bui-page"),
-                })
-                router.$(".bui-page")[0].scrollIntoView(true);
-
-            },300);
+            
+            var agent = navigator.userAgent.toLowerCase();
+            interval = setTimeout(function() {
+                if (!(agent.indexOf('safari') != -1 && agent.indexOf('mqqbrowser') == -1 &&
+                        agent.indexOf('coast') == -1 && agent.indexOf('android') == -1 &&
+                        agent.indexOf('linux') == -1 && agent.indexOf('firefox') == -1)) { 
+                        //safari浏览器
+                    window.scrollTo(0, 30);
+                }
+            }, 0);
         });
     }
 
