@@ -13,7 +13,7 @@ function fixStatusBar() {
   var platform = bui.platform;
   if( platform.isIos() && platform.isIphoneX() ){
     $("body").addClass("iphoneX");
-  }else if( platform.isIos() && !platform.isIphoneX() ){
+  }else if( platform.isIos() && platform.isIphone() ){
     $("body").addClass("iphone");
   }
 }
