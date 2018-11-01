@@ -6,18 +6,18 @@
 loader.define(function(require,exports,module) {
     
     var pageview = {};
-    
+            
     // 模块初始化定义    
     pageview.init = function () {
         this.bind();
     }
     pageview.bind = function () {
             // 发送的内容
-        var $chatInput = router.$("#chatInput"),
+        var $chatInput = $("#chatInput"),
             // 发送按钮
-            $btnSend = router.$("#btnSend"),
+            $btnSend = $("#btnSend"),
             // 聊天的容器
-            $chatPanel = router.$(".chat-panel");
+            $chatPanel = $(".chat-panel");
 
         // 绑定发送按钮
         $btnSend.on("click",function (e) {
@@ -28,11 +28,6 @@ loader.define(function(require,exports,module) {
                 $chatPanel.append(tpl);
                 $chatInput.val('');
                 $(this).removeClass("primary").addClass("disabled");
-
-                // 跳到底部
-                var scrollObj = router.$("main")[0],
-                scrollHeight = scrollObj.scrollHeight ;
-                scrollObj.scrollTop = scrollHeight;
             }else{
                 return false;
             }
@@ -97,26 +92,28 @@ loader.define(function(require,exports,module) {
         var type = type || 0;
         switch(type){
             case 0: 
-            html+='<div class="bui-box-align-top chat-mine">';
-            html+='    <div class="span1">';
-            html+='        <div class="bui-box-align-right">';
-            html+='            <div class="chat-content bui-arrow-right">';
-            html+=              con;
-            html+='            </div>';
-            html+='        </div>';
-            html+='    </div>';
-            html+='    <div class="chat-icon"><img src="../images/applogo.png" alt=""></div>';
-            html+='</div>';
+            html+=`<div class="bui-box-align-top chat-mine">
+                        <div class="span1">
+                            <div class="bui-box-align-right">
+                                <div class="chat-content bui-arrow-right">
+                                 ${con}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-icon"><img src="images/applogo.png" alt=""></div>
+                    </div>`
             break;
             case 1: 
-            html +='<div class="bui-box-align-top chat-target">';
-            html +='    <div class="chat-icon"><img src="../images/applogo.png" alt=""></div>';
-            html +='    <div class="span1">';
-            html +='        <div class="chat-content bui-arrow-left">';
-            html +=             con;
-            html +='        </div>';
-            html +='    </div>';
-            html +='</div>';
+            html+=`<div class="bui-box-align-top chat-mine">
+                        <div class="span1">
+                            <div class="bui-box-align-right">
+                                <div class="chat-content bui-arrow-right">
+                                 ${con}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-icon"><img src="images/applogo.png" alt=""></div>
+                    </div>`
             break;
         }
 
