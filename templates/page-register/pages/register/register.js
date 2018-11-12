@@ -9,6 +9,8 @@ loader.define(function(require,exports,module) {
     
     pageview.bind = function () {
         
+        /*初始化页面的链接跳转*/
+        bui.btn({ id:"#page" , handle:".bui-btn,.bui-btn-text"}).load();
 
         // 监听密码输入事件
         onInput({
@@ -20,21 +22,11 @@ loader.define(function(require,exports,module) {
             }
         });
 
-        // 监听密码输入事件
-        onInput({
-            id: ".phone-input",
-            callback: function () {
-                // 点击删除按钮清空
-                $("#phone").val('');
-                $(this).hide();
-            }
-        });
-
         // 点击触发倒计时
         $(".btn-send").on("click",function () {
             var isDisable = $(this).hasClass("disabled");
-            var phone = $("#phone").val();
-            if( !isDisable && checkPhone(phone) ){
+
+            if( !isDisable ){
                 $(this).addClass("disabled");
 
                 if( timeout ){
@@ -123,7 +115,7 @@ loader.define(function(require,exports,module) {
             return;
         }
         var $id = $(opt.id),
-            $target = $id.find(opt.target);
+            $target = $id.find(opt.target),
             iconClass = '.'+opt.icon;
 
         // 输入框监听延迟执行
@@ -141,7 +133,7 @@ loader.define(function(require,exports,module) {
                 $btnRemove && $btnRemove.css("display","none");
             }
 
-            opt.onInput && opt.onInput.call(this,val);
+            opt.onInput && opt.onInput.call(this);
         },100))
 
         // 图标点击事件

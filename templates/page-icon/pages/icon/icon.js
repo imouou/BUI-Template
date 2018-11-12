@@ -16,7 +16,8 @@ loader.define(function(require,exports,module) {
         // 菜单初始化
         var uiSlideNav = bui.slide({
             id:"#slideIcon",
-            height:310,
+            height:400,
+            autopage: true,
             zoom: true
         });
     }
