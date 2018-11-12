@@ -22,6 +22,7 @@
   },
   "autoprefixer": {
       "browsers": ["last 2 versions"],
+      "remove": false,
       "cascade": false
   },
   "babel": {
