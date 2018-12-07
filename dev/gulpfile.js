@@ -39,13 +39,15 @@ var gulp = require('gulp'),
 // 用于获取本机信息
 // os=require('os');
 
+var package = require('./package.json');
 // 同步刷新
 var browserSync = require('browser-sync').create();
 var reload = browserSync.reload;
 
-// 获取默认配置
-var configName = "app.json",
-    app = require("./" + configName),
+// 获取package的项目配置
+var configName = package['projects'] && package['projects'][process.env.NODE_ENV] || 'app.json';
+
+var app = require("./" + configName),
     // 编译服务配置
     distServer = app.distServer || {},
     // 开发服务配置
@@ -55,9 +57,9 @@ var configName = "app.json",
     // 实时刷新,仅在编译模式
     isDistLivereload = distServer.livereload == false ? false : true,
     // 源文件目录
-    sourcePath = devServer.root || '',
+    sourcePath = process.env.NODE_ENV ? process.env.NODE_ENV + '/src' : 'src',
     // 源文件目录
-    sourceBuild = distServer.root || '';
+    sourceBuild = process.env.NODE_ENV ? process.env.NODE_ENV + '/dist' : 'dist';
 
 // 配置编译的服务
 var config = {
@@ -142,7 +144,7 @@ gulp.task('clean-dist', cb => {
     return del([sourceBuild + '/**/*'], cb);
 });
 
-// sass 实时编译, 并生成sourcemap 便于调试
+// sass 初始化的时候编译, 并生成sourcemap 便于调试
 gulp.task('scss', function() {
 
     return gulp.src(sourcePath + "/scss/*.scss")
@@ -152,6 +154,8 @@ gulp.task('scss', function() {
         .pipe(sass(app.sass).on('error', sass.logError))
         .pipe(autoprefixer(app.autoprefixer))
         .pipe(sourcemaps.write('./'))
+        .pipe(gulp.dest(sourceBuild + "/css"))
+        .pipe(gulp.dest(sourcePath + "/css"))
 });
 // sass 编译成压缩版本
 gulp.task('scss-build', function() {
@@ -275,7 +279,7 @@ gulp.task('server-sync', ['server-build'], function() {
             port: portObj.distPort + 1
         },
         server: {
-            baseDir: app.distServer.root,
+            baseDir: sourceBuild,
             middleware: proxys
         },
         port: portObj.distPort,
@@ -319,7 +323,7 @@ gulp.task('server', function() {
             port: portObj.devPort + 1
         },
         server: {
-            baseDir: app.devServer.root,
+            baseDir: sourcePath,
             middleware: proxys
         },
         port: portObj.devPort,
@@ -370,6 +374,7 @@ function changeFile(file) {
             .pipe(autoprefixer(app.autoprefixer))
             .pipe(sourcemaps.write('./'))
             .pipe(gulp.dest(sourceBuild + "/css"))
+            .pipe(gulp.dest(sourcePath + "/css"))
             .pipe(reload({ stream: true }));
 
     } else if (isHtml) {
