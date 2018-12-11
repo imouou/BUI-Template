@@ -67,11 +67,11 @@ var config = {
         // 源文件目录
         root: sourcePath,
         // 源文件样式目录
-        css: [sourcePath + '/css', , '!' + sourcePath + '/api/**'],
+        css: [sourcePath + "/css/**/*.css"],
         // style.css 源文件目录
-        scss: sourcePath + '/scss/**/*.scss',
+        scss: [sourcePath + '/scss/**/*.scss'],
         // 源文件图片目录
-        images: [sourcePath + '/**/*.{png,jpg,gif,ico}', '!' + sourcePath + '/api/**'],
+        images: [sourcePath + '/**/*.{png,jpg,gif,ico}'],
     },
     // 编译的输出路径
     build: sourceBuild,
@@ -85,10 +85,20 @@ var config = {
     },
     watcher: {
         rootRule: sourcePath + '/**',
-        scssRule: [sourcePath + '/**/*.scss', '!' + sourcePath + '/scss/**/_*.scss'],
-        jsRule: [sourcePath + '/**/*.js', '!' + sourcePath + '/js/bui.js', '!' + sourcePath + '/js/zepto.js', '!' + sourcePath + '/js/platform/**/*.js', '!' + sourcePath + '/js/plugins/**/*.js', '!' + sourcePath + '/**/*.min.js', '!' + sourcePath + '/api/**'],
-        htmlRule: [sourcePath + '/**/*.html', , '!' + sourcePath + '/api/**'],
+        moveRule: [sourcePath + '/**', '!**/*.{html,css,scss,less,md,png,jpg,gif,ico}', '!' + sourcePath + '/scss'],
+        jsRule: [sourcePath + '/**/*.js', '!' + sourcePath + '/js/bui.js', '!' + sourcePath + '/js/zepto.js', '!' + sourcePath + '/js/platform/**/*.js', '!' + sourcePath + '/js/plugins/**/*.js', '!' + sourcePath + '/**/*.min.js'],
+        htmlRule: [sourcePath + '/**/*.html'],
     }
+}
+
+// 增加用户配置的忽略文件
+if ("ignored" in app) {
+    config.source.scss = config.source.scss.concat(app.ignored);
+    config.source.css = config.source.css.concat(app.ignored);
+    config.source.images = config.source.images.concat(app.ignored);
+    config.watcher.moveRule = config.watcher.moveRule.concat(app.ignored);
+    config.watcher.jsRule = config.watcher.jsRule.concat(app.ignored);
+    config.watcher.htmlRule = config.watcher.htmlRule.concat(app.ignored);
 }
 
 // 获取本机IP
@@ -147,7 +157,7 @@ gulp.task('clean-dist', cb => {
 // sass 初始化的时候编译, 并生成sourcemap 便于调试
 gulp.task('scss', function() {
 
-    return gulp.src(sourcePath + "/scss/*.scss")
+    return gulp.src(config.source.scss)
         .pipe(changed(sourceBuild + '/css/'))
         // 生成css对应的sourcemap 
         .pipe(sourcemaps.init())
@@ -159,7 +169,7 @@ gulp.task('scss', function() {
 });
 // sass 编译成压缩版本
 gulp.task('scss-build', function() {
-    return gulp.src(sourcePath + "/scss/*.scss")
+    return gulp.src(config.source.scss)
         .pipe(sass(app.sass).on('error', sass.logError))
         .pipe(autoprefixer(app.autoprefixer))
         .pipe(gulp.dest(sourceBuild + "/css"))
@@ -170,7 +180,7 @@ gulp.task('scss-build', function() {
 // css 编译
 gulp.task('css', function() {
     // 编译style.scss文件
-    return gulp.src(sourcePath + "/css/**/*.css")
+    return gulp.src(config.source.css)
         .pipe(changed(sourceBuild + '/css/'))
         .pipe(gulp.dest(config.output.css))
         // .pipe(md5(10, sourceBuild+"/**/*.html"))
@@ -180,7 +190,7 @@ gulp.task('css', function() {
 // 改变的时候才执行压缩
 gulp.task('css-minify', function() {
     // 编译style.scss文件
-    return gulp.src(sourcePath + "/css/**/*.css")
+    return gulp.src(config.source.css)
         // .pipe(changed(sourceBuild + '/css/'))
         .pipe(minifycss(app.cleanCss))
         .pipe(gulp.dest(config.output.css))
@@ -231,7 +241,7 @@ gulp.task('move-bui', function() {
 });
 // move all file except pages/js/** .sass .md 
 gulp.task('move', function() {
-    return gulp.src([config.source.root + '/**', '!**/*.{html,css,scss,less,md,png,jpg,gif,ico}', '!' + config.source.root + '/scss', '!' + config.source.root + '/api/**'])
+    return gulp.src(config.watcher.moveRule)
         .pipe(changed(config.watcher.rootRule))
         .pipe(gulp.dest(config.output.root));
 });
@@ -250,10 +260,17 @@ gulp.task('html', function() {
 
 // compress image
 gulp.task('images', function() {
-    return gulp.src(config.source.images)
-        .pipe(changed(config.output.images))
-        .pipe(imagemin(app.imagemin))
-        .pipe(gulp.dest(config.output.images));
+    // 有大图会很慢,默认不开启
+    if (app.imagemin) {
+        return gulp.src(config.source.images)
+            .pipe(changed(config.output.images))
+            .pipe(imagemin(app.imagemin))
+            .pipe(gulp.dest(config.output.images));
+    } else {
+        return gulp.src(config.source.images)
+            .pipe(changed(config.output.images))
+            .pipe(gulp.dest(config.output.images));
+    }
 });
 
 
@@ -366,7 +383,7 @@ function changeFile(file) {
             .pipe(md5(10, sourceBuild + '/**/*.html'))
     } else if (isScss) {
 
-        gulp.src(sourcePath + "/scss/*.scss")
+        gulp.src(config.source.scss)
             .pipe(changed(sourceBuild + '/css/'))
             // 生成css对应的sourcemap 
             .pipe(sourcemaps.init())

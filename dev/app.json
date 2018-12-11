@@ -5,6 +5,10 @@
     "devServer": {
         "livereload": false
     },
+    "ignored": [
+        "!src/README.md",
+        "!src/preview.png"
+    ],
     "proxy": {
         "/demo": {
             "target": "http://www.easybui.com",
@@ -48,11 +52,6 @@
         "minifyJS": true,
         "minifyCSS": true
     },
-    "imagemin": {
-        "optimizationLevel": 5,
-        "progressive": true,
-        "interlaced": true,
-        "multipass": true
-    },
+    "imagemin": null,
     "license": "ISC"
 }
