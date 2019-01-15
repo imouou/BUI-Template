@@ -1,33 +1,7 @@
-
-// 开启单页路由
-window.router = bui.router();
-
-bui.ready(function(){
-    // 初始化路由
-    router.init({
-        id: "#bui-router"
-    })
-    
-    // 绑定事件
-    bind();
-
-    function bind() {
-        // 绑定页面的所有按钮有href跳转
-        bui.btn({id:"#bui-router",handle:".bui-btn,a"}).load();
-
-        // 统一绑定页面所有的后退按钮
-        $("#bui-router").on("click",".btn-back",function (e) {
-            // 支持后退多层,支持回调
-            bui.back();
-        })
-    }
-})
-
 /*-----------------------------------
  打包需要设置isWebapp为false 才能绑定后退按键
 ------------------------------------------- */
 /*
-
   bui.isWebapp = false;
   // 原生方法
   bui.on("pageready",function(){
@@ -75,4 +49,28 @@ bui.ready(function(){
   }
   
 */
-    
+
+// 开启单页路由
+window.router = bui.router();
+
+bui.ready(function() {
+    // 初始化路由
+    router.init({
+        id: "#bui-router",
+        progress: true
+    })
+
+    // 绑定事件
+    bind();
+
+    function bind() {
+        // 绑定页面的所有按钮有href跳转
+        bui.btn({ id: "#bui-router", handle: ".bui-btn,a" }).load();
+
+        // 统一绑定页面所有的后退按钮
+        $("#bui-router").on("click", ".btn-back", function(e) {
+            // 支持后退多层,支持回调
+            bui.back();
+        })
+    }
+})

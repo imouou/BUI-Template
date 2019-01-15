@@ -1,35 +1,14 @@
-
-// 开启单页路由
-window.router = bui.router();
-
-bui.ready(function(){
-    // 初始化路由
-    router.init({
-        id: "#bui-router"
-    })
-    
-    // 绑定事件
-    bind();
-
-    function bind() {
-        // 绑定页面的所有按钮有href跳转
-        bui.btn({id:"#bui-router",handle:".bui-btn,a"}).load();
-
-        // 统一绑定页面所有的后退按钮
-        $("#bui-router").on("click",".btn-back",function (e) {
-            // 支持后退多层,支持回调
-            bui.back();
-        })
-    }
-})
-
 /*-----------------------------------------
  打包需要设置isWebapp为false 才能绑定后退按键
  并且 bui.ajax 使用原生的请求方式才不会有跨域问题
 -------------------------------------------*/
 /* 
   bui.isWebapp = false;
-  // 在原生设备准备事件准备完成以后执行api监听方法
+
+  // 打包以后,apicloud的ajax有跨域问题,需要配置needNative 使用原生请求
+  bui.config.ajax = { needNative: true };
+
+  // 监听物理按键的后退
   bui.on("pageready",function () {
     
     // 绑定手机后退按键
@@ -77,3 +56,28 @@ bui.ready(function(){
     }catch(e){}
   }
 */
+
+// 开启单页路由
+window.router = bui.router();
+
+bui.ready(function() {
+    // 初始化路由
+    router.init({
+        id: "#bui-router",
+        progress: true
+    })
+
+    // 绑定事件
+    bind();
+
+    function bind() {
+        // 绑定页面的所有按钮有href跳转
+        bui.btn({ id: "#bui-router", handle: ".bui-btn,a" }).load();
+
+        // 统一绑定页面所有的后退按钮
+        $("#bui-router").on("click", ".btn-back", function(e) {
+            // 支持后退多层,支持回调
+            bui.back();
+        })
+    }
+})
