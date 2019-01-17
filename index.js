@@ -3,7 +3,9 @@ window.router = bui.router();
 bui.ready(function() {
     // 初始化路由
     router.init({
-        id: "#bui-router"
+        id: "#bui-router",
+        progress: true,
+        hash: true,
     })
 
     // 绑定事件
