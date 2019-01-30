@@ -1,0 +1,322 @@
+<style>
+	.page-comment>main {
+		background:#fff
+	}
+	.page-comment .user-wrap {
+		position: relative;
+		min-height: 3rem;
+	}
+	.page-comment .userinfo {
+		position: absolute;
+		bottom: -.4rem;
+		right: .2rem;
+	}
+	.page-comment .userface {
+		width: 1.2rem;
+		height: 1.2rem;
+		overflow: hidden;
+		border-radius: .1rem;
+	}
+	.page-comment .nickname {
+		color: #fff;
+		padding: .1rem .2rem;
+		font-size: .36rem;
+	}
+	.page-comment .comment-box {
+		padding-top: .5rem;
+	}
+	.page-comment .item-title {
+		margin-bottom:0;
+		color:#333
+	}
+	.page-comment .bui-list .span1>.bui-box {
+		margin-bottom:.2rem
+	}
+	.page-comment footer {
+		background:#fff;
+		height:1.3rem
+	}
+	.page-comment footer .bui-input input {
+		background:#F3F5F8;
+		border-radius:.1rem;
+		padding-left:.2rem;
+		height:.8rem
+	}
+	.page-comment footer .bui-btn {
+		color:#39a4ff;
+		border:0
+	}
+	.page-comment footer .bui-btn:active {
+		background:none
+	}
+	.comment-line {
+		padding:.2rem
+	}
+	.comment-line .thumbnail {
+		width:.7rem;
+		height:.7rem;
+		border-radius: .1rem;
+		overflow: hidden;
+		margin-right:.2rem
+	}
+	.comment-line .item-title {
+		margin-bottom:.2rem;
+		color:#6685B0;
+		font-size:.28rem
+	}
+	.comment-line .bui-rating .bui-rating-cell {
+		margin-left:0;
+		margin-right:0
+	}
+	.comment-line .bui-rating .bui-rating-cell:before {
+		font-size:.4rem
+	}
+	.comment-line .time {
+		display:inline-block;
+		height:.7rem;
+		line-height:.7rem
+	}
+	.comment-content {
+		-webkit-line-clamp:3;
+		color:#333
+	}
+	.comment-content.active,.comment-content.autoheight {
+		-webkit-line-clamp:inherit
+	}
+	.question .comment-content {
+		margin-bottom:0
+	}
+	.bui-btn-toggle {
+		text-align:left;
+		display:inline-block;
+		border:0;
+		padding-left:0;
+		max-height:1rem;
+		color:#39a4ff
+	}
+	.bui-btn-toggle:active {
+		background:none;
+		color:#39a4ff
+	}
+	.comment-reply {
+		margin-left:.9rem;
+		background:#f4f6f9;
+		padding:.15rem;
+		font-size:.22rem;
+		color:#333
+	}
+	.comment-reply li {
+		margin-bottom:.1rem
+	}
+	.comment-reply em {
+		font-style:normal;
+		color:#61749B
+	}
+
+  .dropdown-comment  >.bui-btn {
+    padding: 0;
+    padding-left: .2rem;
+    padding-right: .2rem;
+    border: 0;
+	}
+  .dropdown-comment  >.bui-btn:active,
+  .dropdown-comment  >.bui-btn.active {
+      background: none;
+  }
+  .dropdown-comment >.bui-list {
+    width: 2.1rem;
+    text-align: right;
+    top: -.1rem;
+	}
+  .dropdown-comment >.bui-list .bui-btn {
+      display: inline-block;
+      background: #4c5154;
+      color: #fff;
+      margin: 0;
+      font-size: .22rem;
+      border: 0;
+		}
+  .dropdown-comment >.bui-list .bui-btn:first-child {
+      border-radius: .1rem 0 0 .1rem;
+  }
+  .dropdown-comment >.bui-list .bui-btn:last-child {
+      border-radius: 0 .1rem .1rem 0;
+  }
+  .dropdown-comment >.bui-list .bui-btn:only-child {
+      border-radius: .1rem;
+  }
+  .dropdown-comment >.bui-list .bui-btn:active,
+  .dropdown-comment >.bui-list .bui-btn.active {
+      background: #4c5154;
+      color: #fff;
+    }
+  .dropdown-comment >.bui-list .bui-btn  img {
+        height: .4rem;
+    }
+  .dropdown-comment .icon-comment {
+        font-size: .4rem;
+				color: #889dc4;
+    }
+
+	.dialog-slide .bui-dialog-main,
+	.bui-dialog-fullscreen {
+		background: none;
+	}
+	.bui-slide-fullscreen {
+		background: rgba(0,0,0,0.7);
+	}
+
+	.dialog-slide img {
+
+	}
+
+	.slide-img {
+		width: 100%;
+		height: 100%;
+		background-position: center;
+		background-size: contain;
+		background-repeat: no-repeat;
+	}
+
+</style>
+<div class="bui-page page-comment">
+    <header class="bui-bar">
+        <div class="bui-bar-left"></div>
+        <div class="bui-bar-main">朋友圈</div>
+        <div class="bui-bar-right">
+        	<a class="bui-btn"><i class="icon-camera"></i></a>
+        </div>
+    </header>
+    <main>
+				<div class="user-wrap">
+					<div class="cover-img"><img src="http://www.easybui.com/demo/images/banner02.png" alt=""></div>
+					<div class="userinfo bui-box">
+						<div class="nickname">王小o</div>
+						<div class="userface"><img src="http://www.easybui.com/demo/images/face.png" alt=""></div>
+					</div>
+				</div>
+        <div class="comment-box">
+            <!-- 评论 -->
+            <div class="comment-line">
+                <div class="bui-box">
+                    <div class="thumbnail"><img src="http://www.easybui.com/demo/images/face.png" alt=""></div>
+                    <div class="span1">
+                        <div class="bui-box">
+                            <div class="span1">
+                                <h3 class="item-title">大鹏</h3>
+                            </div>
+                        </div>
+												<!-- 内容 -->
+                        <div class="item-text bui-box-text-hide comment-content">我已查阅, 谢谢提问.你好，我想问一下，我在酉阳县城买了房子，按揭房，有购房合同，但现在房子还未交房，因为以前把户口迁到了新疆，现在想把户口迁回来。这种情况，你好，我想问一下，我在酉阳县城买了房子，按揭房，有购房合同，但现在房子还未交房，因为以前把户口迁到了新疆，现在想把户口迁回来。这种情况，</div>
+                        <div class="bui-btn-toggle">展开</div>
+												<!-- 图片 -->
+												<div class="bui-box-space container-full">
+													<div class="span1">
+														<img src="http://www.easybui.com/demo/images/list-img1.png" alt="" data-group="a" re>
+													</div>
+													<div class="span1">
+														<img src="http://www.easybui.com/demo/images/list-img2.png" alt="" data-group="a">
+													</div>
+													<div class="span1">
+														<img src="http://www.easybui.com/demo/images/list-img1.png" alt="" data-group="a">
+													</div>
+												</div>
+                        <div class="bui-box">
+                            <div class="span1">
+                                <span class="time">11-01 11:00</span>
+                            </div>
+                            <div class="bui-dropdown dropdown-comment">
+                                <div class="bui-btn bui-box">
+                                    <div class="span1"><i class="icon-comment"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 回复 -->
+                <ul class="comment-reply">
+                    <li>
+                        <em>王小o</em>回复<em>岑博</em>：好，一是对接，二是管理，
+                    </li>
+                    <li>
+                        <em>岑博</em>回复<em>邹龙明</em>：可以，这块是作为PAAS
+                    </li>
+                </ul>
+            </div>
+						<div class="comment-line">
+                <div class="bui-box">
+                    <div class="thumbnail"><img src="http://www.easybui.com/demo/images/face.png" alt=""></div>
+                    <div class="span1">
+                        <div class="bui-box">
+                            <div class="span1">
+                                <h3 class="item-title">大鹏</h3>
+                            </div>
+                        </div>
+
+                        <div class="item-text bui-box-text-hide comment-content">我已查阅, 谢谢提问.你好，我想问一下，我在酉阳县城买了房子，按揭房，有购房合同，但现在房子还未交房，因为以前把户口迁到了新疆，现在想把户口迁回来。这种情况，你好，我想问一下，我在酉阳县城买了房子，按揭房，有购房合同，但现在房子还未交房，因为以前把户口迁到了新疆，现在想把户口迁回来。这种情况，</div>
+                        <div class="bui-btn-toggle">展开</div>
+												<div class="bui-box-space container-full">
+													<div class="span1">
+														<img src="http://www.easybui.com/demo/images/list-img1.png" alt="">
+													</div>
+													<div class="span1">
+														<img src="http://www.easybui.com/demo/images/list-img2.png" alt="">
+													</div>
+													<div class="span1">
+														<img src="http://www.easybui.com/demo/images/list-img1.png" alt="">
+													</div>
+												</div>
+                        <div class="bui-box">
+                            <div class="span1">
+                                <span class="time">11-01 11:00</span>
+                            </div>
+                            <div class="bui-dropdown dropdown-comment">
+                                <div class="bui-btn bui-box">
+                                    <div class="span1"><i class="icon-comment"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 回复 -->
+                <ul class="comment-reply">
+                    <li>
+                        <em>王小o</em>回复<em>岑博</em>：好，一是对接，二是管理，
+                    </li>
+                    <li>
+                        <em>岑博</em>回复<em>邹龙明</em>：可以，这块是作为PAAS
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </main>
+    <footer class="container-xy comment-post" style="display:none;">
+        <div class="input-wrap">
+            <div class="bui-input comment-input">
+                <input type="text" value="" placeholder="说说你的看法">
+                <div class="bui-btn">发表</div>
+            </div>
+        </div>
+    </footer>
+</div>
+<!-- 焦点图弹窗 -->
+<div id="uiDialog" class="bui-dialog dialog-slide">
+    <div class="bui-dialog-main">
+			<div id="slide" class="bui-slide">
+					<div class="bui-slide-main">
+							<ul>
+									<li>
+										<div class="slide-img" style="background-image:url(http://www.easybui.com/demo/images/list-img1.png)"></div>
+									</li>
+									<li style="display: none;">
+										<div class="slide-img" style="background-image:url(http://www.easybui.com/demo/images/list-img2.png)"></div>
+									</li>
+									<li style="display: none;">
+										<div class="slide-img" style="background-image:url(http://www.easybui.com/demo/images/list-img1.png)"></div>
+									</li>
+							</ul>
+					</div>
+			</div>
+		</div>
+    <div class="bui-dialog-close"><i class="icon-close"></i></div>
+</div>

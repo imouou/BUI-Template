@@ -29,18 +29,18 @@ loader.define(function(require, exports, module) {
                 case 0:
                     loader.require(["pages/main/home"], function(mod) {
                         // 有回调的话是每次切换都会触发, 如果home里面还有init执行,则会造成2次触发
-                        mod.init();
+                        // mod.init();
                     })
                     break;
                 case 1:
                     // 这里是加载脚本第一次的时候触发
-                    loader.require(["pages/main/news"])
+                    loader.require(["pages/main/category"])
                     break;
                 case 2:
                     loader.require(["pages/main/photo"])
                     break;
                 case 3:
-                    loader.require(["pages/main/setting"])
+                    loader.require(["pages/main/personal"])
                     break;
             }
         }).to(0);

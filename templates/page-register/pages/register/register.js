@@ -1,158 +1,68 @@
 /**
  * 注册模板,包含验证码倒计时及手机号简单验证
- * 默认模块名: pages/page-list/page-list
+ * 默认模块名: pages/register/register
  * @return {[object]}  [ 返回一个对象 ]
  */
 loader.define(function(require,exports,module) {
 
     var pageview = {};
-    
-    pageview.bind = function () {
-        
-        /*初始化页面的链接跳转*/
-        bui.btn({ id:"#page" , handle:".bui-btn,.bui-btn-text"}).load();
-
-        // 监听密码输入事件
-        onInput({
-            id: ".code-input",
-            callback: function () {
-                // 点击删除按钮清空
-                $("#code").val('');
-                $(this).hide();
-            }
-        });
-
-        // 点击触发倒计时
-        $(".btn-send").on("click",function () {
-            var isDisable = $(this).hasClass("disabled");
-
-            if( !isDisable ){
-                $(this).addClass("disabled");
-
-                if( timeout ){
-                    clearTimeout(timeout);
-                }
-                countdown.call(this);
-            }
-        })
-
-    }
 
     pageview.init = function () {
 
-        // 绑定事件
-        this.bind();
-    }
+      // 手机号,帐号是同个样式名, 获取值的时候,取的是最后一个focus的值
+      var userInput = bui.input({
+          id: ".user-input",
+          callback: function(e) {
+              // 清空数据
+              this.empty();
+          }
+      })
 
-    /**
-     * [countnum 倒计时]
-     * @type {Number}
-     */
-    var countnum = 60,
-        timeout; 
-    function countdown(_self) { 
-        _self = _self || this;
-        var arg = arguments;
+      // 密码显示或者隐藏
+      var password = bui.input({
+              id: "#passwordInput",
+              iconClass: ".icon-eye",
+              onBlur: function(e) {
 
-        var $this = $(_self);
+                  if (e.target.value == '') { return false; }
+                  // 注册的时候校验只能4-18位密码
+                  var rule = /^[a-zA-Z0-9_-]{4,18}$/;
+                  if (!rule.test(e.target.value)) {
+                      bui.hint("密码只能由4-18位字母或者数字上下横杠组成");
+                      return false;
+                  }
 
-        if (countnum == 0) { 
-            $this.removeClass("disabled");    
-            $this.text("获取验证码"); 
-            countnum = 60;
+                  return true;
+              },
+              callback: function(e) {
+                  //切换类型
+                  this.toggleType();
+                  //
+                  $(e.target).toggleClass("active")
+              }
+          })
 
-            clearTimeout(timeout);
+        // 验证码示例
+      var $btnSend = $("#btnSend");
+      var timer = bui.timer({
+          onEnd: function() {
+              $btnSend.removeClass("disabled").text("重新获取验证码");
+          },
+          onProcess: function(e) {
+              var valWithZero = e.count < 10 ? "0" + e.count : e.count;
+              $btnSend.text(valWithZero + "后重新获取");
+          },
+          times: 10
+      });
 
-            return;
-        } else { 
-            $this.addClass("disabled"); 
-            $this.text("重新发送(" + countnum + ")"); 
-            countnum--; 
-        }
-
-        // 自执行
-        timeout = setTimeout(function() { 
-            countdown(_self) 
-        },1000) 
-    } 
-    /**
-     * [onInput 监听input事件]
-     * @param  {[object]} opt [description]
-     * @param  {[string]} opt.id [事件的父级]
-     * @param  {[string]} opt.target [目标是input]
-     * @param  {[string]} opt.target [目标的input]
-     * @example  
-     * 
-     * html: 
-      
-        <div class="bui-input password-input">
-            <input id="password" type="password" placeholder="密码">
-        </div>
-
-       js: 
-
-        onInput({
-            id: ".password-input",
-            callback: function () {
-                // 点击删除按钮清空
-                $("#password").val('');
-                $(this).hide();
-            }
-        })
-     * 
-     * @return {[type]}     [description]
-     */
-    function onInput(opt) {
-        var opt = opt || {};
-            opt.id = opt.id || "";
-            opt.target = opt.target || "input";
-            opt.event = opt.event || "keyup";
-            opt.icon = opt.icon || "icon-remove";
-            opt.onInput = opt.onInput || function () {};
-            opt.callback = opt.callback || function () {};
-
-        if( opt.id == "" || opt.id === null ){
-            return;
-        }
-        var $id = $(opt.id),
-            $target = $id.find(opt.target),
-            iconClass = '.'+opt.icon;
-
-        // 输入框监听延迟执行
-        $target.on(opt.event,bui.unit.debounce(function () {
-            var val = $(this).val(),
-                $btnRemove = $id.find(iconClass);
-            if(val.length > 0){
-                if( $btnRemove && $btnRemove.length ){
-                    $btnRemove.css("display","block");
-                }else{
-                    $id.append('<i class="'+opt.icon+'"></i>');
-                    $btnRemove = $target.find(iconClass);
-                }
-            }else{
-                $btnRemove && $btnRemove.css("display","none");
-            }
-
-            opt.onInput && opt.onInput.call(this);
-        },100))
-
-        // 图标点击事件
-        $id.on("click",iconClass,function () {
-            opt.callback && opt.callback.call(this);
-        })
-    }
-
-    // 检查手机号
-    function checkPhone(val) {
-        var myreg = /^(((11[0-9]{1})|(12[0-9]{1})|(13[0-9]{1})|(14[0-9]{1})|(15[0-9]{1})|(16[0-9]{1})|(17[0-9]{1})|(18[0-9]{1})|(19[0-9]{1}))+\d{8})$/; 
-        if(myreg.test(val)) 
-        { 
-            return true; 
-        }else{
-            bui.hint('请输入有效的手机号码！'); 
-
-            return false;
-        }
+      $btnSend.on("click", function(argument) {
+          var hasDisabled = $(this).hasClass("disabled");
+          if (!hasDisabled) {
+              $(this).addClass("disabled")
+              bui.hint("验证码发送成功")
+              timer.restart();
+          }
+      })
     }
 
     // 初始化

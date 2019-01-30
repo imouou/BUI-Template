@@ -1,6 +1,6 @@
 /**
  * 个人中心模板
- * 默认模块名: pages/page-personal/page-personal
+ * 默认模块名: pages/personal/personal
  * @return {[object]}  [ 返回一个对象 ]
  */
 loader.define(function(require,exports,module) {
@@ -9,7 +9,7 @@ loader.define(function(require,exports,module) {
 
     // 初始化定义
     pageview.init = function () {
-        
+
     }
 
     // 初始化

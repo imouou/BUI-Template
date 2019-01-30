@@ -1,13 +1,13 @@
 /**
- * 搜索模板
- * 默认模块名: pages/page-search/page-search
+ * 搜索历史模板
+ * 默认模块名: pages/history/history
  * @return {[object]}  [ 返回一个对象 ]
  */
 loader.define(function(require,exports,module) {
 
     var pageview = {};
-    
-    // 模块初始化定义    
+
+    // 模块初始化定义
     pageview.init = function () {
 
         var uiSearchbar = bui.searchbar({
@@ -23,9 +23,9 @@ loader.define(function(require,exports,module) {
               // 删除关键词需要做什么其它处理
             }
         });
-        
+
     }
-    
+
 
     // 初始化
     pageview.init();
