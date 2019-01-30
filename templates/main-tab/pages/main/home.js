@@ -1,72 +1,66 @@
-loader.define(function(require,exports,module) {
-    
-    var pageview = {},  // 页面模块
-        uiList,         // 列表控件
-        uiSlide;        // 焦点图控件;
+loader.define(function(require, exports, module) {
+    // 焦点图 js 初始化:
+    var uiSlide = bui.slide({
+        id:"#uiSlide",
+        height:380,
+        autopage: true,
+        loop: true
+    })
 
-    // 页面初始化
-    pageview.init = function () {
-        
-        if( !uiSlide ){
-           // 初始化焦点图
-           uiSlide = bui.slide({
-               id:"#tabSlideImg",
-               height:200,
-               autoplay : true,
-               autopage: true,
-               zoom: true
-           }) 
-        }
-        
+    var uiList = bui.list({
+        id: "#scrollList",
+        url: "http://www.easybui.com/demo/json/shop.json",
+        pageSize: 5,
+        data: {},
+        //如果分页的字段名不一样,通过field重新定义
+        field: {
+            page: "page",
+            size: "pageSize",
+            data: "data"
+        },
+        callback: function(e) {
+            // e.target 为你当前点击的元素
+            // $(e.target).closest(".bui-btn") 可以找到你当前点击的一整行,可以把一些属性放这里
+            console.log($(e.target).closest(".bui-btn").attr("class"))
+        },
+        template: function(data) {
+            var html = "";
+            data.map(function(el, index) {
+                // 演示传参,标准JSON才能转换
+                var param = {"id":index,"title":el.name};
+                var paramStr = JSON.stringify(param);
 
-        // 初始化列表刷新加载
-        uiList = bui.list({
-            id: "#uiTabScroll",
-            url: "http://www.easybui.com/demo/json/chuangyi/article-list.json",
-            data: {},
-            pageSize:10,
-            field: {
-                page: "page",        // 分页字段
-                size: "pageSize",    // 页数字段
-                data: ""         // 数据
-            },
-            template: template,
-            onLoad: function (scroll) {
-                // 自定义渲染
-            },
-            callback: function (e) {
-                // 点击单行回调 console.log($(this).text())
-            }
-        });
+                // 处理角标状态
+                var sub = '',
+                    subClass = '';
+                switch (el.status) {
+                    case 1:
+                        sub = '新品';
+                        subClass = 'bui-sub';
+                        break;
+                    case 2:
+                        sub = '热门';
+                        subClass = 'bui-sub danger';
+                        break;
+                    default:
+                        sub = '';
+                        subClass = '';
+                        break;
+                }
 
-    }
-
-    //生成列表的模板
-    function template (data) {
-    
-        var html = "";
-            $.each(data,function(index, el) {
-                html +='<li class="bui-btn bui-box-align-top">';
-                html +='    <div class="thumbnail"><img src="images/Personal3-img-contact.png" alt=""></div>';
-                html +='    <div class="span1">';
-                html +='        <h3 class="item-title">'+el.Name+'</h3>';
-                html +='        <div class="item-text bui-box">';
-                html +='            <div class="span1">'+el.ExInforSources+'</div>';
-                html +='            <span class="time"><i class="icon-">&#xe643;</i>23</span>';
-                html +='            <span class="time"><i class="icon-">&#xe680;</i>495</span>';
-                html +='            <span class="time"><i class="icon-">&#xe641;</i>28</span>';
-                html +='        </div>';
-                html +='    </div>            ';
-                html +='</li>';
+                html += `<li class="bui-btn bui-box" href="pages/ui/article.html" param='${paramStr}'>
+                    <div class="bui-thumbnail ${subClass}" data-sub="${sub}" ><img src="${el.image}" alt=""></div>
+                    <div class="span1">
+                        <h3 class="item-title">${el.name}</h3>
+                        <p class="item-text">${el.address}</p>
+                        <p class="item-text">${el.distance}公里</p>
+                    </div>
+                    <span class="price"><i>￥</i>${el.price}</span>
+                </li>`
             });
-    
-        return html;
-    };
 
+            return html;
+        }
+    });
 
-    // 这里默认初始化
-    pageview.init();
-
-    // 输出模块
-    return pageview;
 })
