@@ -92,7 +92,7 @@
 
      var citySelect = null;
      // 绑定数据
-     loader.import("js/plugins/citys.js", function() {
+     loader.import("http://www.easybui.com/demo/js/plugins/citys.js", function() {
 
          // 普通初始化
          citySelect = bui.levelselect({
