@@ -17,11 +17,11 @@
     <script src="js/zepto.js"></script>
     <script src="js/platform/cordova.js"></script>
     <script src="js/platform/bingotouch.js"></script>
-    <!-- link原生插件 -->
+    <!-- link原生插件,Link轻应用才引入,打包不用引入 -->
     <!-- <script src="js/platform/linkplugins.js"></script> -->
-    <!-- BUI库 -->
     <script src="js/bui.js"></script>
-    <script src="js/plugins/fixStatusBar.js"></script>
+    <!-- 修正iphone全屏问题, 打包引入,link轻应用不用引入 -->
+    <!-- <script src="js/plugins/fixStatusBar.js"></script> -->
     <!-- 初始化单页 -->
     <script src="index.js"></script>
 </body>

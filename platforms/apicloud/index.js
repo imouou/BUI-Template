@@ -2,7 +2,7 @@
  打包需要设置isWebapp为false 才能绑定后退按键
  并且 bui.ajax 使用原生的请求方式才不会有跨域问题
 -------------------------------------------*/
-/* 
+/*
   bui.isWebapp = false;
 
   // 打包以后,apicloud的ajax有跨域问题,需要配置needNative 使用原生请求
@@ -10,7 +10,7 @@
 
   // 监听物理按键的后退
   bui.on("pageready",function () {
-    
+
     // 绑定手机后退按键
     bindBack();
   })
@@ -21,7 +21,7 @@
     var flag = 0,
         quickClick = 0,
         timeout;
-    try{    
+    try{
       api.addEventListener({
           name: 'keyback'
       }, function(ret, err){
@@ -64,7 +64,8 @@ bui.ready(function() {
     // 初始化路由
     router.init({
         id: "#bui-router",
-        progress: true
+        progress: true,
+        hash: true,
     })
 
     // 绑定事件

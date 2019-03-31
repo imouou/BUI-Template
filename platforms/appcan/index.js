@@ -8,7 +8,8 @@ bui.ready(function() {
     router.init({
         id: "#bui-router",
         progress: true,
-        syncHistory: false
+        syncHistory: false,
+        hash: true,
     })
 
     // 绑定事件
