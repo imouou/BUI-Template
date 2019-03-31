@@ -15,10 +15,10 @@
     var flag = 0,
         quickClick = 0,
         timeout;
-    try{    
+    try{
       // 隐藏滚动条
       plus.webview.currentWebview().setStyle({scrollIndicator:'none'});
-       
+
        plus.key.addEventListener('backbutton', function(){
         if( router.getHistory().length > 1 ){
             // 防止快速点击导致历史记录错乱
@@ -40,14 +40,14 @@
              }, 2000);
             } else if (flag == 1) {
               plus.runtime.quit();
-             
+
             }
         }
-        
+
        }, false);
     }catch(e){}
   }
-  
+
 */
 
 // 开启单页路由
@@ -57,7 +57,8 @@ bui.ready(function() {
     // 初始化路由
     router.init({
         id: "#bui-router",
-        progress: true
+        progress: true,
+        hash: true,
     })
 
     // 绑定事件

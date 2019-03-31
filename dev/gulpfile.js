@@ -36,8 +36,12 @@ var gulp = require('gulp'),
     md5 = require('gulp-md5-assets'),
     // 删除文件
     del = require('del');
+
+// 加入二维码
+var qrcode = require('qrcode-terminal');
 // 用于获取本机信息
-// os=require('os');
+var os = require('os');
+var ip = getNetwork().ip || "localhost";
 
 var package = require('./package.json');
 // 同步刷新
@@ -75,7 +79,7 @@ var config = {
     },
     // 编译的输出路径
     build: sourceBuild,
-    // 输出配置 
+    // 输出配置
     output: {
         // 输出的根目录
         root: sourceBuild,
@@ -110,6 +114,7 @@ function getNetwork() {
         ifaces[dev].forEach(function(details, alias) {
             if (details.family == 'IPv4') {
                 iptable[dev + (alias ? ':' + alias : '')] = details.address;
+                iptable["ip"] = details.address;
             }
         });
     }
@@ -159,7 +164,7 @@ gulp.task('scss', function() {
 
     return gulp.src(config.source.scss)
         .pipe(changed(sourceBuild + '/css/'))
-        // 生成css对应的sourcemap 
+        // 生成css对应的sourcemap
         .pipe(sourcemaps.init())
         .pipe(sass(app.sass).on('error', sass.logError))
         .pipe(autoprefixer(app.autoprefixer))
@@ -239,7 +244,7 @@ gulp.task('move-bui', function() {
     gulp.src([sourcePath + '/js/platform/*.js'])
         .pipe(gulp.dest(sourceBuild + '/js/platform/'))
 });
-// move all file except pages/js/** .sass .md 
+// move all file except pages/js/** .sass .md
 gulp.task('move', function() {
     return gulp.src(config.watcher.moveRule)
         .pipe(changed(config.watcher.rootRule))
@@ -278,7 +283,6 @@ gulp.task('images', function() {
 gulp.task('server-sync', ['server-build'], function() {
     var portObj = getServerPort();
 
-
     let proxys = [];
     if ("proxy" in app) {
         let proxyObj = app["proxy"];
@@ -303,7 +307,14 @@ gulp.task('server-sync', ['server-build'], function() {
         ghostMode: false,
         notify: false,
         codeSync: isDistLivereload,
+        // plugins: ['bs-console-qrcode']
     });
+
+    // 插入二维码,手机扫码调试
+    var qrurl = "http://" + ip + ":" + portObj.distPort + app.qrcode;
+
+    qrcode.generate(qrurl, { small: true });
+    console.log("手机扫码预览效果");
 
     // 新增删除由插件负责
     watch(config.watcher.rootRule)
@@ -348,6 +359,10 @@ gulp.task('server', function() {
         codeSync: isDevLivereload
     });
 
+    // 插入二维码,手机扫码调试
+    var qrurl = "http://" + ip + ":" + portObj.devPort + app.qrcode;
+    qrcode.generate(qrurl, { small: true });
+
 });
 
 // 监测新增
@@ -385,7 +400,7 @@ function changeFile(file) {
 
         gulp.src(config.source.scss)
             .pipe(changed(sourceBuild + '/css/'))
-            // 生成css对应的sourcemap 
+            // 生成css对应的sourcemap
             .pipe(sourcemaps.init())
             .pipe(sass(app.sass).on('error', sass.logError))
             .pipe(autoprefixer(app.autoprefixer))

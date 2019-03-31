@@ -5,6 +5,7 @@
     "devServer": {
         "livereload": false
     },
+    "qrcode": "/index.html",
     "ignored": [
         "!src/README.md",
         "!src/preview.png"

@@ -1,13 +1,13 @@
 /*-----------------------------------------
  打包需要设置isWebapp为false 才能绑定后退按键
  并且 bui.upload,bui.download 默认使用web方式,
- 如果需要原生,请全局配置 bui.config.upload = { needNative:true } 
+ 如果需要原生,请全局配置 bui.config.upload = { needNative:true }
 -------------------------------------------*/
 /*
   bui.isWebapp = false;
 
   bui.on("pageready",function () {
-     
+
     // 绑定手机后退按键
     bindBack();
   })
@@ -43,14 +43,14 @@
            exitApp();
           }
       }
-      
+
      }, false);
     }catch(e){}
   }
 
   // 退出应用
-  function exitApp(){  
-      navigator.app.exitApp();  
+  function exitApp(){
+      navigator.app.exitApp();
   }
 */
 
@@ -62,7 +62,8 @@ bui.ready(function() {
     // 初始化路由
     router.init({
         id: "#bui-router",
-        progress: true
+        progress: true,
+        hash: true,
     })
 
     // 绑定事件

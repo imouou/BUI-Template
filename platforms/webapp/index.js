@@ -5,8 +5,7 @@ bui.ready(function() {
     router.init({
         id: "#bui-router",
         progress: true,
-        // 刷新的时候是否还可以后退
-        reloadCache: false
+        hash: false
     })
 
     // 绑定事件
