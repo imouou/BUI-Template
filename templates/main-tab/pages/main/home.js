@@ -1,8 +1,8 @@
 loader.define(function(require, exports, module) {
     // 焦点图 js 初始化:
     var uiSlide = bui.slide({
-        id:"#uiSlide",
-        height:380,
+        id: "#uiSlide",
+        height: 380,
         autopage: true,
         loop: true
     })
@@ -27,7 +27,7 @@ loader.define(function(require, exports, module) {
             var html = "";
             data.map(function(el, index) {
                 // 演示传参,标准JSON才能转换
-                var param = {"id":index,"title":el.name};
+                var param = { "id": index, "title": el.name };
                 var paramStr = JSON.stringify(param);
 
                 // 处理角标状态
@@ -48,7 +48,7 @@ loader.define(function(require, exports, module) {
                         break;
                 }
 
-                html += `<li class="bui-btn bui-box" href="pages/ui/article.html" param='${paramStr}'>
+                html += `<li class="bui-btn bui-box" href="pages/article/article.html" param='${paramStr}'>
                     <div class="bui-thumbnail ${subClass}" data-sub="${sub}" ><img src="${el.image}" alt=""></div>
                     <div class="span1">
                         <h3 class="item-title">${el.name}</h3>

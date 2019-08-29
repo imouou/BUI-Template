@@ -1,7 +1,7 @@
-<!-- 这里还是一个标准的BUI页面 -->
-<div class="bui-page">
+<!-- 这里还是一个标准的BUI页面 bui-box-vertical 用来解决微信IOS的前进后退历史记录问题 -->
+<div class="bui-page bui-box-vertical">
     <main>
-        <div id="tabDynamic" class="bui-tab">
+        <div id="tabDynamic" class="bui-tab bui-box-vertical">
             <div class="bui-tab-main">
                 <ul>
                     <li>
@@ -23,10 +23,18 @@
     </main>
     <footer>
         <ul id="tabDynamicNav" class="bui-nav">
-            <li class="bui-btn bui-box-vertical active" href="pages/main/home.html"><i class="icon-home"></i><div class="span1">首页</div></li>
-            <li class="bui-btn bui-box-vertical" href="pages/main/category.html"><i class="icon-menu"></i><div class="span1">分类</div></li>
-            <li class="bui-btn bui-box-vertical" href="pages/main/photo.html"><i class="icon-pic"><span class="bui-badges"></span></i><div class="span1">图片</div></li>
-            <li class="bui-btn bui-box-vertical" href="pages/main/personal.html"><i class="icon-user"></i><div class="span1">个人</div></li>
+            <li class="bui-btn bui-box-vertical active" href="pages/main/home.html"><i class="icon-home"></i>
+                <div class="span1">首页</div>
+            </li>
+            <li class="bui-btn bui-box-vertical" href="pages/main/category.html"><i class="icon-menu"></i>
+                <div class="span1">分类</div>
+            </li>
+            <li class="bui-btn bui-box-vertical" href="pages/main/photo.html"><i class="icon-pic"><span class="bui-badges"></span></i>
+                <div class="span1">图片</div>
+            </li>
+            <li class="bui-btn bui-box-vertical" href="pages/main/personal.html"><i class="icon-user"></i>
+                <div class="span1">个人</div>
+            </li>
         </ul>
     </footer>
 </div>
