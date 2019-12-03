@@ -10,12 +10,17 @@
     <link rel="stylesheet" href="css/style.css" />
 </head>
 
-<body class="apicloud">
+<body>
     <!-- 第1步: 开启单页路由 -->
     <div id="bui-router"></div>
-    <script type="text/javascript" src="js/platform/api.js"></script>
+
     <script src="js/zepto.js"></script>
-    <script src="js/bui.js"></script>
+    <!-- 新增引入 start -->
+  	<script type="text/javascript" src="applocal://www/cordova.min.js"></script>
+    <script type="text/javascript" src="js/zepto.js"></script>
+    <script type="text/javascript" src="js/bui.js"></script>
+    <script type="text/javascript" src="js/platform/workplus.js"></script>
+    <!-- 新增引入 end -->
     <!-- 初始化单页 -->
     <script src="index.js"></script>
 </body>
