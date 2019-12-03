@@ -25,7 +25,7 @@ loader.define(function(require, exports, module) {
         },
         template: function(data) {
             var html = "";
-            data.map(function(el, index) {
+            data.forEach(function(el, index) {
                 // 演示传参,标准JSON才能转换
                 var param = { "id": index, "title": el.name };
                 var paramStr = JSON.stringify(param);
