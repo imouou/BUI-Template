@@ -2233,11 +2233,11 @@ var Zepto = (function() {
 //     $.fn[eventName] = function(callback){ return this.on(eventName, callback) }
 //   })
 // })(Zepto)
-var $ = Zepto;
+window.$ = Zepto;
 
 // 没jQuery的时候,jQuery就是Zepto
 if (!window.jQuery) {
-    $ = Zepto;
+    window.$ = Zepto;
     window.jQuery = Zepto;
 }
 //jQuery = Zepto;

@@ -24,7 +24,8 @@ loader.define(function(require, exports, module) {
                 autoload: true,
             })
             // 2: 监听加载后的事件
-        tab.on("to", function(index) {
+        tab.on("to", function() {
+            var index = this.index();
             switch (index) {
                 case 0:
                     loader.require(["pages/main/home"], function(mod) {

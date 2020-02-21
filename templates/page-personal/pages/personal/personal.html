@@ -5,89 +5,91 @@
         padding-top: .3rem;
         padding-bottom: .3rem;
     }
-
+    
     .personal-header .personal-img {
         width: 1.5rem;
         height: 1.5rem;
         border-radius: 50%;
-        background:#fff;
+        background: #fff;
         /* border: 2px solid #fff; */
         overflow: hidden;
         margin: 0 auto .2rem auto;
         text-align: center;
     }
-
+    
     .personal-header .personal-img img {
         width: 100%;
     }
-
+    
     .personal-header p {
         text-align: center;
         color: #ffffff;
         margin-bottom: 0.1rem;
     }
-
+    
     .personal-header .name {
         font-size: 0.26rem;
     }
-
+    
     .personal-header .grade {
         font-size: 0.2rem;
     }
-
+    
     .nav-list {
         border-top: none;
         margin-top: 0.2rem;
         padding: 0 0.2rem;
         background-color: #ffffff;
     }
-
+    
     .nav-list .bui-btn {
         padding-left: 0;
         padding-right: 0;
     }
-
+    
     .nav-list li:first-child {
         border-top: none;
     }
-
+    
     .nav-list .icon i {
         font-size: 0.4rem;
     }
-
+    
     .nav-list .icon {
         height: 0.42rem;
     }
-
+    
     .nav-list .bui-btn {
         border: none;
         border-top: 1px solid #efefef;
     }
-
+    
     .icon-yellow {
         color: #ffad03;
     }
-
+    
     .icon-thinblue {
         color: #56ced5;
     }
-
+    
     .icon-green {
         color: #6ed046;
     }
-
+    
     .icon-red {
         color: #fd8886;
     }
 </style>
 
-<div class="bui-page">
-    <header class="bui-bar">
-        <div class="bui-bar-left">
-            <a class="bui-btn btn-back"><i class="icon-back"></i></a>
-        </div>
-        <div class="bui-bar-main">我的</div>
-        <div class="bui-bar-right">
+<div class="bui-page bui-box-vertical">
+    <header>
+        <div class="bui-bar">
+            <div class="bui-bar-left">
+                <div class="bui-btn" onclick="bui.back();"><i class="icon-back"></i></div>
+            </div>
+            <div class="bui-bar-main">我的</div>
+            <div class="bui-bar-right">
+            </div>
         </div>
     </header>
     <main>
@@ -120,6 +122,9 @@
                 <i class="icon-listright"></i>
             </li>
         </ul>
+        <div class="container-xy">
+            <div class="bui-btn round danger" href="pages/login/index.html">注销</div>
+        </div>
     </main>
     <footer>
         <!-- 底部d导航栏 -->
