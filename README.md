@@ -79,7 +79,7 @@ $ buijs create -t main-tab
     <tr>
         <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/main-tab/preview.png" alt=""></div> <div style="font-size: 13px;">模板: main-tab</div> <div style="font-size: 13px;">预览: index.html</div></td>
         <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/main-tab-head/preview.png" alt=""></div> <div style="font-size: 13px;">模板: main-tab-head</div> <div style="font-size: 13px;">预览: index.html</div></td>
-        <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/main-tab-com/preview.png" alt=""></div> <div style="font-size: 13px;">模板: main-tab-com </div> <div style="font-size: 13px;">预览: index.html</div></td>
+        <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/main-tab-foot/preview.png" alt=""></div> <div style="font-size: 13px;">模板: main-tab-foot </div> <div style="font-size: 13px;">预览: index.html</div></td>
     </tr>
 </table>
 
