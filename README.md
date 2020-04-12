@@ -6,6 +6,7 @@
 |去除link平台,整合在bingotouch工程    |2018-5-25    |
 |模板更新为1.5.0版本,设计稿更新为750规范    |2018-10-31    |
 |新增模板    |2019-01-30    |
+|新增node10的npm工程    |2020-03-27    |
 
 > 重要更新,模板更新为1.5.0, 设计稿升级为750规范, 如果你的版本目前是1.4.7, 创建模板时,请指定对应版本,
 如果你的模板还是旧版, 请尝试清空模板缓存.
@@ -16,6 +17,8 @@ $ npm update -g buijs
 # 清除缓存
 $ buijs clear
 ```
+
+默认的npm工程文件为 node8.x, 如果下载的是 node10以上版本, 需要替换工程, 并且使用 cnpm 安装.
 
 ## 简介
 
@@ -44,19 +47,47 @@ $ buijs create -t main-tab
 
 > <strong style="color:red">注意:</strong>
 1. 同一个工程可以多次创建模板;
-模板名以 `main-`开头 会覆盖 main 模块, 例如: 模板名 `main-tab` 预览地址 `index.html`
+模板名以 `main-`开头 会覆盖 main 模块, 例如: 模板名 `main-tab` 预览地址 `index.html`;
 模板名以 `page-`开头 会新增页面, 例如: 模板名 `page-login` 预览地址 `index.html#pages/login/login`;
-2. `main-`开头的模板会覆盖main页面, `page-`开头的模板是新增页面;
+**1.6.x 新增**
+模板名以 `case-`开头 会覆盖工程, 例如: 模板名 `case-login` 预览地址 `index.html`;
+2. `main-`开头的模板会覆盖main页面, `page-`开头的模板是新增页面, `case-`开头是一个完整的小案例;
 3. 同一个工程只能创建一个平台, 多次创建会相互覆盖;
 
 更多 [buijs使用说明](https://github.com/imouou/buijs-cli) ;
 
 # 模板预览
 
+## 通用及常用的案例类
+- case-login: 全局登录权限处理
+- case-tablogin: tab局部登录处理
+- case-163: 163新闻案例
+<table>
+    <tr>
+        <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/case-login/preview.png" alt=""></div> <div style="font-size: 13px;">案例: case-login</div> <div style="font-size: 13px;">预览: index.html</div></td>
+        <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/page-blog/preview.png" alt=""></div> <div style="font-size: 13px;">案例: case-tablogin </div> <div style="font-size: 13px;">预览: index.html</div></td>
+        <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/page-icon/preview.png" alt=""></div> <div style="font-size: 13px;">案例: case-163</div> <div style="font-size: 13px;">预览: index.html</div></td>
+    </tr>
+</table>
+
+## 覆盖main模块的模板
+- main-tab: tab底部动态加载
+- main-tab-head: tab顶部动态加载Component
+- main-tab-foot: tab底部动态加载Component
 
 <table>
     <tr>
         <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/main-tab/preview.png" alt=""></div> <div style="font-size: 13px;">模板: main-tab</div> <div style="font-size: 13px;">预览: index.html</div></td>
+        <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/main-tab-head/preview.png" alt=""></div> <div style="font-size: 13px;">模板: main-tab-head</div> <div style="font-size: 13px;">预览: index.html</div></td>
+        <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/main-tab-com/preview.png" alt=""></div> <div style="font-size: 13px;">模板: main-tab-com </div> <div style="font-size: 13px;">预览: index.html</div></td>
+    </tr>
+</table>
+
+## 新增页面模板
+
+<table>
+    <tr>
+        <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/page-addressbook/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-addressbook</div> <div style="font-size: 13px;">预览: index.html#pages/addressbook/addressbook</div></td>
         <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/page-blog/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-blog </div> <div style="font-size: 13px;">预览: index.html#pages/blog/blog</div></td>
         <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/page-icon/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-icon</div> <div style="font-size: 13px;">预览: index.html#pages/icon/icon</div></td>
     </tr>
@@ -67,7 +98,7 @@ $ buijs create -t main-tab
     </tr>
     <tr>
         <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/page-list/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-list</div> <div style="font-size: 13px;">预览: index.html#pages/list/list</div></td>
-        <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/page-searchbar/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-searchbar</div> <div style="font-size: 13px;">预览: index.html#pages/searchbar/searchbar</div></td>
+        <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/page-search/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-search</div> <div style="font-size: 13px;">预览: index.html#pages/search/search</div></td>
         <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/page-history/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-history</div> <div style="font-size: 13px;">预览: index.html#pages/history/history</div></td>
     </tr>
     <tr>

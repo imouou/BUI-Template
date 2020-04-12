@@ -1,0 +1,48 @@
+﻿<div class="bui-page bui-box-vertical">
+    <header>
+        <div class="bui-bar">
+            <div class="bui-bar-left">
+                <div class="bui-btn" onclick="bui.back();"><i class="icon-back"></i></div>
+            </div>
+            <div class="bui-bar-main">
+                全局登录
+            </div>
+            <div class="bui-bar-right">
+                <div class="bui-btn" href="pages/personal/index.html"><i class="icon-user"></i></div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div id="uiTab" class="bui-tab bui-box-vertical">
+            <div class="bui-tab-head">
+                <!-- 滚动导航布局 -->
+                <!-- <div class="bui-navbar"> -->
+                <ul class="bui-nav">
+                    <!-- <li>之间不能有空隙 -->
+                    <li class="bui-btn active">新闻</li>
+                    <li class="bui-btn">娱乐</li>
+                    <li class="bui-btn">体育</li>
+                    <li class="bui-btn">图片</li>
+                </ul>
+                <!-- </div> -->
+            </div>
+            <div class="bui-tab-main">
+                <ul>
+                    <!-- 内容必须在li里面 -->
+                    <li>
+                        <component id="tab0" name="pages/components/list/index" type="home"></component>
+                    </li>
+                    <li style="display: none;">
+                        <component id="tab1" name="pages/components/list/index" type="ent" delay="true"></component>
+                    </li>
+                    <li style="display: none;">
+                        <component id="tab2" name="pages/components/list/index" type="sport" delay="true"></component>
+                    </li>
+                    <li style="display: none;">
+                        <component id="tab3" name="pages/components/list/index" type="photo" delay="true"></component>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </main>
+</div>

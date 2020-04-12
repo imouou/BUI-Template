@@ -1,0 +1,58 @@
+{
+    "distServer": {
+        "livereload": true
+    },
+    "devServer": {
+        "livereload": false
+    },
+    "qrcode": "/index.html",
+    "ignored": [
+        "!src/README.md",
+        "!src/preview.png"
+    ],
+    "proxy": {
+        "/demo": {
+            "target": "http://www.easybui.com",
+            "changeOrigin": true,
+            "ssl": false
+        }
+    },
+    "sass": {
+        "outputStyle": "compressed"
+    },
+    "cleanCss": {
+        "compatibility": "ie8"
+    },
+    "autoprefixer": {
+        "browsers": ["last 2 versions"],
+        "remove": false,
+        "cascade": false
+    },
+    "babel": {
+        "presets": [
+            "es2015"
+        ]
+    },
+    "uglify": {
+        "compress": {
+            "drop_debugger": false
+        },
+        "output": {
+            "max_line_len": false
+        },
+        "preserveComments": "some",
+        "mangle": true
+    },
+    "htmlmin": {
+        "removeComments": true,
+        "collapseWhitespace": false,
+        "collapseBooleanAttributes": false,
+        "removeEmptyAttributes": false,
+        "removeScriptTypeAttributes": true,
+        "removeStyleLinkTypeAttributes": true,
+        "minifyJS": true,
+        "minifyCSS": true
+    },
+    "imagemin": null,
+    "license": "ISC"
+}

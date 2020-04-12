@@ -1,0 +1,272 @@
+<style>
+    .page-addressbook main {
+        background: #fff;
+    }
+    
+    .addressbook>[class*=bui-btn]+dd,
+    .addressbook>dt+dd,
+    .addressbook>dd {
+        display: block;
+    }
+    
+    .addressbook-bar {
+        position: absolute;
+        right: .2rem;
+        top: 50%;
+        height: 11rem;
+        margin-top: -5.5rem;
+        z-index: 11;
+    }
+    
+    .addressbook-bar .letter-list li {
+        font-size: .24rem;
+        color: #ccc;
+        text-align: center;
+        padding: .01rem .1rem;
+    }
+    
+    .addressbook-bar .letter-list li.active {
+        background: #eee;
+    }
+</style>
+<div class="bui-page bui-box-vertical page-addressbook">
+    <header>
+        <div class="bui-bar">
+            <div class="bui-bar-left">
+                <a class="bui-btn" onclick="bui.back();"><i class="icon-back"></i></a>
+            </div>
+            <div class="bui-bar-main">通讯录</div>
+            <div class="bui-bar-right">
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="bui-floor-head">
+            A
+        </div>
+        <div id="floor" class="bui-floor">
+            <div class="bui-floor-main">
+                <dl id="uiAccordion" class="bui-accordion addressbook">
+                    <dt class="bui-btn bui-box bui-floor-item">
+                        <div class="span1">A</div>
+                    </dt>
+                    <dd>
+                        <ul class="bui-list">
+                            <li class="bui-btn bui-box">
+                                <div class="bui-icon primary">
+                                    王
+                                </div>
+                                <div class="span1">王某某</div>
+                            </li>
+                            <li class="bui-btn bui-box">
+                                <div class="bui-icon primary">
+                                    王
+                                </div>
+                                <div class="span1">王某某</div>
+                            </li>
+                            <li class="bui-btn bui-box">
+                                <div class="bui-icon primary">
+                                    王
+                                </div>
+                                <div class="span1">王某某</div>
+                            </li>
+                            <li class="bui-btn bui-box">
+                                <div class="bui-icon primary">
+                                    王
+                                </div>
+                                <div class="span1">王某某</div>
+                            </li>
+                        </ul>
+                    </dd>
+                    <dt class="bui-btn bui-box bui-floor-item">
+                        <div class="span1">B</div>
+                    </dt>
+                    <dd>
+                        <ul class="bui-list">
+                            <li class="bui-btn bui-box">
+                                <div class="bui-icon primary">
+                                    王
+                                </div>
+                                <div class="span1">王某某</div>
+                            </li>
+                            <li class="bui-btn bui-box">
+                                <div class="bui-icon primary">
+                                    王
+                                </div>
+                                <div class="span1">王某某</div>
+                            </li>
+                            <li class="bui-btn bui-box">
+                                <div class="bui-icon primary">
+                                    王
+                                </div>
+                                <div class="span1">王某某</div>
+                            </li>
+                            <li class="bui-btn bui-box">
+                                <div class="bui-icon primary">
+                                    王
+                                </div>
+                                <div class="span1">王某某</div>
+                            </li>
+                        </ul>
+                    </dd>
+                    <dt class="bui-btn bui-box bui-floor-item">
+                        <div class="span1">C</div>
+                    </dt>
+                    <dd>
+                        <ul class="bui-list">
+                            <li class="bui-btn bui-box">
+                                <div class="bui-icon primary">
+                                    王
+                                </div>
+                                <div class="span1">王某某</div>
+                            </li>
+                            <li class="bui-btn bui-box">
+                                <div class="bui-icon primary">
+                                    王
+                                </div>
+                                <div class="span1">王某某</div>
+                            </li>
+                            <li class="bui-btn bui-box">
+                                <div class="bui-icon primary">
+                                    王
+                                </div>
+                                <div class="span1">王某某</div>
+                            </li>
+                            <li class="bui-btn bui-box">
+                                <div class="bui-icon primary">
+                                    王
+                                </div>
+                                <div class="span1">王某某</div>
+                            </li>
+                        </ul>
+                    </dd>
+                    <dt class="bui-btn bui-box bui-floor-item">
+                        <div class="span1">D</div>
+                    </dt>
+                    <dd>
+                        <ul class="bui-list">
+                            <li class="bui-btn bui-box">
+                                <div class="bui-icon primary">
+                                    王
+                                </div>
+                                <div class="span1">王某某</div>
+                            </li>
+                            <li class="bui-btn bui-box">
+                                <div class="bui-icon primary">
+                                    王
+                                </div>
+                                <div class="span1">王某某</div>
+                            </li>
+                            <li class="bui-btn bui-box">
+                                <div class="bui-icon primary">
+                                    王
+                                </div>
+                                <div class="span1">王某某</div>
+                            </li>
+                            <li class="bui-btn bui-box">
+                                <div class="bui-icon primary">
+                                    王
+                                </div>
+                                <div class="span1">王某某</div>
+                            </li>
+                        </ul>
+                    </dd>
+                    <dt class="bui-btn bui-box bui-floor-item">
+                        <div class="span1">E</div>
+                    </dt>
+                    <dd>
+                        <ul class="bui-list">
+                            <li class="bui-btn bui-box">
+                                <div class="bui-icon primary">
+                                    王
+                                </div>
+                                <div class="span1">王某某</div>
+                            </li>
+                            <li class="bui-btn bui-box">
+                                <div class="bui-icon primary">
+                                    王
+                                </div>
+                                <div class="span1">王某某</div>
+                            </li>
+                            <li class="bui-btn bui-box">
+                                <div class="bui-icon primary">
+                                    王
+                                </div>
+                                <div class="span1">王某某</div>
+                            </li>
+                            <li class="bui-btn bui-box">
+                                <div class="bui-icon primary">
+                                    王
+                                </div>
+                                <div class="span1">王某某</div>
+                            </li>
+                        </ul>
+                    </dd>
+                    <dt class="bui-btn bui-box bui-floor-item">
+                        <div class="span1">F</div>
+                    </dt>
+                    <dd>
+                        <ul class="bui-list">
+                            <li class="bui-btn bui-box">
+                                <div class="bui-icon primary">
+                                    王
+                                </div>
+                                <div class="span1">王某某</div>
+                            </li>
+                            <li class="bui-btn bui-box">
+                                <div class="bui-icon primary">
+                                    王
+                                </div>
+                                <div class="span1">王某某</div>
+                            </li>
+                            <li class="bui-btn bui-box">
+                                <div class="bui-icon primary">
+                                    王
+                                </div>
+                                <div class="span1">王某某</div>
+                            </li>
+                            <li class="bui-btn bui-box">
+                                <div class="bui-icon primary">
+                                    王
+                                </div>
+                                <div class="span1">王某某</div>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+            <div class="bui-floor-foot"></div>
+        </div>
+        <!-- 字母导航条 -->
+        <div class="addressbook-bar bui-box-center">
+            <ul class="letter-list">
+                <li>A</li>
+                <li>B</li>
+                <li>C</li>
+                <li>D</li>
+                <li>E</li>
+                <li>F</li>
+                <li>G</li>
+                <li>H</li>
+                <li>I</li>
+                <li>J</li>
+                <li>K</li>
+                <li>L</li>
+                <li>M</li>
+                <li>N</li>
+                <li>O</li>
+                <li>P</li>
+                <li>Q</li>
+                <li>R</li>
+                <li>S</li>
+                <li>T</li>
+                <li>U</li>
+                <li>V</li>
+                <li>W</li>
+                <li>X</li>
+                <li>Y</li>
+                <li>Z</li>
+            </ul>
+        </div>
+    </main>
+</div>
