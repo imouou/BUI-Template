@@ -1,0 +1,128 @@
+<style type="text/css">
+    .page-personal .personal-header {
+        background-color: #39a4ff;
+        /*background-image: linear-gradient(to bottom, #7cb8e9, #89bfe3, #72a8d7, #89b5d8, #92bbda);*/
+        padding-top: .3rem;
+        padding-bottom: .3rem;
+    }
+    
+    .page-personal .personal-header .personal-img {
+        width: 1.5rem;
+        height: 1.5rem;
+        border-radius: 50%;
+        background: #fff;
+        /* border: 2px solid #fff; */
+        overflow: hidden;
+        margin: 0 auto .2rem auto;
+        text-align: center;
+    }
+    
+    .page-personal .personal-header .personal-img img {
+        width: 100%;
+    }
+    
+    .page-personal .personal-header p {
+        text-align: center;
+        color: #ffffff;
+        margin-bottom: 0.1rem;
+    }
+    
+    .page-personal .personal-header .name {
+        font-size: 0.26rem;
+    }
+    
+    .page-personal .personal-header .grade {
+        font-size: 0.2rem;
+    }
+    
+    .page-personal .nav-list {
+        border-top: none;
+        margin-top: 0.2rem;
+        padding: 0 0.2rem;
+        background-color: #ffffff;
+    }
+    
+    .page-personal .nav-list .bui-btn {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    
+    .page-personal .nav-list li:first-child {
+        border-top: none;
+    }
+    
+    .page-personal .nav-list .icon i {
+        font-size: 0.4rem;
+    }
+    
+    .page-personal .nav-list .icon {
+        height: 0.42rem;
+    }
+    
+    .page-personal .nav-list .bui-btn {
+        border: none;
+        border-top: 1px solid #efefef;
+    }
+    
+    .page-personal .icon-yellow {
+        color: #ffad03;
+    }
+    
+    .page-personal .icon-thinblue {
+        color: #56ced5;
+    }
+    
+    .page-personal .icon-green {
+        color: #6ed046;
+    }
+    
+    .page-personal .icon-red {
+        color: #fd8886;
+    }
+</style>
+<div class="bui-page page-personal">
+    <header class="bui-bar">
+        <div class="bui-bar-left">
+            <a class="bui-btn" onclick="bui.back();"><i class="icon-back"></i></a>
+        </div>
+        <div class="bui-bar-main"></div>
+        <div class="bui-bar-right">
+            <!-- 右边按钮 -->
+        </div>
+    </header>
+    <main>
+        <div class="personal-header">
+            <div class="personal-img">
+                <img src="images/applogo.png">
+            </div>
+            <p class="name">王小o</p>
+            <p class="grade">积分：2988</p>
+        </div>
+        <ul class="bui-list nav-list">
+            <li class="bui-btn bui-box ">
+                <div class="icon"><i class="icon-favfill icon-yellow"></i></div>
+                <div class="span1">我的收藏</div>
+                <i class="icon-listright"></i>
+            </li>
+            <li class="bui-btn bui-box">
+                <div class="icon"><i class="icon icon-thinblue">&#xe64f;</i></div>
+                <div class="span1">播放记录</div>
+                <i class="icon-listright"></i>
+            </li>
+            <li class="bui-btn bui-box">
+                <div class="icon"><i class="icon icon-green">&#xe62d;</i></div>
+                <div class="span1">测试记录</div>
+                <i class="icon-listright"></i>
+            </li>
+            <li class="bui-btn bui-box">
+                <div class="icon"><i class="icon icon-red">&#xe666;</i></div>
+                <div class="span1">我的下载</div>
+                <i class="icon-listright"></i>
+            </li>
+        </ul>
+        <div class="container-xy">
+            <div class="bui-btn round danger" b-click="page.logout">注销</div>
+        </div>
+
+    </main>
+</div>

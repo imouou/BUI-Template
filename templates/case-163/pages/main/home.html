@@ -1,0 +1,49 @@
+  <div class="bui-page bui-box-vertical" id="newsPage">
+      <header>
+          <div class="bui-bar bui-bar-side">
+            <div class="bui-bar-left">
+            </div>
+            <div class="bui-bar-main"><img class="logo-pic" src="images/logo.png"/></div>
+            <div class="bui-bar-right">
+                <!-- 右边图片 -->
+                <a class="bui-btn search" id="search">
+                    <img src="images/search.png"/>
+                </a>
+                <!-- 右边图片 -->
+                <a class="bui-btn live">
+                    <img src="images/live.png"/>
+                </a>
+            </div>
+          </div>
+          <div class="bui-navbar bui-box-align-middle">
+              <div class="span1" id="uiSlideNavbar">
+                  <ul id="uiNewsTabNav" class="bui-nav">
+                      <li class="bui-btn">头条</li><li class="bui-btn">精选</li><li class="bui-btn">娱乐</li><li class="bui-btn">体育</li><li class="bui-btn">网易号</li><li class="bui-btn">广州</li><li class="bui-btn">视频</li><li class="bui-btn">财经</li><li class="bui-btn">科技</li><li class="bui-btn">汽车</li><li class="bui-btn">时尚</li></ul>
+              </div>
+              <div class="bui-btn btn-dropdown"><i class="icon-listdown"></i></div>
+          </div>
+      </header>
+      <main>
+         <div id="uiNewsTab" class="bui-tab bui-box-vertical fullheight">
+           <div class="bui-tab-main">
+             <ul>
+              <!-- 头条 -->
+               <li>
+                  <!-- 头条 -->
+                  <component id="newsTab0" name="pages/components/home-list/index" type="recommend"></component>
+               </li>
+               <li><component id="newsTab1" name="pages/components/list/index" type="featured" delay="true"></component></li>
+               <li><component id="newsTab2" name="pages/components/list/index" type="ent" delay="true"></component></li>
+               <li><component id="newsTab3" name="pages/components/list/index" type="sport" delay="true"></component></li>
+               <li> 网易号 </li>
+               <li> 广州 </li>
+               <li> 视频 </li>
+               <li> 财经 </li>
+               <li> 科技 </li>
+               <li> 汽车 </li>
+               <li> 时尚 </li>
+             </ul>
+           </div>
+         </div>
+      </main>
+  </div>

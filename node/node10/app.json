@@ -1,0 +1,26 @@
+{
+    "distServer": {
+        "livereload": true
+    },
+    "devServer": {
+        "livereload": false
+    },
+    "qrcode": "/index.html",
+    "ignored": [
+        "!src/README.md",
+        "!src/preview.png"
+    ],
+    "proxy": {
+        "/demo": {
+            "target": "http://www.easybui.com",
+            "changeOrigin": true,
+            "ssl": false
+        }
+    },
+    "cleancss": false,
+    "autoprefixer": true,
+    "uglify": true,
+    "htmlmin": false,
+    "imagemin": false,
+    "license": "MIT"
+}

@@ -9,14 +9,13 @@
       mod.init()
    })
  */
-loader.define(function(require,exports,module) {
-    // 在这里初始化控件
-    var pageview = {};
-
-    // 定义模块的init方法
-    pageview.init = function () {
-
-    }
+loader.define(function(require, exports, module) {
+    // 定义
+    var pageview = {
+        init: function() {
+            // 这里初始化
+        }
+    };
 
     // 第1次初始化
     pageview.init();

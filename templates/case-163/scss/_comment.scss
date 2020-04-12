@@ -1,0 +1,64 @@
+@charset "utf-8";
+
+.comments-panel {
+    border:0;
+    background:#f6f6f6;
+    .bui-panel-main ,
+    .bui-panel-head {
+        border:0;
+    }
+    .bui-panel-head {
+        span {
+            display:inline-block;
+            padding:.05rem .1rem;
+            background:$primary-color;
+            @include round();
+            color:#fff;
+        }
+    }
+    .bui-panel-main {
+    }
+
+    .bui-list {
+        .bui-btn {
+            background:#f6f6f6;
+            border-bottom:1px solid #eee;
+            padding-top:.2rem;
+            padding-bottom:.2rem;
+
+            .thumbnail {
+                width:.46rem;
+                height:.46rem;
+                @include round(50%);
+                overflow:hidden;
+            }
+            .name {
+                color:#228ae6;
+                font-size:.22rem;
+            }
+            .item-text {
+                margin-bottom:.2rem;
+            }
+            .area {
+                margin-right:.1rem;
+                color:#a8a8a8;
+            }
+            .time {
+                color:#a8a8a8;
+            }
+            .item-content {
+                font-size:.24rem;
+                line-height:1.5;
+                color:#333;
+            }
+        }
+    }
+
+    .digg {
+        color:#cfcfcf;
+        font-size:.16rem;
+        img {
+            width:.24rem;
+        }
+    }
+}

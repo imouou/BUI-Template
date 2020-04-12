@@ -3,14 +3,13 @@
  * 默认模块名: pages/personal/personal
  * @return {[object]}  [ 返回一个对象 ]
  */
-loader.define(function(require,exports,module) {
+loader.define(function(require, exports, module) {
 
-    var pageview = {};
-
-    // 初始化定义
-    pageview.init = function () {
-
-    }
+    var pageview = {
+        init: function() {
+            // 这里初始化
+        }
+    };
 
     // 初始化
     pageview.init();
