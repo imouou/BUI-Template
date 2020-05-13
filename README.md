@@ -64,9 +64,9 @@ $ buijs create -t main-tab
 - case-163: 163新闻案例
 <table>
     <tr>
-        <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/case-login/preview.png" alt=""></div> <div style="font-size: 13px;">案例: case-login</div> <div style="font-size: 13px;">预览: index.html</div></td>
-        <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/case-tablogin/preview.png" alt=""></div> <div style="font-size: 13px;">案例: case-tablogin </div> <div style="font-size: 13px;">预览: index.html</div></td>
-        <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/case-163/preview.png" alt=""></div> <div style="font-size: 13px;">案例: case-163</div> <div style="font-size: 13px;">预览: index.html</div></td>
+        <td><div><img src="https://cdn.jsdelivr.net/gh/imouou/bui-template/templates/case-login/preview.png" alt=""></div> <div style="font-size: 13px;">案例: case-login</div> <div style="font-size: 13px;">预览: index.html</div></td>
+        <td><div><img src="https://cdn.jsdelivr.net/gh/imouou/bui-template/templates/case-tablogin/preview.png" alt=""></div> <div style="font-size: 13px;">案例: case-tablogin </div> <div style="font-size: 13px;">预览: index.html</div></td>
+        <td><div><img src="https://cdn.jsdelivr.net/gh/imouou/bui-template/templates/case-163/preview.png" alt=""></div> <div style="font-size: 13px;">案例: case-163</div> <div style="font-size: 13px;">预览: index.html</div></td>
     </tr>
 </table>
 
@@ -77,9 +77,9 @@ $ buijs create -t main-tab
 
 <table>
     <tr>
-        <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/main-tab/preview.png" alt=""></div> <div style="font-size: 13px;">模板: main-tab</div> <div style="font-size: 13px;">预览: index.html</div></td>
-        <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/main-tab-head/preview.png" alt=""></div> <div style="font-size: 13px;">模板: main-tab-head</div> <div style="font-size: 13px;">预览: index.html</div></td>
-        <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/main-tab-foot/preview.png" alt=""></div> <div style="font-size: 13px;">模板: main-tab-foot </div> <div style="font-size: 13px;">预览: index.html</div></td>
+        <td><div><img src="https://cdn.jsdelivr.net/gh/imouou/bui-template/templates/main-tab/preview.png" alt=""></div> <div style="font-size: 13px;">模板: main-tab</div> <div style="font-size: 13px;">预览: index.html</div></td>
+        <td><div><img src="https://cdn.jsdelivr.net/gh/imouou/bui-template/templates/main-tab-head/preview.png" alt=""></div> <div style="font-size: 13px;">模板: main-tab-head</div> <div style="font-size: 13px;">预览: index.html</div></td>
+        <td><div><img src="https://cdn.jsdelivr.net/gh/imouou/bui-template/templates/main-tab-foot/preview.png" alt=""></div> <div style="font-size: 13px;">模板: main-tab-foot </div> <div style="font-size: 13px;">预览: index.html</div></td>
     </tr>
 </table>
 
@@ -87,33 +87,33 @@ $ buijs create -t main-tab
 
 <table>
     <tr>
-        <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/page-addressbook/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-addressbook</div> <div style="font-size: 13px;">预览: index.html#pages/addressbook/addressbook</div></td>
-        <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/page-blog/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-blog </div> <div style="font-size: 13px;">预览: index.html#pages/blog/blog</div></td>
-        <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/page-icon/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-icon</div> <div style="font-size: 13px;">预览: index.html#pages/icon/icon</div></td>
+        <td><div><img src="https://cdn.jsdelivr.net/gh/imouou/bui-template/templates/page-addressbook/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-addressbook</div> <div style="font-size: 13px;">预览: index.html#pages/addressbook/addressbook</div></td>
+        <td><div><img src="https://cdn.jsdelivr.net/gh/imouou/bui-template/templates/page-blog/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-blog </div> <div style="font-size: 13px;">预览: index.html#pages/blog/blog</div></td>
+        <td><div><img src="https://cdn.jsdelivr.net/gh/imouou/bui-template/templates/page-icon/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-icon</div> <div style="font-size: 13px;">预览: index.html#pages/icon/icon</div></td>
     </tr>
     <tr>
-        <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/page-article/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-article</div> <div style="font-size: 13px;">预览: index.html#pages/article/article</div></td>
-        <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/page-article-list/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-article-list</div> <div style="font-size: 13px;">预览: index.html#pages/article-list/article-list</div></td>
-        <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/page-comment/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-comment</div> <div style="font-size: 13px;">预览: index.html#pages/comment/comment</div></td>
+        <td><div><img src="https://cdn.jsdelivr.net/gh/imouou/bui-template/templates/page-article/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-article</div> <div style="font-size: 13px;">预览: index.html#pages/article/article</div></td>
+        <td><div><img src="https://cdn.jsdelivr.net/gh/imouou/bui-template/templates/page-article-list/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-article-list</div> <div style="font-size: 13px;">预览: index.html#pages/article-list/article-list</div></td>
+        <td><div><img src="https://cdn.jsdelivr.net/gh/imouou/bui-template/templates/page-comment/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-comment</div> <div style="font-size: 13px;">预览: index.html#pages/comment/comment</div></td>
     </tr>
     <tr>
-        <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/page-list/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-list</div> <div style="font-size: 13px;">预览: index.html#pages/list/list</div></td>
-        <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/page-search/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-search</div> <div style="font-size: 13px;">预览: index.html#pages/search/search</div></td>
-        <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/page-history/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-history</div> <div style="font-size: 13px;">预览: index.html#pages/history/history</div></td>
+        <td><div><img src="https://cdn.jsdelivr.net/gh/imouou/bui-template/templates/page-list/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-list</div> <div style="font-size: 13px;">预览: index.html#pages/list/list</div></td>
+        <td><div><img src="https://cdn.jsdelivr.net/gh/imouou/bui-template/templates/page-search/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-search</div> <div style="font-size: 13px;">预览: index.html#pages/search/search</div></td>
+        <td><div><img src="https://cdn.jsdelivr.net/gh/imouou/bui-template/templates/page-history/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-history</div> <div style="font-size: 13px;">预览: index.html#pages/history/history</div></td>
     </tr>
     <tr>
-        <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/page-login/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-login</div> <div style="font-size: 13px;">预览: index.html#pages/login/login</div></td>
-        <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/page-register/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-register</div> <div style="font-size: 13px;">预览: index.html#pages/register/register</div></td>
-        <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/page-form/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-form</div> <div style="font-size: 13px;">预览: index.html#pages/form/form</div></td>
+        <td><div><img src="https://cdn.jsdelivr.net/gh/imouou/bui-template/templates/page-login/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-login</div> <div style="font-size: 13px;">预览: index.html#pages/login/login</div></td>
+        <td><div><img src="https://cdn.jsdelivr.net/gh/imouou/bui-template/templates/page-register/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-register</div> <div style="font-size: 13px;">预览: index.html#pages/register/register</div></td>
+        <td><div><img src="https://cdn.jsdelivr.net/gh/imouou/bui-template/templates/page-form/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-form</div> <div style="font-size: 13px;">预览: index.html#pages/form/form</div></td>
     </tr>
     <tr>
-        <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/page-chat/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-chat</div> <div style="font-size: 13px;">预览: index.html#pages/chat/chat</div></td>
-        <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/page-panel/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-panel</div> <div style="font-size: 13px;">预览: index.html#pages/panel/panel</div></td>
-        <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/page-personal/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-personal</div> <div style="font-size: 13px;">预览: index.html#pages/personal/personal</div></td>
+        <td><div><img src="https://cdn.jsdelivr.net/gh/imouou/bui-template/templates/page-chat/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-chat</div> <div style="font-size: 13px;">预览: index.html#pages/chat/chat</div></td>
+        <td><div><img src="https://cdn.jsdelivr.net/gh/imouou/bui-template/templates/page-panel/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-panel</div> <div style="font-size: 13px;">预览: index.html#pages/panel/panel</div></td>
+        <td><div><img src="https://cdn.jsdelivr.net/gh/imouou/bui-template/templates/page-personal/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-personal</div> <div style="font-size: 13px;">预览: index.html#pages/personal/personal</div></td>
     </tr>
     <tr>
-        <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/page-sidebar/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-sidebar</div> <div style="font-size: 13px;">预览: index.html#pages/sidebar/sidebar</div></td>
-        <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/page-photo/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-photo</div> <div style="font-size: 13px;">预览: index.html#pages/photo/photo</div></td>
-        <td><div><img src="https://raw.githubusercontent.com/imouou/BUI-Template/master/templates/page-msg/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-msg</div> <div style="font-size: 13px;">预览: index.html#pages/msg/msg</div></td>
+        <td><div><img src="https://cdn.jsdelivr.net/gh/imouou/bui-template/templates/page-sidebar/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-sidebar</div> <div style="font-size: 13px;">预览: index.html#pages/sidebar/sidebar</div></td>
+        <td><div><img src="https://cdn.jsdelivr.net/gh/imouou/bui-template/templates/page-photo/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-photo</div> <div style="font-size: 13px;">预览: index.html#pages/photo/photo</div></td>
+        <td><div><img src="https://cdn.jsdelivr.net/gh/imouou/bui-template/templates/page-msg/preview.png" alt=""></div> <div style="font-size: 13px;">模板: page-msg</div> <div style="font-size: 13px;">预览: index.html#pages/msg/msg</div></td>
     </tr>
 </table>
