@@ -8,6 +8,8 @@ const folder = {
 
 const gulp = require('gulp');
 const { task, dest, src, series } = require('gulp');
+// 压缩包
+const zip = require('gulp-zip');
 // ES6 转ES5
 const babel = require('gulp-babel');
 // 打包es6
@@ -411,6 +413,212 @@ task('images', function() {
 });
 
 
+task('mergeFile', function(cb) {
+    // 默认是 "dist/pages"
+    findFileMerge(folder.dist + "/" + app.package.folder);
+
+    cb();
+});
+
+task('index-babel-mini', cb => {
+    return src(folder.dist + "/index.js")
+        .pipe(babel({
+            presets: ['@babel/preset-env'],
+            plugins: ['@babel/plugin-transform-runtime']
+        }))
+        .pipe(plumber({
+            errorHandler: function(error) {
+                console.log(error)
+                this.emit('end');
+            }
+        }))
+        // 混淆
+        .pipe(app.uglify ? uglify({
+            "compress": {
+                "drop_debugger": false
+            },
+            "output": {
+                "max_line_len": false,
+                "comments": /^!/
+            },
+            "mangle": true
+        }) : plumber())
+        .pipe(dest(folder.temp));
+});
+// 模块化打包
+task('index-browserify', cb => {
+    let files = [{
+        path: folder.temp + "/index.js",
+        name: "index.js",
+        relativePath: "index.js",
+    }];
+
+    var task = files.map(entry => {
+            return browserify({
+                    entries: entry.path,
+                    debug: false
+                })
+                .bundle()
+                .on('error', function(error) {
+                    console.log(error.toString())
+                })
+                .pipe(stream(entry.name))
+                .pipe(buffer())
+                .pipe(dest(folder.dist))
+        })
+        // 任务合并
+    es.merge.apply(null, task)
+    cb() //这一句其实是因为V4不再支持同步任务，所以需要以这种方式或者其他API中提到的方式
+})
+
+function getTime() {
+    var date = new Date();
+
+    return "" + date.getFullYear() + (date.getMonth() + 1) + date.getDate() + date.getHours() + date.getMinutes() + date.getSeconds();
+}
+// 模块化打包
+task('dist-zip', cb => {
+    var tag = getTime();
+    console.log('dist/dist' + tag + '.zip 文件创建成功')
+    return src('dist/**')
+        .pipe(zip('dist' + tag + '.zip'))
+        .pipe(gulp.dest(folder.dist))
+    cb();
+})
+task('backup', cb => {
+    var tag = getTime();
+    return src('src/**')
+        .pipe(zip('src' + tag + '.zip'))
+        .pipe(gulp.dest('backup'))
+    cb();
+})
+
+// 找到文件进行打包处理
+function findFileMerge(startPath) {
+    let results = []
+    let startFolder = "dist";
+    let bundleFile = "index.js"; // 合并到首页
+    function finder(path) {
+        let files = fs.readdirSync(path)
+
+        files.forEach(val => {
+            let fPath = join(path, val);
+            let stats = fs.statSync(fPath)
+            if (stats.isDirectory()) {
+                finder(fPath)
+            }
+            if (stats.isFile() && val.lastIndexOf(".js") > -1 && val.lastIndexOf(".json") < 0) {
+                results.push({ path: fPath, name: val, relativePath: path.substr(folder.temp.length) })
+            }
+        })
+
+    }
+    // 查找dist目录
+    finder(startPath);
+
+    let res = results.forEach((item, index) => {
+
+                item.path = item.path.replace(/\\/g, '/');
+                let moduleName = item.path.replace(startFolder + "/" + app.package.folder, app.package.folder).replace(".js", "");
+                let _moduleName = moduleName;
+                // 读取每个文件
+                let data = fs.readFileSync(item.path, 'utf-8');
+
+                let datastr = data.toString();
+                let templateFile = startFolder + "/" + moduleName + ".html";
+                let templateHtml = "";
+                // 能否读取模板
+                try {
+                    fs.accessSync(templateFile, fs.constants.R_OK);
+                    templateHtml = fs.readFileSync(templateFile, "utf-8") || "";
+                } catch (err) {
+                    templateHtml = "";
+                }
+
+                // 把html模板变成一个function
+                let template = `function(){
+					   return ${"\`"+templateHtml+"\`"};
+		 }`
+		 
+		// 匹配 loader.define() 括号里面的内容, 里面有5种书写格式,
+		/*
+			1. loader.define(function(){});
+			2. loader.define("name",function(){});
+			3. loader.define("name",["pages/main"],function(main){});
+			4. loader.define(["pages/main"],function(main){});
+			5. loader.define({
+				moduleName:"",
+				depend: [],
+				loaded: function(){}
+			});
+		*/
+		 let rule = /(?<=loader\.define\()\s*([\s\S]+)\)/gm;
+		 let ruleName = /^"([\s\S]+?)",/gm;
+		 // 前面是数组的时候,loader.define([],function(){});
+		 let ruleDepend = /[\s,]*(\[[.|\s\S]+?])[,|\s]*?/;
+		 // 必须出现,前面必须有loader.define("",[],function(){});
+		 let ruleDepend2 = /[,]+(\[[.|\s\S]+?])[,|\s]*?/;
+		 let ruleFunction = /(function[\s\S]+\([\s\S]+\})/gm;
+		 // 提取 loader.define里面的内容
+		 let datas = rule.exec(datastr) || [];
+		 // 第2个是返回的值
+		 let result = datas[1] || "";
+		 // 获取
+		 let getRuleName = ruleName.exec(result);
+		 // 
+		moduleName = getRuleName && getRuleName[1] ? (getRuleName[1]||moduleName) : moduleName;
+		// 如果入口的配置
+		if( _moduleName === app.package.main || item.path === app.package.main ){
+			moduleName = "main";
+		}
+		 
+		 let hasName = result && (result.indexOf('"') == 0 || result.indexOf("'") == 0 );
+		 let isObject = result && result.indexOf('{') == 0;
+		 let isArray = result && result.indexOf('[') == 0;
+		 let isFunctioin = result && result.indexOf('function') == 0;
+		 if( isObject ){
+					   // 把值增加到 bundle.js , 这个文件会被首先引用进去, 等于所有模块都已经加载.
+					   fs.appendFileSync(startFolder+'/'+bundleFile,`;loader.set("${moduleName}",{
+						   template:${template}});
+						   loader.set("${moduleName}",${result})`,
+						   'utf8')
+					   console.log(moduleName+'对象模块合并成功');
+		 }else{
+					   
+					   let newloader = "";
+					   if( isFunctioin ){
+						   // 如果是只有回调, result = function(){}
+						   newloader = `;loader.set("${moduleName}",{
+							   template:${template},
+							   loaded:${result}});`;
+					   }else if( hasName || isArray ){
+						   // 如果有依赖 result = [],function(){}
+						   // 只有数组开头的时候, loader.define([],function(){}) 或者 loader.define("",[],function(){})
+						   let depend1 = isArray ? ruleDepend.exec(result)||[]: [];
+						   let depend2 = hasName ? ruleDepend2.exec(result) || [] : [];
+						   let depend = isArray ? depend1 : depend2;
+						   // if( moduleName.indexOf("store/template") > -1){
+							   // console.log(ruleDepend.exec(result)[1]+"测试")
+						   // }
+						   let loaded = ruleFunction.exec(result) || [];
+						   newloader = `;loader.set("${moduleName}",{
+							   template:${template},
+							   depend:${depend[1]||[]},
+							   loaded:${loaded[1]}});`;
+					   }
+					   
+					   // 把值增加到 bundle.js , 这个文件会被首先引用进去, 等于所有模块都已经加载.
+					   fs.appendFileSync(startFolder+'/'+bundleFile,newloader,'utf8')
+					   console.log(moduleName+'define模块合并成功');
+		 }
+		 if( index === results.length-1){
+			 console.log("合并完成")
+		 }
+
+    })
+    return res
+}
+
 // 监测新增
 function addFile(file) {
     console.log(file, "added");
@@ -578,3 +786,10 @@ exports.build = series('clean-tmp', 'clean-dist', 'move', 'css-minify', 'images'
 
 // 先编译再起服务,不需要每次都清除文件夹的内容 如果有scss目录,会在最后才生成, 如果没有,则以src/css/style.css 作为主要样式
 exports.dev = series('move', 'html', 'css', 'images', 'sass', 'less', 'babel', 'server-sync')
+
+// 打包成一个独立脚本,是否压缩
+if( app.package && app.package.uglify ){
+	exports.package = series('clean-tmp', 'clean-dist', 'move', 'css-minify', 'images', 'html', 'less-build', 'mergeFile', 'index-babel-mini', 'index-browserify', 'dist-zip');
+}else{
+	exports.package = series('clean-tmp', 'clean-dist', 'move', 'css-minify', 'images', 'html', 'less-build', 'mergeFile', 'dist-zip');
+}

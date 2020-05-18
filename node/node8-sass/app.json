@@ -6,6 +6,11 @@
         "livereload": false
     },
     "qrcode": "/index.html",
+    "package": {
+        "uglify": true,
+        "folder": "pages",
+        "main": "pages/main/main"
+    },
     "ignored": [
         "!src/README.md",
         "!src/preview.png"
