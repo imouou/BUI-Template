@@ -199,6 +199,7 @@ gulp.task('less', function() {
     return gulp.src(config.source.less)
         .pipe(sourcemaps.init())
         .pipe(less())
+        .pipe(autoprefixer(app.autoprefixer))
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest(sourceBuild + "/css"))
         .pipe(gulp.dest(sourcePath + "/css"))
@@ -208,6 +209,7 @@ gulp.task('less-build', function(cb) {
     del([sourceBuild + '/css/*.css.map']);
     return gulp.src(config.source.less)
         .pipe(less())
+        .pipe(autoprefixer(app.autoprefixer))
         .pipe(gulp.dest(sourceBuild + "/css"))
         .pipe(gulp.dest(sourcePath + "/css"))
 });
@@ -467,6 +469,7 @@ function changeFile(file) {
         gulp.src(config.source.less)
             .pipe(sourcemaps.init())
             .pipe(less())
+            .pipe(autoprefixer(app.autoprefixer))
             .pipe(sourcemaps.write('./'))
             .pipe(dest(sourceBuild + "/css"))
             .pipe(dest(sourcePath + "/css"))

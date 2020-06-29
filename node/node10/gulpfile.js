@@ -303,6 +303,7 @@ task('less', function() {
     return src(config.source.less)
         .pipe(sourcemaps.init())
         .pipe(less())
+        .pipe(app.autoprefixer ? autoprefixer(autoprefixOpt) : plumber())
         .pipe(sourcemaps.write('./'))
         .pipe(dest(sourceBuild + "/css"))
         .pipe(dest(sourcePath + "/css"))
@@ -312,6 +313,7 @@ task('less-build', function(cb) {
     del([sourceBuild + '/css/*.css.map']);
     return src(config.source.less)
         .pipe(less())
+        .pipe(app.autoprefixer ? autoprefixer(autoprefixOpt) : plumber())
         .pipe(dest(sourceBuild + "/css"))
         .pipe(dest(sourcePath + "/css"))
 });
@@ -518,12 +520,12 @@ function findFileMerge(startPath) {
 				loaded: function(){}
 			});
 		*/
-		 let rule = /(?<=loader\.define\()\s*([\s\S]+)\)/gm;
+		let rule = /(?<=loader\.define\()\s*([\s\S]+)\)/gm;
 		 let ruleName = /^"([\s\S]+?)",/gm;
 		 // 前面是数组的时候,loader.define([],function(){});
-		 let ruleDepend = /[\s,]*(\[[.|\s\S]+?])[,|\s]*?/;
+		 let ruleDepend = /[\s,]*(\[[.|\s\S]*?])[,|\s]*?/;
 		 // 必须出现,前面必须有loader.define("",[],function(){});
-		 let ruleDepend2 = /[,]+(\[[.|\s\S]+?])[,|\s]*?/;
+		 let ruleDepend2 = /[,]+(\[[.|\s\S]*?])[,|\s]*?/;
 		 let ruleFunction = /(function[\s\S]+\([\s\S]+\})/gm;
 		 // 提取 loader.define里面的内容
 		 let datas = rule.exec(datastr) || [];
@@ -636,6 +638,7 @@ function changeFile(file) {
         gulp.src(config.source.less)
             .pipe(sourcemaps.init())
             .pipe(less())
+            .pipe(app.autoprefixer ? autoprefixer(autoprefixOpt) : plumber())
             .pipe(sourcemaps.write('./'))
             .pipe(dest(sourceBuild + "/css"))
             .pipe(dest(sourcePath + "/css"))
