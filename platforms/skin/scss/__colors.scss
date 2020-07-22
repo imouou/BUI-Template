@@ -1,0 +1,218 @@
+@charset "utf-8";
+$progress-bgcolor: #dedede;
+//几种色系
+$colorsClassName: ( 1: default, 2: primary, 3: warning, 4: success, 5: danger, 6: info);
+//将背景颜色以键值对的形式存在map中
+$colorsBg: $default-bg-color,
+$primary-bg-color,
+$warning-bg-color,
+$success-bg-color,
+$danger-bg-color,
+$info-bg-color;
+$colorsText: $default-text-color,
+$primary-text-color,
+$warning-text-color,
+$success-text-color,
+$danger-text-color,
+$info-text-color;
+$colorsBorder: $default-border-color,
+$primary-border-color,
+$warning-border-color,
+$success-border-color,
+$danger-border-color,
+$info-border-color;
+$colorsActiveBg: $default-active-bg-color,
+$primary-active-bg-color,
+$warning-active-bg-color,
+$success-active-bg-color,
+$danger-active-bg-color,
+$info-active-bg-color;
+$colorsActiveText: $default-active-text-color,
+$primary-active-text-color,
+$warning-active-text-color,
+$success-active-text-color,
+$danger-active-text-color,
+$info-active-text-color;
+$colorsActiveBorder: $default-active-border-color,
+$primary-active-border-color,
+$warning-active-border-color,
+$success-active-border-color,
+$danger-active-border-color,
+$info-active-border-color;
+$colorsDisableBg: $default-disable-bg,
+$primary-disable-bg,
+$warning-disable-bg,
+$success-disable-bg,
+$danger-disable-bg,
+$info-disable-bg;
+$colorsDisableColor: $default-disable-color,
+$primary-disable-color,
+$warning-disable-color,
+$success-disable-color,
+$danger-disable-color,
+$info-disable-color;
+$colorsLightBg: $default-light-bg-color,
+$primary-light-bg-color,
+$warning-light-bg-color,
+$success-light-bg-color,
+$danger-light-bg-color,
+$info-light-bg-color;
+// 处理色系在按钮,图标,禁止状态
+@each $i,
+$item in $colorsClassName {
+    .#{$item} {
+        background-color: nth($colorsBg, $i);
+        color: nth($colorsText, $i);
+        // [class^=icon-] {
+        // color: nth($colorsText, $i);
+        // }
+        &[class^=icon-] {
+            background: none;
+            color: nth($colorsBg, $i);
+        }
+        &.#{$namespace}switch {
+            background: #dfdfdf;
+            /*&:after{
+                background: nth($colorsBg, $i);
+            }*/
+            &:checked {
+                background-color: nth($colorsBg, $i);
+            }
+            &:checked:after {
+                background: nth($colorsText, $i);
+            }
+        }
+        &.#{$namespace}switch-text {
+            background: #dfdfdf;
+            &:after {
+                // background: nth($colorsBg, $i);
+            }
+            &:checked {
+                background: nth($colorsBg, $i);
+            }
+            &:checked:before {
+                // background: nth($colorsBg, $i);
+            }
+        }
+        &.#{$namespace}check,
+        &.#{$namespace}switch-btn {
+            background: nth($colorsBg, $i);
+            &:before {
+                color: nth($colorsText, $i);
+            }
+            &:checked {
+                background: nth($colorsLightBg, $i);
+                border-color: nth($colorsBg, $i);
+            }
+            &:checked:before {
+                color: nth($colorsBg, $i);
+            }
+        }
+        &.#{$namespace}fav,
+        &.#{$namespace}like {
+            background: none;
+            color: #999;
+            // &:before{
+            //     color: nth($colorsBg, $i);
+            // }
+            &:checked:before {
+                color: nth($colorsBg, $i);
+            }
+        }
+        &.#{$namespace}sub {
+            background: none;
+            &:before {
+                border-right-color: nth($colorsBg, $i);
+            }
+        }
+        &.#{$namespace}tips,
+        &.#{$namespace}hint {
+            background: nth($colorsLightBg, $i);
+            color: nth($colorsBg, $i);
+            i {
+                color: nth($colorsBg, $i);
+            }
+        }
+        &.#{$namespace}range {
+            background: none;
+            &::-webkit-slider-thumb {
+                background: nth($colorsBg, $i);
+            }
+        }
+        &.#{$namespace}stepbar {
+            background: none;
+            .#{$namespace}stepbar-cell {
+                color: $body-color;
+                &.visited,
+                &.active {
+                    border-left-color: nth($colorsBg, $i);
+                    .#{$namespace}stepbar-dot {
+                        background-color: nth($colorsBg, $i);
+                    }
+                    .#{$namespace}stepbar-text {
+                        color: $body-color;
+                    }
+                }
+            }
+        }
+        &.#{$namespace}stepbar-line {
+            background: none;
+            .#{$namespace}stepbar-cell {
+                color: $body-color;
+                &.visited,
+                &.active {
+                    border-top-color: nth($colorsBg, $i);
+                    .#{$namespace}stepbar-dot {
+                        background-color: nth($colorsBg, $i);
+                    }
+                    .#{$namespace}stepbar-text {
+                        color: $body-color;
+                    }
+                }
+            }
+        }
+        &.#{$namespace}progress {
+            background: $progress-bgcolor;
+            &::-webkit-progress-value {
+                background: nth($colorsBg, $i);
+            }
+            .#{$namespace}progress-cell {
+                background: nth($colorsBg, $i);
+            }
+        }
+        &.reverse {
+            background: inherit;
+            color: nth($colorsBg, $i);
+        }
+    }
+    .#{$item}-reverse {
+        /*background:inherit;*/
+        color: nth($colorsBg, $i);
+        border-color: nth($colorsBg, $i);
+    }
+    [class*=#{$namespace}btn].#{$item} {
+        border-color: nth($colorsBorder, $i)
+    }
+    [class*=#{$namespace}btn].#{$item}:active {
+        background: nth($colorsActiveBg, $i);
+        color: nth($colorsActiveText, $i);
+        border-color: nth($colorsActiveBorder, $i);
+    }
+    // 禁止状态
+    [class*=#{$namespace}btn].disabled {
+        background-color: $disabled-bg-color;
+        border-color: $disabled-border-color;
+        color: $disabled-text-color;
+        &.#{$item} {
+            background: nth($colorsDisableBg, $i);
+            color: nth($colorsDisableColor, $i);
+            border-color: nth($colorsDisableColor, $i);
+            &:active {
+                background: nth($colorsDisableBg, $i);
+                color: nth($colorsDisableColor, $i);
+                border-color: nth($colorsDisableColor, $i);
+            }
+            ;
+        }
+    }
+}

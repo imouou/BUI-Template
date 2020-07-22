@@ -1,7 +1,6 @@
 loader.define(function(require, exports, module) {
     var pageview = {
         init: function() {
-            this.slide();
             this.list();
         },
         list: function() {
@@ -59,14 +58,6 @@ loader.define(function(require, exports, module) {
 
                     return html;
                 }
-            });
-        },
-        slide: function() {
-            var uiSlide = bui.slide({
-                id: "#uiSlide",
-                height: 380,
-                autopage: true,
-                loop: true
             });
         }
     }

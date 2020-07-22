@@ -2,6 +2,8 @@
 var gulp = require('gulp'),
     // 生成css,js map图
     sourcemaps = require('gulp-sourcemaps'),
+    // 压缩打包
+    zip = require('gulp-zip'),
     // 错误处理
     plumber = require('gulp-plumber'),
     // html压缩
@@ -49,8 +51,16 @@ var package = require('./package.json');
 var browserSync = require('browser-sync').create();
 var reload = browserSync.reload;
 
-// 获取package的项目配置
+const folder = {
+        src: 'src',
+        dist: 'dist',
+        temp: '.tmp'
+    }
+    // 获取package的项目配置
 var configName = package['projects'] && package['projects'][process.env.NODE_ENV] || 'app.json';
+var sourceTemp = process.env.NODE_ENV ? process.env.NODE_ENV + '/' + folder.temp : folder.temp;
+const join = require('path').join;
+
 
 var app = require("./" + configName),
     // 编译服务配置
@@ -181,7 +191,7 @@ function getServerPort() {
 
 
 // 清空文件,在最后构建的时候才加入这部
-gulp.task('clean-dist', cb => {
+gulp.task('clean-dist', function(cb) {
     return del([sourceBuild + '/**/*'], cb);
 });
 
@@ -190,6 +200,7 @@ gulp.task('less', function() {
     return gulp.src(config.source.less)
         .pipe(sourcemaps.init())
         .pipe(less())
+        .pipe(autoprefixer(app.autoprefixer))
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest(sourceBuild + "/css"))
         .pipe(gulp.dest(sourcePath + "/css"))
@@ -199,6 +210,7 @@ gulp.task('less-build', function(cb) {
     del([sourceBuild + '/css/*.css.map']);
     return gulp.src(config.source.less)
         .pipe(less())
+        .pipe(autoprefixer(app.autoprefixer))
         .pipe(gulp.dest(sourceBuild + "/css"))
         .pipe(gulp.dest(sourcePath + "/css"))
 });
@@ -445,6 +457,7 @@ function changeFile(file) {
         gulp.src(config.source.less)
             .pipe(sourcemaps.init())
             .pipe(less())
+            .pipe(autoprefixer(app.autoprefixer))
             .pipe(sourcemaps.write('./'))
             .pipe(dest(sourceBuild + "/css"))
             .pipe(dest(sourcePath + "/css"))
@@ -473,6 +486,184 @@ function changeFile(file) {
 }
 
 
+gulp.task('mergeFile', function(cb) {
+    // 默认是 "dist/pages"
+    findFileMerge(folder.dist + "/" + app.package.folder);
+
+    cb();
+});
+gulp.task('clean-tmp', function(cb) {
+    return del([sourceTemp], cb);
+});
+gulp.task('index-babel-mini', function(cb) {
+    return gulp.src(folder.dist + "/index.js")
+        // .pipe(changed(config.output.root))
+        // error end task
+        .pipe(plumber({
+            errorHandler: function(error) {
+                console.log(error)
+                this.emit('end');
+            }
+        }))
+        .pipe(babel(app.babel))
+        .pipe(uglify(app.uglify))
+        .pipe(gulp.dest(folder.temp));
+});
+gulp.task('move-tmp-index', function(cb) {
+    return gulp.src(folder.temp + "/index.js")
+        .pipe(gulp.dest(folder.dist));
+});
+
+function getTime() {
+    var date = new Date();
+
+    return "" + date.getFullYear() + (date.getMonth() + 1) + date.getDate() + date.getHours() + date.getMinutes() + date.getSeconds();
+}
+// 模块化打包
+gulp.task('dist-zip', function(cb) {
+    var tag = getTime();
+    console.log('dist/dist' + tag + '.zip 文件创建成功')
+    return gulp.src('dist/**')
+        .pipe(zip('dist' + tag + '.zip'))
+        .pipe(gulp.dest(folder.dist))
+        // cb();
+})
+
+gulp.task('backup', function(cb) {
+    var tag = getTime();
+    return gulp.src('src/**')
+        .pipe(zip('src' + tag + '.zip'))
+        .pipe(gulp.dest('backup'))
+        // cb();
+})
+
+
+// 找到文件进行打包处理
+function findFileMerge(startPath) {
+    let results = []
+    let startFolder = "dist";
+    let bundleFile = "index.js"; // 合并到首页
+    function finder(path) {
+        let files = fs.readdirSync(path)
+
+        files.forEach(function(val) {
+            let fPath = join(path, val);
+            let stats = fs.statSync(fPath)
+            if (stats.isDirectory()) {
+                finder(fPath)
+            }
+            if (stats.isFile() && val.lastIndexOf(".js") > -1 && val.lastIndexOf(".json") < 0) {
+                results.push({ path: fPath, name: val, relativePath: path.substr(folder.temp.length) })
+            }
+        })
+
+    }
+    // 查找dist目录
+    finder(startPath);
+
+    let res = results.forEach(function(item, index) {
+
+                item.path = item.path.replace(/\\/g, '/');
+                let moduleName = item.path.replace(startFolder + "/" + app.package.folder, app.package.folder).replace(".js", "");
+                let _moduleName = moduleName;
+                // 读取每个文件
+                let data = fs.readFileSync(item.path, 'utf-8');
+
+                let datastr = data.toString();
+                let templateFile = startFolder + "/" + moduleName + ".html";
+                let templateHtml = "";
+                // 能否读取模板
+                try {
+                    fs.accessSync(templateFile, fs.constants.R_OK);
+                    templateHtml = fs.readFileSync(templateFile, "utf-8") || "";
+                } catch (err) {
+                    templateHtml = "";
+                }
+
+                // 把html模板变成一个function
+                let template = `function(){
+					   return ${"\`"+templateHtml+"\`"};
+		 }`
+		 
+		// 匹配 loader.define() 括号里面的内容, 里面有5种书写格式,
+		/*
+			1. loader.define(function(){});
+			2. loader.define("name",function(){});
+			3. loader.define("name",["pages/main"],function(main){});
+			4. loader.define(["pages/main"],function(main){});
+			5. loader.define({
+				moduleName:"",
+				depend: [],
+				loaded: function(){}
+			});
+		*/
+		 let rule = /(?<=loader\.define\()\s*([\s\S]+)\)/gm;
+		 let ruleName = /^"([\s\S]+?)",/gm;
+		 // 前面是数组的时候,loader.define([],function(){});
+		 let ruleDepend = /[\s,]*(\[[.|\s\S]+?])[,|\s]*?/;
+		 // 必须出现,前面必须有loader.define("",[],function(){});
+		 let ruleDepend2 = /[,]+(\[[.|\s\S]+?])[,|\s]*?/;
+		 let ruleFunction = /(function[\s\S]+\([\s\S]+\})/gm;
+		 // 提取 loader.define里面的内容
+		 let datas = rule.exec(datastr) || [];
+		 // 第2个是返回的值
+		 let result = datas[1] || "";
+		 // 获取
+		 let getRuleName = ruleName.exec(result);
+		 // 
+		moduleName = getRuleName && getRuleName[1] ? (getRuleName[1]||moduleName) : moduleName;
+		// 如果入口的配置
+		if( _moduleName === app.package.main || item.path === app.package.main ){
+			moduleName = "main";
+		}
+		 
+		 let hasName = result && (result.indexOf('"') == 0 || result.indexOf("'") == 0 );
+		 let isObject = result && result.indexOf('{') == 0;
+		 let isArray = result && result.indexOf('[') == 0;
+		 let isFunctioin = result && result.indexOf('function') == 0;
+		 if( isObject ){
+					   // 把值增加到 bundle.js , 这个文件会被首先引用进去, 等于所有模块都已经加载.
+					   fs.appendFileSync(startFolder+'/'+bundleFile,`;loader.set("${moduleName}",{
+						   template:${template}});
+						   loader.set("${moduleName}",${result})`,
+						   'utf8')
+					   console.log(moduleName+'对象模块合并成功');
+		 }else{
+					   
+					   let newloader = "";
+					   if( isFunctioin ){
+						   // 如果是只有回调, result = function(){}
+						   newloader = `;loader.set("${moduleName}",{
+							   template:${template},
+							   loaded:${result}});`;
+					   }else if( hasName || isArray ){
+						   // 如果有依赖 result = [],function(){}
+						   // 只有数组开头的时候, loader.define([],function(){}) 或者 loader.define("",[],function(){})
+						   let depend1 = isArray ? ruleDepend.exec(result)||[]: [];
+						   let depend2 = hasName ? ruleDepend2.exec(result) || [] : [];
+						   let depend = isArray ? depend1 : depend2;
+						   // if( moduleName.indexOf("store/template") > -1){
+							   // console.log(ruleDepend.exec(result)[1]+"测试")
+						   // }
+						   let loaded = ruleFunction.exec(result) || [];
+						   newloader = `;loader.set("${moduleName}",{
+							   template:${template},
+							   depend:${depend[1]||[]},
+							   loaded:${loaded[1]}});`;
+					   }
+					   
+					   // 把值增加到 bundle.js , 这个文件会被首先引用进去, 等于所有模块都已经加载.
+					   fs.appendFileSync(startFolder+'/'+bundleFile,newloader,'utf8')
+					   console.log(moduleName+'define模块合并成功');
+		 }
+		 if( index === results.length-1){
+			 console.log("合并完成")
+		 }
+
+    })
+    return res
+}
+
 // 编译任务以后,缺省任务的服务才能跑起来
 gulp.task('build', sequence('clean-dist', 'move', 'move-bui', ['html'], ['css-minify'], ['images'], 'less-build', ['js-minify']));
 
@@ -483,3 +674,10 @@ gulp.task('server-build', sequence('move', 'move-bui', ['html'], ['css'], ['imag
 gulp.task('dev', ['server-sync']);
 
 gulp.task('default', ['dev']);
+
+// 打包成一个独立脚本,是否压缩
+if( app.package && app.package.uglify ){
+	gulp.task("package",sequence('clean-tmp', 'clean-dist', 'move', 'css-minify', 'images', 'html', 'less-build', 'mergeFile','index-babel-mini','move-tmp-index','dist-zip'));
+}else{
+	gulp.task("package",sequence('clean-tmp', 'clean-dist', 'move', 'css-minify', 'images', 'html', 'less-build', 'mergeFile','dist-zip'));
+}

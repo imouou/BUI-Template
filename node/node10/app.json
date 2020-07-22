@@ -17,6 +17,16 @@
             "ssl": false
         }
     },
+    "babel": {
+        "presets": [
+            "es2015"
+        ]
+    },
+    "package": {
+        "uglify": true,
+        "folder": "pages",
+        "main": "pages/main/main"
+    },
     "cleancss": false,
     "autoprefixer": true,
     "uglify": true,
