@@ -13,7 +13,4 @@ loader.define(function(require, exports, module) {
 
     // 初始化
     pageview.init();
-
-    // 输出模块
-    return pageview;
 })

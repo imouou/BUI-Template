@@ -1,0 +1,225 @@
+@charset "utf-8";
+// 全局
+body {
+    font-family: $font-family-default;
+    font-size: $font-size-default;
+    color: $body-color;
+}
+
+//排版
+.container {
+    padding-left: $padding-left;
+    padding-right: $padding-right;
+}
+
+.container-xy {
+    padding: $padding-left;
+}
+
+.container-x {
+    padding-left: $padding-left;
+    padding-right: $padding-right;
+}
+
+.container-y {
+    padding-top: $padding-left;
+    padding-bottom: $padding-right;
+}
+
+.container-full {
+    margin-left: - $margin-base*2;
+    margin-right: - $margin-base*2;
+}
+
+// 默认按钮
+.#{$namespace}btn-default {
+    background: $btn-bg;
+    color: $color;
+}
+
+// 头部
+.header.#{$namespace}bar,
+.header .#{$namespace}bar,
+header.#{$namespace}bar,
+header .#{$namespace}bar {
+    background: $main-color;
+}
+
+.#{$namespace}bar .#{$namespace}bar-left,
+.#{$namespace}bar .#{$namespace}bar-right {
+    height: $header-height;
+}
+
+// tab reverse相反的配色
+.#{$namespace}nav>[class*=#{$namespace}btn].active {
+    color: $main-color;
+    &:after {
+        background: $main-color;
+        width: $tab-nav-line-width;
+        left: 50%;
+        margin-left: -$tab-nav-line-width/2;
+    }
+}
+
+.#{$namespace}navbar,
+.#{$namespace}tab {
+    .#{$namespace}nav .active {
+        color: $main-color;
+        &:after {
+            background: $main-color;
+            width: $tab-nav-line-width;
+            left: 50%;
+            margin-left: -$tab-nav-line-width/2;
+        }
+    }
+    &.reverse {
+        .#{$namespace}nav>[class*=#{$namespace}btn] {
+            background: $main-color;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .#{$namespace}nav .active {
+            background: $main-color;
+            color: $color;
+            &:after {
+                background: $color;
+                bottom: .15rem;
+            }
+        }
+    }
+}
+
+// 侧边栏
+.#{$namespace}tab-sidenav .active {
+    border-color: $main-color
+}
+
+// 顶部导航
+.#{$namespace}nav {
+    >[class*=#{$namespace}btn] {
+        padding-top: .28rem;
+        padding-bottom: .28rem;
+        .icon,
+        i {
+            max-width: .64rem;
+            height: .44rem;
+            line-height: .44rem;
+            font-size: .44rem;
+        }
+    }
+    >.active {
+        color: $main-color;
+    }
+}
+
+// 底部导航
+footer .#{$namespace}nav [class*=#{$namespace}btn].#{$namespace}box-vertical {
+    padding-top: .12rem;
+    padding-bottom: .12rem;
+}
+
+.#{$namespace}mask {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+//搜索栏
+.#{$namespace}searchbar {
+    padding-top: .14rem;
+    padding-bottom: .14rem;
+    .btn-search {
+        color: #999;
+        &:active {
+            color: $main-color;
+        }
+    }
+    .#{$namespace}input {
+        background: $bg-color;
+        i {
+            color: #999;
+        }
+    }
+}
+
+// 弹出框 
+.#{$namespace}dialog {
+    border-radius: .08rem;
+    .#{$namespace}dialog-text {
+        color: $default-color;
+    }
+    .#{$namespace}dialog-foot {
+        border-top-color: $border-color;
+        [class*=#{$namespace}btn] {
+            border-left: 0;
+        }
+        .primary-reverse {
+            color: $danger-color;
+        }
+    }
+}
+
+// 自动消失提醒
+.#{$namespace}hint {
+    background: rgba(48, 48, 48, 0.9);
+}
+
+// 图文列表
+.item-title {
+    color: $default-color;
+}
+
+.#{$namespace}icon {
+    width: 1rem;
+    height: 1rem;
+    line-height: 1rem;
+    border-radius: 1rem;
+}
+
+.#{$namespace}list {
+    .#{$namespace}box .span1 {
+        color: $default-color;
+    }
+    >[class*=#{$namespace}btn] {
+        // border-color: $border-color;
+        .icon-listright {
+            color: $gray-color;
+        }
+    }
+}
+
+.#{$namespace}switch-text:after,
+.#{$namespace}switch-text:checked:after,
+.#{$namespace}switch:checked {
+    background-color: $main-color;
+}
+
+.#{$namespace}check :checked~label,
+input.#{$namespace}tag:checked,
+input.#{$namespace}check:checked {
+    border-color: $main-color;
+    background-color: rgba($main-color, 0.05);
+}
+
+.#{$namespace}dropdown-tab .#{$namespace}dropdown-content .#{$namespace}list .active {
+    color: $main-color;
+}
+
+.#{$namespace}choose.active:before,
+.#{$namespace}choose:checked:before,
+.#{$namespace}like.active:before,
+.#{$namespace}like:checked:before,
+.#{$namespace}fav.active:before,
+.#{$namespace}fav:checked:before,
+.#{$namespace}checkbox.active:before,
+.#{$namespace}checkbox:checked:before,
+.#{$namespace}radio.active:before,
+.#{$namespace}radio:checked:before {
+    color: $main-color;
+}
+
+// 日期控件
+.picker-item.picker-selected {
+    color: $main-color;
+}
+
+.picker-center-highlight {
+    border-color: $main-color;
+}
