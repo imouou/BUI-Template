@@ -317,6 +317,8 @@ task('sass', function() {
 });
 // less 初始化的时候编译, 并生成sourcemap 便于调试
 task('less', function() {
+
+    let autoprefixOpt = {}; //参考 https://github.com/postcss/autoprefixer#options
     return src(config.source.less)
         .pipe(sourcemaps.init())
         .pipe(less())
@@ -327,6 +329,8 @@ task('less', function() {
 });
 // less 初始化的时候编译, 并生成sourcemap 便于调试
 task('less-build', function(cb) {
+
+    let autoprefixOpt = {}; //参考 https://github.com/postcss/autoprefixer#options
     del([sourceBuild + '/css/*.css.map']);
     return src(config.source.less)
         .pipe(less())
@@ -637,6 +641,7 @@ function changeFile(file) {
     let isScss = file.lastIndexOf(".scss") > -1;
     let isCss = file.lastIndexOf(".css") > -1;
     let isLess = file.lastIndexOf(".less") > -1;
+    let autoprefixOpt = {}; //参考 https://github.com/postcss/autoprefixer#options
 
     if (isJs) {
         gulp.src(file, { base: './' + sourcePath }) //指定这个文件
@@ -653,7 +658,6 @@ function changeFile(file) {
             .pipe(md5(10, sourceBuild + '/**/*.html'))
     } else if (isScss) {
 
-        let autoprefixOpt = {}; //参考 https://github.com/postcss/autoprefixer#options
         let sassOpt = {
             "outputStyle": "compressed"
         }
@@ -668,7 +672,6 @@ function changeFile(file) {
             .pipe(reload({ stream: true }));
 
     } else if (isLess) {
-
         gulp.src(config.source.less)
             .pipe(sourcemaps.init())
             .pipe(less())
