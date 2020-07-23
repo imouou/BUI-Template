@@ -616,7 +616,10 @@ function changeFile(file) {
                 }
             }))
             // translate es5
-            .pipe(babel(app.babel))
+            .pipe(babel({
+                presets: ['@babel/preset-env'],
+                plugins: ['@babel/plugin-transform-runtime']
+            }))
             .pipe(gulp.dest('./' + sourceBuild))
             .pipe(reload({ stream: true }))
             .pipe(md5(10, sourceBuild + '/**/*.html'))
