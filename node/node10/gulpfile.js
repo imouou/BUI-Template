@@ -763,7 +763,7 @@ exports.build = series('clean-tmp', 'clean-dist', 'move', 'css-minify', 'images'
 exports.dev = series('move', 'html', 'css', 'images', 'less', 'babel', 'server-sync')
 // 打包成一个独立脚本,是否压缩
 if( app.package && app.package.uglify ){
-	exports.package = series('clean-tmp', 'clean-dist', 'move', 'css-minify', 'images', 'html', 'less-build', 'mergeFile', 'index-babel-mini', 'index-browserify', 'clean-tmp', 'dist-zip');
+	exports.package = series('clean-tmp', 'clean-dist', 'move', 'css-minify', 'images', 'html', 'less-build', 'mergeFile', 'index-babel-mini', 'index-browserify', 'dist-zip');
 }else{
-	exports.package = series('clean-tmp', 'clean-dist', 'move', 'css-minify', 'images', 'html', 'less-build', 'mergeFile', 'clean-tmp', 'dist-zip');
+	exports.package = series('clean-tmp', 'clean-dist', 'move', 'css-minify', 'images', 'html', 'less-build', 'mergeFile', 'dist-zip');
 }
