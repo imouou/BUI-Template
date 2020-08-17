@@ -229,6 +229,7 @@ function findSync(startPath) {
 }
 // 转es5 部分打包平台的webview对es6不友好,譬如: async await 等
 task('babel', cb => {
+
         let step = src(config.watcher.jsRule)
             .pipe(babel({
                 presets: ['@babel/preset-env'],
@@ -240,11 +241,12 @@ task('babel', cb => {
                     this.emit('end');
                 }
             }))
-            .pipe(dest(folder.temp))
+            .pipe(dest(sourceTemp))
         return step;
     })
     // 转义并压缩
 task('babel-mini', cb => {
+
         return src(config.watcher.jsRule)
             .pipe(babel({
                 presets: ['@babel/preset-env'],
@@ -267,13 +269,16 @@ task('babel-mini', cb => {
                 },
                 "mangle": true
             }) : plumber())
-            .pipe(dest(folder.temp));
+            .pipe(dest(sourceTemp));
     })
     // 模块化打包
 task('browserify', cb => {
-    let files = findSync(folder.temp)
+    let files = findSync(sourceTemp)
 
     var task = files.map(entry => {
+            // 去除 .temp/ 前缀
+            let relativeFile = process.env.NODE_ENV ? sourceBuild + entry.relativePath.substr(5) : folder.dist + entry.relativePath;
+
             return browserify({
                     entries: entry.path,
                     debug: false
@@ -284,12 +289,13 @@ task('browserify', cb => {
                 })
                 .pipe(stream(entry.name))
                 .pipe(buffer())
-                .pipe(dest(folder.dist + entry.relativePath))
+                .pipe(dest(relativeFile))
         })
         // 任务合并
     es.merge.apply(null, task)
     cb() //这一句其实是因为V4不再支持同步任务，所以需要以这种方式或者其他API中提到的方式
 })
+
 
 // 清空文件,在最后构建的时候才加入这部
 task('clean-dist', cb => {
