@@ -1,11 +1,13 @@
 <!DOCTYPE HTML>
 <html>
-
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
     <title>BUI</title>
-    <meta name="format-detection" content="telephone=no" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="theme-color" content="#39a4ff">
+	  <meta property="og:image" content="images/appicon/icon-512.png">
+	  <link rel="manifest" href="manifest.json">
+	  <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" href="css/bui.css" />
     <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -13,11 +15,23 @@
 <body>
     <!-- 第1步: 开启单页路由 -->
     <div id="bui-router"></div>
-
     <script src="js/zepto.js"></script>
     <script src="js/bui.js"></script>
     <!-- 初始化单页 -->
     <script src="index.js"></script>
+    <script>
+        // 检测浏览器是否支持SW
+        if(navigator.serviceWorker != null){
+          navigator.serviceWorker.register('sw.js',{scope: '/'})
+          .then(function(registartion){
+          //注册成功
+            console.log('支持sw:',registartion.scope)
+          }).catch(function (err){
+            console.log('fail')
+          });
+        }
+    </script>
+
 </body>
 
 </html>

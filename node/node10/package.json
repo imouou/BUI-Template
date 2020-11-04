@@ -20,6 +20,7 @@
         "@babel/plugin-transform-runtime": "^7.7.6",
         "@babel/preset-env": "^7.7.7",
         "autoprefixer": "^9.7.3",
+        "babelify": "^10.0.0",
         "browser-sync": "^2.26.7",
         "browserify": "^16.5.0",
         "cross-env": "^6.0.3",
