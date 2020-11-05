@@ -242,7 +242,7 @@ task('babel', cb => {
     let step = src(config.watcher.jsRule)
         .pipe(babel({
             presets: ['@babel/preset-env'],
-            plugins: ['@babel/plugin-transform-runtime']
+            plugins: ['@babel/plugin-transform-runtime', '@babel/plugin-transform-object-assign']
         }))
         .pipe(plumber({
             errorHandler: function (error) {
@@ -259,7 +259,7 @@ task('babel-mini', cb => {
     return src(config.watcher.jsRule)
         .pipe(babel({
             presets: ['@babel/preset-env'],
-            plugins: ['@babel/plugin-transform-runtime']
+            plugins: ['@babel/plugin-transform-runtime', '@babel/plugin-transform-object-assign']
         }))
         .pipe(plumber({
             errorHandler: function (error) {
@@ -450,11 +450,19 @@ task('mergeFile', function (cb) {
     cb();
 });
 
+
+function getTime() {
+    var date = new Date();
+
+    return "" + date.getFullYear() + (date.getMonth() + 1) + date.getDate() + date.getHours() + date.getMinutes() + date.getSeconds();
+}
+
+
 task('index-babel-mini', cb => {
     return src(folder.dist + "/index.js")
         .pipe(babel({
             presets: ['@babel/preset-env'],
-            plugins: ['@babel/plugin-transform-runtime']
+            plugins: ['@babel/plugin-transform-runtime', '@babel/plugin-transform-object-assign']
         }))
         .pipe(plumber({
             errorHandler: function (error) {
@@ -482,6 +490,9 @@ task('index-browserify', cb => {
         name: "index.js",
         relativePath: "index.js",
     }];
+
+    var tag = getTime();
+    console.log('dist/dist' + tag + '.zip 文件创建成功')
     // 这里需要找到多个文件再进行合并,是异步的, 会造成dist-zip压缩的时候,文件还是没有编译混淆的版本
     var task = files.map(entry => {
         return browserify({
@@ -495,17 +506,15 @@ task('index-browserify', cb => {
             .pipe(stream(entry.name))
             .pipe(buffer())
             .pipe(dest(folder.dist))
+            .pipe(src('dist/**'))
+            .pipe(zip('dist' + tag + '.zip'))
+            .pipe(gulp.dest(folder.dist))
     })
     // 任务合并
     es.merge.apply(null, task)
     cb() //这一句其实是因为V4不再支持同步任务，所以需要以这种方式或者其他API中提到的方式
 })
 
-function getTime() {
-    var date = new Date();
-
-    return "" + date.getFullYear() + (date.getMonth() + 1) + date.getDate() + date.getHours() + date.getMinutes() + date.getSeconds();
-}
 // 模块化打包
 task('dist-zip', cb => {
     var tag = getTime();
@@ -606,11 +615,22 @@ function findFileMerge(startPath) {
             moduleName = "main";
         }
         // 通过import 导入的模块也要进行打包
-        let importrule = /(import\s.+from\s["|'].+["|'])/gm;
+        let importrule = /(import[\s\S|.]+from\s+["|'].+?["|'])/gm;
         let importModules = datastr.match(importrule) || [];
+        // 当前文件路径
+        let apath = item.relativePath.split("/");
+        apath[0] = ".";
 
         importModules.forEach(function (el, index) {
-            let importfile = el.replace("./", "." + item.relativePath + "/");
+            // 有多少个 ../
+            let hasRelativePath = el.match(/\.\.\//g) || [];
+            let newpath = "";
+            for (let i = 0; i < apath.length - hasRelativePath.length; i++) {
+                newpath += apath[i] + "/";
+            }
+            // 把路径处理成相对根路径
+            let importfile = el.indexOf("../") > -1 ? el.replace("../", newpath).replace(/\.\.\//g, "") : el.replace("./", "." + item.relativePath + "/");
+
             fs.appendFileSync(startFolder + '/' + bundleFile, ";" + importfile);
         })
 
@@ -689,7 +709,7 @@ function changeFile(file) {
         browserify(file)
             .transform("babelify", {
                 presets: ["@babel/preset-env"],
-                plugins: ['@babel/plugin-transform-runtime']
+                plugins: ['@babel/plugin-transform-runtime', '@babel/plugin-transform-object-assign']
             })
             .bundle()
             .pipe(fs.createWriteStream(distfile))
@@ -851,15 +871,15 @@ task('server-sync', function () {
         });
 });
 
+
 // 清空缓存, 重新编译
-exports.build = series('clean-tmp', 'clean-dist', 'move', 'css-minify', 'images', 'html', 'sass-build', 'less-build', 'babel-mini', 'browserify') //series是gulpV4中新方法，按顺序执行
+exports.build = series('clean-tmp', 'clean-dist', 'move', 'css-minify', 'images', 'html', 'less-build', 'babel-mini', 'browserify') //series是gulpV4中新方法，按顺序执行
 
 // 先编译再起服务,不需要每次都清除文件夹的内容 如果有scss目录,会在最后才生成, 如果没有,则以src/css/style.css 作为主要样式
-exports.dev = series('move', 'html', 'css', 'images', 'sass', 'less', 'babel', 'browserify', 'server-sync');
-
+exports.dev = series('move', 'html', 'css', 'images', 'less', 'babel', 'browserify', 'server-sync')
 // 打包成一个独立脚本,是否压缩
 if (app.package && app.package.uglify) {
-    exports.package = series('clean-tmp', 'clean-dist', 'move', 'css-minify', 'images', 'html', 'less-build', 'mergeFile', 'babel', 'browserify', 'index-babel-mini', 'index-browserify', 'dist-zip');
+    exports.package = series('clean-tmp', 'clean-dist', 'move', 'css-minify', 'images', 'html', 'less-build', 'babel-mini', 'browserify', 'mergeFile', 'index-babel-mini', 'index-browserify');
 } else {
-    exports.package = series('clean-tmp', 'clean-dist', 'move', 'css-minify', 'images', 'html', 'less-build', 'mergeFile', 'babel', 'browserify', 'dist-zip');
+    exports.package = series('clean-tmp', 'clean-dist', 'move', 'css-minify', 'images', 'html', 'less-build', 'babel', 'browserify', 'mergeFile', 'dist-zip');
 }
