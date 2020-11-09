@@ -7,7 +7,12 @@ const folder = {
 }
 
 const gulp = require('gulp');
-const { task, dest, src, series } = require('gulp');
+const {
+    task,
+    dest,
+    src,
+    series
+} = require('gulp');
 // 压缩包
 const zip = require('gulp-zip');
 // ES6 转ES5
@@ -121,7 +126,7 @@ var config = {
 
 // 增加用户配置的忽略文件
 if ("ignored" in app) {
-    app.ignored.forEach(function(item, index) {
+    app.ignored.forEach(function (item, index) {
         var type = item.substr(item.lastIndexOf(".") + 1);
         switch (type) {
             case "css":
@@ -158,7 +163,7 @@ function getNetwork() {
         ifaces = os.networkInterfaces();
 
     for (let dev in ifaces) {
-        ifaces[dev].forEach(function(details, alias) {
+        ifaces[dev].forEach(function (details, alias) {
             if (details.family == 'IPv4') {
                 iptable[dev + (alias ? ':' + alias : '')] = details.address;
                 iptable["ip"] = details.address;
@@ -171,7 +176,7 @@ function getNetwork() {
 
 // 获取随机端口
 function getRandomPort() {
-    let random = Math.random() * 10000 + 1000;
+    let random = Math.random() * 10000 + 2000;
     let randomPort = parseInt(random);
 
     return randomPort;
@@ -215,7 +220,11 @@ function findSync(startPath) {
                 finder(fPath)
             }
             if (stats.isFile() && val.lastIndexOf(".js") > -1) {
-                result.push({ path: fPath, name: val, relativePath: path.substr(folder.temp.length) })
+                result.push({
+                    path: fPath,
+                    name: val,
+                    relativePath: path.substr(folder.temp.length)
+                })
             }
         })
 
@@ -229,67 +238,73 @@ function findSync(startPath) {
 }
 // 转es5 部分打包平台的webview对es6不友好,譬如: async await 等
 task('babel', cb => {
-        let step = src(config.watcher.jsRule)
-            .pipe(babel({
-                presets: ['@babel/preset-env'],
-                plugins: ['@babel/plugin-transform-runtime']
-            }))
-            .pipe(plumber({
-                errorHandler: function(error) {
-                    console.log(error)
-                    this.emit('end');
-                }
-            }))
-            .pipe(dest(folder.temp))
-        return step;
-    })
-    // 转义并压缩
+
+    let step = src(config.watcher.jsRule)
+        .pipe(babel({
+            presets: ['@babel/preset-env'],
+            plugins: ['@babel/plugin-transform-runtime', '@babel/plugin-transform-object-assign']
+        }))
+        .pipe(plumber({
+            errorHandler: function (error) {
+                console.log(error)
+                this.emit('end');
+            }
+        }))
+        .pipe(dest(sourceTemp))
+    return step;
+})
+// 转义并压缩
 task('babel-mini', cb => {
-        return src(config.watcher.jsRule)
-            .pipe(babel({
-                presets: ['@babel/preset-env'],
-                plugins: ['@babel/plugin-transform-runtime']
-            }))
-            .pipe(plumber({
-                errorHandler: function(error) {
-                    console.log(error)
-                    this.emit('end');
-                }
-            }))
-            // 混淆
-            .pipe(app.uglify ? uglify({
-                "compress": {
-                    "drop_debugger": false
-                },
-                "output": {
-                    "max_line_len": false,
-                    "comments": /^!/
-                },
-                "mangle": true
-            }) : plumber())
-            .pipe(dest(folder.temp));
-    })
-    // 模块化打包
+
+    return src(config.watcher.jsRule)
+        .pipe(babel({
+            presets: ['@babel/preset-env'],
+            plugins: ['@babel/plugin-transform-runtime', '@babel/plugin-transform-object-assign']
+        }))
+        .pipe(plumber({
+            errorHandler: function (error) {
+                console.log(error)
+                this.emit('end');
+            }
+        }))
+        // 混淆
+        .pipe(app.uglify ? uglify({
+            "compress": {
+                "drop_debugger": false
+            },
+            "output": {
+                "max_line_len": false,
+                "comments": /^!/
+            },
+            "mangle": true
+        }) : plumber())
+        .pipe(dest(sourceTemp));
+})
+// 模块化打包
 task('browserify', cb => {
-    let files = findSync(folder.temp)
+    let files = findSync(sourceTemp)
 
     var task = files.map(entry => {
-            return browserify({
-                    entries: entry.path,
-                    debug: false
-                })
-                .bundle()
-                .on('error', function(error) {
-                    console.log(error.toString())
-                })
-                .pipe(stream(entry.name))
-                .pipe(buffer())
-                .pipe(dest(folder.dist + entry.relativePath))
-        })
-        // 任务合并
+        // 去除 .temp/ 前缀
+        let relativeFile = process.env.NODE_ENV ? sourceBuild + entry.relativePath.substr(5) : folder.dist + entry.relativePath;
+
+        return browserify({
+                entries: entry.path,
+                debug: false
+            })
+            .bundle()
+            .on('error', function (error) {
+                console.log(error.toString())
+            })
+            .pipe(stream(entry.name))
+            .pipe(buffer())
+            .pipe(dest(relativeFile))
+    })
+    // 任务合并
     es.merge.apply(null, task)
     cb() //这一句其实是因为V4不再支持同步任务，所以需要以这种方式或者其他API中提到的方式
 })
+
 
 // 清空文件,在最后构建的时候才加入这部
 task('clean-dist', cb => {
@@ -301,7 +316,7 @@ task('clean-tmp', cb => {
 });
 
 // sass 初始化的时候编译, 并生成sourcemap 便于调试
-task('sass', function() {
+task('sass', function () {
     var autoprefixOpt = {}; //参考 https://github.com/postcss/autoprefixer#options
     var sassOpt = {
         "outputStyle": "compressed"
@@ -316,7 +331,7 @@ task('sass', function() {
         .pipe(dest(sourcePath + "/css"))
 });
 // less 初始化的时候编译, 并生成sourcemap 便于调试
-task('less', function() {
+task('less', function () {
 
     let autoprefixOpt = {}; //参考 https://github.com/postcss/autoprefixer#options
     return src(config.source.less)
@@ -328,7 +343,7 @@ task('less', function() {
         .pipe(dest(sourcePath + "/css"))
 });
 // less 初始化的时候编译, 并生成sourcemap 便于调试
-task('less-build', function(cb) {
+task('less-build', function (cb) {
 
     let autoprefixOpt = {}; //参考 https://github.com/postcss/autoprefixer#options
     del([sourceBuild + '/css/*.css.map']);
@@ -339,7 +354,7 @@ task('less-build', function(cb) {
         .pipe(dest(sourcePath + "/css"))
 });
 // sass 编译成压缩版本
-task('sass-build', function(cb) {
+task('sass-build', function (cb) {
     var autoprefixOpt = {}; //参考 https://github.com/postcss/autoprefixer#options
     var sassOpt = {
         "outputStyle": "compressed"
@@ -353,10 +368,12 @@ task('sass-build', function(cb) {
         .pipe(app.cleancss ? minifycss({
             "compatibility": "ie8"
         }) : plumber())
-        .pipe(reload({ stream: true }));
+        .pipe(reload({
+            stream: true
+        }));
 });
 // css 编译
-task('css', function() {
+task('css', function () {
     // 编译style.scss文件
     return src(config.source.css)
         .pipe(changed(sourceBuild + '/css/'))
@@ -364,7 +381,7 @@ task('css', function() {
 })
 
 // 改变的时候才执行压缩
-task('css-minify', function() {
+task('css-minify', function () {
     // 编译style.scss文件
     return src(config.source.css)
         .pipe(app.cleancss ? minifycss({
@@ -375,14 +392,14 @@ task('css-minify', function() {
 
 
 // move all file except pages/js/** .sass .md
-task('move', function() {
+task('move', function () {
     return src(config.watcher.moveRule)
         .pipe(changed(config.watcher.rootRule))
         .pipe(dest(config.output.root));
 });
 
 // compress html
-task('html', function() {
+task('html', function () {
     var options = {
         "removeComments": true,
         "collapseWhitespace": false,
@@ -400,17 +417,24 @@ task('html', function() {
 });
 
 // compress image
-task('images', function() {
+task('images', function () {
     // 有大图会很慢,默认不开启
     return src(config.source.images)
         // .pipe(changed(config.output.images))
         .pipe(app.imagemin ? imagemin([
-            imagemin.jpegtran({ progressive: true }),
-            imagemin.optipng({ optimizationLevel: 5 }),
+            imagemin.jpegtran({
+                progressive: true
+            }),
+            imagemin.optipng({
+                optimizationLevel: 5
+            }),
             imagemin.svgo({
-                plugins: [
-                    { removeViewBox: true },
-                    { cleanupIDs: false }
+                plugins: [{
+                        removeViewBox: true
+                    },
+                    {
+                        cleanupIDs: false
+                    }
                 ]
             })
         ]) : changed(config.output.images))
@@ -419,21 +443,29 @@ task('images', function() {
 });
 
 
-task('mergeFile', function(cb) {
+task('mergeFile', function (cb) {
     // 默认是 "dist/pages"
     findFileMerge(folder.dist + "/" + app.package.folder);
 
     cb();
 });
 
+
+function getTime() {
+    var date = new Date();
+
+    return "" + date.getFullYear() + (date.getMonth() + 1) + date.getDate() + date.getHours() + date.getMinutes() + date.getSeconds();
+}
+
+
 task('index-babel-mini', cb => {
     return src(folder.dist + "/index.js")
         .pipe(babel({
             presets: ['@babel/preset-env'],
-            plugins: ['@babel/plugin-transform-runtime']
+            plugins: ['@babel/plugin-transform-runtime', '@babel/plugin-transform-object-assign']
         }))
         .pipe(plumber({
-            errorHandler: function(error) {
+            errorHandler: function (error) {
                 console.log(error)
                 this.emit('end');
             }
@@ -459,29 +491,30 @@ task('index-browserify', cb => {
         relativePath: "index.js",
     }];
 
+    var tag = getTime();
+    console.log('dist/dist' + tag + '.zip 文件创建成功')
+    // 这里需要找到多个文件再进行合并,是异步的, 会造成dist-zip压缩的时候,文件还是没有编译混淆的版本
     var task = files.map(entry => {
-            return browserify({
-                    entries: entry.path,
-                    debug: false
-                })
-                .bundle()
-                .on('error', function(error) {
-                    console.log(error.toString())
-                })
-                .pipe(stream(entry.name))
-                .pipe(buffer())
-                .pipe(dest(folder.dist))
-        })
-        // 任务合并
+        return browserify({
+                entries: entry.path,
+                debug: false
+            })
+            .bundle()
+            .on('error', function (error) {
+                console.log(error.toString())
+            })
+            .pipe(stream(entry.name))
+            .pipe(buffer())
+            .pipe(dest(folder.dist))
+            .pipe(src('dist/**'))
+            .pipe(zip('dist' + tag + '.zip'))
+            .pipe(gulp.dest(folder.dist))
+    })
+    // 任务合并
     es.merge.apply(null, task)
     cb() //这一句其实是因为V4不再支持同步任务，所以需要以这种方式或者其他API中提到的方式
 })
 
-function getTime() {
-    var date = new Date();
-
-    return "" + date.getFullYear() + (date.getMonth() + 1) + date.getDate() + date.getHours() + date.getMinutes() + date.getSeconds();
-}
 // 模块化打包
 task('dist-zip', cb => {
     var tag = getTime();
@@ -514,7 +547,11 @@ function findFileMerge(startPath) {
                 finder(fPath)
             }
             if (stats.isFile() && val.lastIndexOf(".js") > -1 && val.lastIndexOf(".json") < 0) {
-                results.push({ path: fPath, name: val, relativePath: path.substr(folder.temp.length) })
+                results.push({
+                    path: fPath,
+                    name: val,
+                    relativePath: path.substr(folder.temp.length)
+                })
             }
         })
 
@@ -524,40 +561,40 @@ function findFileMerge(startPath) {
 
     let res = results.forEach((item, index) => {
 
-                item.path = item.path.replace(/\\/g, '/');
-                let moduleName = item.path.replace(startFolder + "/" + app.package.folder, app.package.folder).replace(".js", "");
-                let _moduleName = moduleName;
-                // 读取每个文件
-                let data = fs.readFileSync(item.path, 'utf-8');
+        item.path = item.path.replace(/\\/g, '/');
+        let moduleName = item.path.replace(startFolder + "/" + app.package.folder, app.package.folder).replace(".js", "");
+        let _moduleName = moduleName;
+        // 读取每个文件
+        let data = fs.readFileSync(item.path, 'utf-8');
 
-                let datastr = data.toString();
-                let templateFile = startFolder + "/" + moduleName + ".html";
-                let templateHtml = "";
-                // 能否读取模板
-                try {
-                    fs.accessSync(templateFile, fs.constants.R_OK);
-                    templateHtml = fs.readFileSync(templateFile, "utf-8") || "";
-                } catch (err) {
-                    templateHtml = "";
-                }
+        let datastr = data.toString();
+        let templateFile = startFolder + "/" + moduleName + ".html";
+        let templateHtml = "";
+        // 能否读取模板
+        try {
+            fs.accessSync(templateFile, fs.constants.R_OK);
+            templateHtml = fs.readFileSync(templateFile, "utf-8") || "";
+        } catch (err) {
+            templateHtml = "";
+        }
 
-                // 把html模板变成一个function
-                let template = `function(){
+        // 把html模板变成一个function
+        let template = `function(){
 					   return ${"\`"+templateHtml+"\`"};
 		 }`
-		 
-		// 匹配 loader.define() 括号里面的内容, 里面有5种书写格式,
-		/*
-			1. loader.define(function(){});
-			2. loader.define("name",function(){});
-			3. loader.define("name",["pages/main"],function(main){});
-			4. loader.define(["pages/main"],function(main){});
-			5. loader.define({
-				moduleName:"",
-				depend: [],
-				loaded: function(){}
-			});
-		*/
+
+        // 匹配 loader.define() 括号里面的内容, 里面有5种书写格式,
+        /*
+        	1. loader.define(function(){});
+        	2. loader.define("name",function(){});
+        	3. loader.define("name",["pages/main"],function(main){});
+        	4. loader.define(["pages/main"],function(main){});
+        	5. loader.define({
+        		moduleName:"",
+        		depend: [],
+        		loaded: function(){}
+        	});
+        */
         let rule = /(?<=loader\.define\()\s*([\s\S]+)\)/gm;
         let ruleName = /^"([\s\S]+?)",/gm;
         // 前面是数组的时候,loader.define([],function(){});
@@ -571,55 +608,75 @@ function findFileMerge(startPath) {
         let result = datas[1] || "";
         // 获取
         let getRuleName = ruleName.exec(result);
-		 // 
-		moduleName = getRuleName && getRuleName[1] ? (getRuleName[1]||moduleName) : moduleName;
-		// 如果入口的配置
-		if( _moduleName === app.package.main || item.path === app.package.main ){
-			moduleName = "main";
-		}
-		 
-		 let hasName = result && (result.indexOf('"') == 0 || result.indexOf("'") == 0 );
-		 let isObject = result && result.indexOf('{') == 0;
-		 let isArray = result && result.indexOf('[') == 0;
-		 let isFunctioin = result && result.indexOf('function') == 0;
-		 if( isObject ){
-					   // 把值增加到 bundle.js , 这个文件会被首先引用进去, 等于所有模块都已经加载.
-					   fs.appendFileSync(startFolder+'/'+bundleFile,`;loader.set("${moduleName}",{
+        // 
+        moduleName = getRuleName && getRuleName[1] ? (getRuleName[1] || moduleName) : moduleName;
+        // 如果入口的配置
+        if (_moduleName === app.package.main || item.path === app.package.main) {
+            moduleName = "main";
+        }
+        // 通过import 导入的模块也要进行打包
+        let importrule = /(import[\s\S|.]+from\s+["|'].+?["|'])/gm;
+        let importModules = datastr.match(importrule) || [];
+        // 当前文件路径
+        let apath = item.relativePath.split("/");
+        apath[0] = ".";
+
+        importModules.forEach(function (el, index) {
+            // 有多少个 ../
+            let hasRelativePath = el.match(/\.\.\//g) || [];
+            let newpath = "";
+            for (let i = 0; i < apath.length - hasRelativePath.length; i++) {
+                newpath += apath[i] + "/";
+            }
+            // 把路径处理成相对根路径
+            let importfile = el.indexOf("../") > -1 ? el.replace("../", newpath).replace(/\.\.\//g, "") : el.replace("./", "." + item.relativePath + "/");
+
+            fs.appendFileSync(startFolder + '/' + bundleFile, ";" + importfile);
+        })
+
+
+        let hasName = result && (result.indexOf('"') == 0 || result.indexOf("'") == 0);
+        let isObject = result && result.indexOf('{') == 0;
+        let isArray = result && result.indexOf('[') == 0;
+        let isFunctioin = result && result.indexOf('function') == 0;
+        if (isObject) {
+            // 把值增加到 bundle.js , 这个文件会被首先引用进去, 等于所有模块都已经加载.
+            fs.appendFileSync(startFolder + '/' + bundleFile, `;loader.set("${moduleName}",{
 						   template:${template}});
 						   loader.set("${moduleName}",${result})`,
-						   'utf8')
-					   console.log(moduleName+'对象模块合并成功');
-		 }else{
-					   
-					   let newloader = "";
-					   if( isFunctioin ){
-						   // 如果是只有回调, result = function(){}
-						   newloader = `;loader.set("${moduleName}",{
+                'utf8')
+            console.log(moduleName + '对象模块合并成功');
+        } else {
+
+            let newloader = "";
+            if (isFunctioin) {
+                // 如果是只有回调, result = function(){}
+                newloader = `;loader.set("${moduleName}",{
 							   template:${template},
 							   loaded:${result}});`;
-					   }else if( hasName || isArray ){
-						   // 如果有依赖 result = [],function(){}
-						   // 只有数组开头的时候, loader.define([],function(){}) 或者 loader.define("",[],function(){})
-						   let depend1 = isArray ? ruleDepend.exec(result)||[]: [];
-						   let depend2 = hasName ? ruleDepend2.exec(result) || [] : [];
-						   let depend = isArray ? depend1 : depend2;
-						   // if( moduleName.indexOf("store/template") > -1){
-							   // console.log(ruleDepend.exec(result)[1]+"测试")
-						   // }
-						   let loaded = ruleFunction.exec(result) || [];
-						   newloader = `;loader.set("${moduleName}",{
+            } else if (hasName || isArray) {
+                // 如果有依赖 result = [],function(){}
+                // 只有数组开头的时候, loader.define([],function(){}) 或者 loader.define("",[],function(){})
+                let depend1 = isArray ? ruleDepend.exec(result) || [] : [];
+                let depend2 = hasName ? ruleDepend2.exec(result) || [] : [];
+                let depend = isArray ? depend1 : depend2;
+                // if( moduleName.indexOf("store/template") > -1){
+                // console.log(ruleDepend.exec(result)[1]+"测试")
+                // }
+                let loaded = ruleFunction.exec(result) || [];
+                newloader = `;loader.set("${moduleName}",{
 							   template:${template},
 							   depend:${depend[1]||[]},
 							   loaded:${loaded[1]}});`;
-					   }
-					   
-					   // 把值增加到 bundle.js , 这个文件会被首先引用进去, 等于所有模块都已经加载.
-					   fs.appendFileSync(startFolder+'/'+bundleFile,newloader,'utf8')
-					   console.log(moduleName+'define模块合并成功');
-		 }
-		 if( index === results.length-1){
-			 console.log("合并完成")
-		 }
+            }
+
+            // 把值增加到 bundle.js , 这个文件会被首先引用进去, 等于所有模块都已经加载.
+            fs.appendFileSync(startFolder + '/' + bundleFile, newloader, 'utf8')
+            console.log(moduleName + 'define模块合并成功');
+        }
+        if (index === results.length - 1) {
+            console.log("合并完成")
+        }
 
     })
     return res
@@ -628,7 +685,9 @@ function findFileMerge(startPath) {
 // 监测新增
 function addFile(file) {
     console.log(file, "added");
-    gulp.src(file, { base: './' + sourcePath }) //指定这个文件
+    gulp.src(file, {
+            base: './' + sourcePath
+        }) //指定这个文件
         .pipe(gulp.dest('./' + sourceBuild))
 }
 // 监测新增
@@ -644,21 +703,23 @@ function changeFile(file) {
     let autoprefixOpt = {}; //参考 https://github.com/postcss/autoprefixer#options
 
     if (isJs) {
-        gulp.src(file, { base: './' + sourcePath }) //指定这个文件
-            .pipe(plumber({
-                errorHandler: function(error) {
-                    console.log(error)
-                    this.emit('end');
-                }
+        let relativePath = path.relative('./' + sourcePath, file);
+        let distfile = './' + folder.dist + '/' + relativePath;
+        // 文件单独打包成es5
+        browserify(file)
+            .transform("babelify", {
+                presets: ["@babel/preset-env"],
+                plugins: ['@babel/plugin-transform-runtime', '@babel/plugin-transform-object-assign']
+            })
+            .bundle()
+            .pipe(fs.createWriteStream(distfile))
+
+        // 刷新
+        gulp.src(distfile)
+            .pipe(reload({
+                stream: true
             }))
-            // translate es5
-            .pipe(babel({
-                presets: ['@babel/preset-env'],
-                plugins: ['@babel/plugin-transform-runtime']
-            }))
-            .pipe(gulp.dest('./' + sourceBuild))
-            .pipe(reload({ stream: true }))
-            .pipe(md5(10, sourceBuild + '/**/*.html'))
+
     } else if (isScss) {
 
         let sassOpt = {
@@ -672,7 +733,9 @@ function changeFile(file) {
             .pipe(sourcemaps.write('./'))
             .pipe(dest(sourceBuild + "/css"))
             .pipe(dest(sourcePath + "/css"))
-            .pipe(reload({ stream: true }));
+            .pipe(reload({
+                stream: true
+            }));
 
     } else if (isLess) {
         gulp.src(config.source.less)
@@ -682,32 +745,46 @@ function changeFile(file) {
             .pipe(sourcemaps.write('./'))
             .pipe(dest(sourceBuild + "/css"))
             .pipe(dest(sourcePath + "/css"))
-            .pipe(reload({ stream: true }));
+            .pipe(reload({
+                stream: true
+            }));
 
     } else if (isHtml) {
 
-        gulp.src(file, { base: './' + sourcePath })
+        gulp.src(file, {
+                base: './' + sourcePath
+            })
             .pipe(plumber())
             .pipe(htmlmin(app.htmlmin))
             .pipe(gulp.dest('./' + sourceBuild))
             .pipe(md5(10))
-            .pipe(reload({ stream: true }))
+            .pipe(reload({
+                stream: true
+            }))
     } else if (isCss) {
 
-        gulp.src(file, { base: './' + sourcePath })
+        gulp.src(file, {
+                base: './' + sourcePath
+            })
             .pipe(gulp.dest('./' + sourceBuild))
             .pipe(md5(10, sourceBuild + "/**/*.html"))
-            .pipe(reload({ stream: true }))
+            .pipe(reload({
+                stream: true
+            }))
     } else {
-        gulp.src(file, { base: './' + sourcePath })
+        gulp.src(file, {
+                base: './' + sourcePath
+            })
             .pipe(gulp.dest('./' + sourceBuild))
-            .pipe(reload({ stream: true }))
+            .pipe(reload({
+                stream: true
+            }))
     }
 
 }
 
 // 起一个普通服务
-task('server', function() {
+task('server', function () {
     var portObj = getServerPort();
 
     let proxys = [];
@@ -715,7 +792,7 @@ task('server', function() {
         let proxyObj = app["proxy"];
         let keys = Object.keys(proxyObj);
 
-        keys.forEach(function(item, i) {
+        keys.forEach(function (item, i) {
             let proxyItem = proxy(item, proxyObj[item])
             proxys.push(proxyItem);
         })
@@ -737,12 +814,14 @@ task('server', function() {
 
     // 插入二维码,手机扫码调试
     var qrurl = "http://" + ip + ":" + portObj.devPort + app.qrcode;
-    qrcode.generate(qrurl, { small: true });
+    qrcode.generate(qrurl, {
+        small: true
+    });
 
 });
 
 // 起一个同步实时修改的服务
-task('server-sync', function() {
+task('server-sync', function () {
     var portObj = getServerPort();
 
     let proxys = [];
@@ -750,7 +829,7 @@ task('server-sync', function() {
         let proxyObj = app["proxy"];
         let keys = Object.keys(proxyObj);
 
-        keys.forEach(function(item, i) {
+        keys.forEach(function (item, i) {
             let proxyItem = proxy(item, proxyObj[item])
             proxys.push(proxyItem);
         })
@@ -775,14 +854,16 @@ task('server-sync', function() {
     // 插入二维码,手机扫码调试
     var qrurl = "http://" + ip + ":" + portObj.distPort + app.qrcode;
 
-    qrcode.generate(qrurl, { small: true });
+    qrcode.generate(qrurl, {
+        small: true
+    });
     console.log("手机扫码预览效果");
 
     // 新增删除由插件负责
     watch(config.watcher.rootRule)
         .on('add', addFile)
         .on('change', changeFile)
-        .on('unlink', function(file) {
+        .on('unlink', function (file) {
             //删除文件
             let distFile = './' + sourceBuild + '/' + path.relative('./' + sourcePath, file); //计算相对路径
             fse.existsSync(distFile) && fse.unlink(distFile);
@@ -790,15 +871,15 @@ task('server-sync', function() {
         });
 });
 
+
 // 清空缓存, 重新编译
-exports.build = series('clean-tmp', 'clean-dist', 'move', 'css-minify', 'images', 'html', 'sass-build', 'less-build', 'babel-mini', 'browserify') //series是gulpV4中新方法，按顺序执行
+exports.build = series('clean-tmp', 'clean-dist', 'move', 'css-minify', 'images', 'html', 'less-build', 'babel-mini', 'browserify') //series是gulpV4中新方法，按顺序执行
 
 // 先编译再起服务,不需要每次都清除文件夹的内容 如果有scss目录,会在最后才生成, 如果没有,则以src/css/style.css 作为主要样式
-exports.dev = series('move', 'html', 'css', 'images', 'sass', 'less', 'babel', 'server-sync');
-
+exports.dev = series('move', 'html', 'css', 'images', 'less', 'babel', 'browserify', 'server-sync')
 // 打包成一个独立脚本,是否压缩
-if( app.package && app.package.uglify ){
-	exports.package = series('clean-tmp', 'clean-dist', 'move', 'css-minify', 'images', 'html', 'less-build', 'mergeFile', 'index-babel-mini', 'index-browserify', 'dist-zip');
-}else{
-	exports.package = series('clean-tmp', 'clean-dist', 'move', 'css-minify', 'images', 'html', 'less-build', 'mergeFile', 'dist-zip');
+if (app.package && app.package.uglify) {
+    exports.package = series('clean-tmp', 'clean-dist', 'move', 'css-minify', 'images', 'html', 'less-build', 'babel-mini', 'browserify', 'mergeFile', 'index-babel-mini', 'index-browserify');
+} else {
+    exports.package = series('clean-tmp', 'clean-dist', 'move', 'css-minify', 'images', 'html', 'less-build', 'babel', 'browserify', 'mergeFile', 'dist-zip');
 }

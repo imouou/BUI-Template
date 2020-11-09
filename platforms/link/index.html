@@ -15,9 +15,10 @@
     <div id="bui-router"></div>
 
     <script src="js/zepto.js"></script>
-    <!-- 新的bingotouch独立打包,内置cordova 8.1 获取版本 device.cordova -->
-    <script src="local://cordova.js"></script>
-    <script src="local://bingotouch.js"></script>
+    <script src="js/platform/cordova.js"></script>
+    <script src="js/platform/bingotouch.js"></script>
+    <!-- link原生插件,Link轻应用才引入,打包不用引入 -->
+    <script src="js/platform/linkplugins.js"></script>
     <script src="js/bui.js"></script>
     <!-- 修正iphone全屏问题, 打包引入,link轻应用不用引入 -->
     <!-- <script src="js/plugins/fixStatusBar.js"></script> -->
