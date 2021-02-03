@@ -52,11 +52,11 @@ var browserSync = require('browser-sync').create();
 var reload = browserSync.reload;
 
 const folder = {
-        src: 'src',
-        dist: 'dist',
-        temp: '.tmp'
-    }
-    // 获取package的项目配置
+    src: 'src',
+    dist: 'dist',
+    temp: '.tmp'
+}
+// 获取package的项目配置
 var configName = package['projects'] && package['projects'][process.env.NODE_ENV] || 'app.json';
 var sourceTemp = process.env.NODE_ENV ? process.env.NODE_ENV + '/' + folder.temp : folder.temp;
 const join = require('path').join;
@@ -110,7 +110,7 @@ var config = {
 
 // 增加用户配置的忽略文件
 if ("ignored" in app) {
-    app.ignored.forEach(function(item, index) {
+    app.ignored.forEach(function (item, index) {
         var type = item.substr(item.lastIndexOf(".") + 1);
         switch (type) {
             case "css":
@@ -147,7 +147,7 @@ function getNetwork() {
         ifaces = os.networkInterfaces();
 
     for (let dev in ifaces) {
-        ifaces[dev].forEach(function(details, alias) {
+        ifaces[dev].forEach(function (details, alias) {
             if (details.family == 'IPv4') {
                 iptable[dev + (alias ? ':' + alias : '')] = details.address;
                 iptable["ip"] = details.address;
@@ -160,7 +160,7 @@ function getNetwork() {
 
 // 获取随机端口
 function getRandomPort() {
-    let random = Math.random() * 10000 + 1000;
+    let random = Math.random() * 10000 + 2000;
     let randomPort = parseInt(random);
 
     return randomPort;
@@ -191,12 +191,12 @@ function getServerPort() {
 
 
 // 清空文件,在最后构建的时候才加入这部
-gulp.task('clean-dist', function(cb) {
+gulp.task('clean-dist', function (cb) {
     return del([sourceBuild + '/**/*'], cb);
 });
 
 // less 初始化的时候编译, 并生成sourcemap 便于调试
-gulp.task('less', function() {
+gulp.task('less', function () {
     return gulp.src(config.source.less)
         .pipe(sourcemaps.init())
         .pipe(less())
@@ -206,7 +206,7 @@ gulp.task('less', function() {
         .pipe(gulp.dest(sourcePath + "/css"))
 });
 // less 初始化的时候编译, 并生成sourcemap 便于调试
-gulp.task('less-build', function(cb) {
+gulp.task('less-build', function (cb) {
     del([sourceBuild + '/css/*.css.map']);
     return gulp.src(config.source.less)
         .pipe(less())
@@ -238,17 +238,17 @@ gulp.task('less-build', function(cb) {
 //         .pipe(reload({ stream: true }));
 // });
 // css 编译
-gulp.task('css', function() {
+gulp.task('css', function () {
     // 编译style.scss文件
     return gulp.src(config.source.css)
         .pipe(changed(sourceBuild + '/css/'))
         .pipe(gulp.dest(config.output.css))
-        // .pipe(md5(10, sourceBuild+"/**/*.html"))
-        // .pipe(reload({stream: true}));
+    // .pipe(md5(10, sourceBuild+"/**/*.html"))
+    // .pipe(reload({stream: true}));
 })
 
 // 改变的时候才执行压缩
-gulp.task('css-minify', function() {
+gulp.task('css-minify', function () {
     // 编译style.scss文件
     return gulp.src(config.source.css)
         // .pipe(changed(sourceBuild + '/css/'))
@@ -257,12 +257,12 @@ gulp.task('css-minify', function() {
 })
 
 // 处理完JS文件后返回流
-gulp.task('js-babel', function() {
+gulp.task('js-babel', function () {
 
     return gulp.src(config.watcher.jsRule)
         // error end task
         .pipe(plumber({
-            errorHandler: function(error) {
+            errorHandler: function (error) {
                 console.log(error)
                 this.emit('end');
             }
@@ -272,12 +272,12 @@ gulp.task('js-babel', function() {
         .pipe(gulp.dest(config.output.root))
 });
 // 脚本 编译
-gulp.task('js-minify', function() {
+gulp.task('js-minify', function () {
     return gulp.src(config.watcher.jsRule)
         // .pipe(changed(config.output.root))
         // error end task
         .pipe(plumber({
-            errorHandler: function(error) {
+            errorHandler: function (error) {
                 console.log(error)
                 this.emit('end');
             }
@@ -290,7 +290,7 @@ gulp.task('js-minify', function() {
 
 
 // 把bui需要的文件移动过去
-gulp.task('move-bui', function() {
+gulp.task('move-bui', function () {
 
     gulp.src([sourcePath + '/css/bui.css'])
         .pipe(gulp.dest(sourceBuild + '/css/'))
@@ -300,26 +300,26 @@ gulp.task('move-bui', function() {
         .pipe(gulp.dest(sourceBuild + '/js/platform/'))
 });
 // move all file except pages/js/** .sass .md
-gulp.task('move', function() {
+gulp.task('move', function () {
     return gulp.src(config.watcher.moveRule)
         .pipe(changed(config.watcher.rootRule))
         .pipe(gulp.dest(config.output.root));
 });
 
 // compress html
-gulp.task('html', function() {
+gulp.task('html', function () {
     var options = app.htmlmin;
     return gulp.src(config.watcher.htmlRule)
         .pipe(changed(sourceBuild))
         .pipe(plumber())
         .pipe(htmlmin(options))
         .pipe(gulp.dest(sourceBuild))
-        // .pipe(md5(10))
-        // .pipe(reload({stream: true}))
+    // .pipe(md5(10))
+    // .pipe(reload({stream: true}))
 });
 
 // compress image
-gulp.task('images', function() {
+gulp.task('images', function () {
     // 有大图会很慢,默认不开启
     if (app.imagemin) {
         return gulp.src(config.source.images)
@@ -335,7 +335,7 @@ gulp.task('images', function() {
 
 
 // 同步服务
-gulp.task('server-sync', ['server-build'], function() {
+gulp.task('server-sync', ['server-build'], function () {
     var portObj = getServerPort();
 
     let proxys = [];
@@ -343,7 +343,7 @@ gulp.task('server-sync', ['server-build'], function() {
         let proxyObj = app["proxy"];
         let keys = Object.keys(proxyObj);
 
-        keys.forEach(function(item, i) {
+        keys.forEach(function (item, i) {
             let proxyItem = proxy(item, proxyObj[item])
             proxys.push(proxyItem);
         })
@@ -368,14 +368,16 @@ gulp.task('server-sync', ['server-build'], function() {
     // 插入二维码,手机扫码调试
     var qrurl = "http://" + ip + ":" + portObj.distPort + app.qrcode;
 
-    qrcode.generate(qrurl, { small: true });
+    qrcode.generate(qrurl, {
+        small: true
+    });
     console.log("手机扫码预览效果");
 
     // 新增删除由插件负责
     watch(config.watcher.rootRule)
         .on('add', addFile)
         .on('change', changeFile)
-        .on('unlink', function(file) {
+        .on('unlink', function (file) {
             //删除文件
             let distFile = './' + sourceBuild + '/' + path.relative('./' + sourcePath, file); //计算相对路径
             fs.existsSync(distFile) && fs.unlink(distFile);
@@ -386,7 +388,7 @@ gulp.task('server-sync', ['server-build'], function() {
 });
 
 // 起一个src目录的server
-gulp.task('server', function() {
+gulp.task('server', function () {
     var portObj = getServerPort();
 
     let proxys = [];
@@ -394,7 +396,7 @@ gulp.task('server', function() {
         let proxyObj = app["proxy"];
         let keys = Object.keys(proxyObj);
 
-        keys.forEach(function(item, i) {
+        keys.forEach(function (item, i) {
             let proxyItem = proxy(item, proxyObj[item])
             proxys.push(proxyItem);
         })
@@ -416,14 +418,18 @@ gulp.task('server', function() {
 
     // 插入二维码,手机扫码调试
     var qrurl = "http://" + ip + ":" + portObj.devPort + app.qrcode;
-    qrcode.generate(qrurl, { small: true });
+    qrcode.generate(qrurl, {
+        small: true
+    });
 
 });
 
 // 监测新增
 function addFile(file) {
     console.log(file, "added");
-    gulp.src(file, { base: './' + sourcePath }) //指定这个文件
+    gulp.src(file, {
+            base: './' + sourcePath
+        }) //指定这个文件
         .pipe(gulp.dest('./' + sourceBuild))
 
 
@@ -440,9 +446,11 @@ function changeFile(file) {
     let isLess = file.lastIndexOf(".less") > -1;
 
     if (isJs) {
-        gulp.src(file, { base: './' + sourcePath }) //指定这个文件
+        gulp.src(file, {
+                base: './' + sourcePath
+            }) //指定这个文件
             .pipe(plumber({
-                errorHandler: function(error) {
+                errorHandler: function (error) {
                     console.log(error)
                     this.emit('end');
                 }
@@ -450,7 +458,9 @@ function changeFile(file) {
             // translate es5
             .pipe(babel(app.babel))
             .pipe(gulp.dest('./' + sourceBuild))
-            .pipe(reload({ stream: true }))
+            .pipe(reload({
+                stream: true
+            }))
             .pipe(md5(10, sourceBuild + '/**/*.html'))
     } else if (isLess) {
 
@@ -461,46 +471,60 @@ function changeFile(file) {
             .pipe(sourcemaps.write('./'))
             .pipe(dest(sourceBuild + "/css"))
             .pipe(dest(sourcePath + "/css"))
-            .pipe(reload({ stream: true }));
+            .pipe(reload({
+                stream: true
+            }));
 
     } else if (isHtml) {
 
-        gulp.src(file, { base: './' + sourcePath })
+        gulp.src(file, {
+                base: './' + sourcePath
+            })
             .pipe(plumber())
             .pipe(htmlmin(app.htmlmin))
             .pipe(gulp.dest('./' + sourceBuild))
             .pipe(md5(10))
-            .pipe(reload({ stream: true }))
+            .pipe(reload({
+                stream: true
+            }))
     } else if (isCss) {
 
-        gulp.src(file, { base: './' + sourcePath })
+        gulp.src(file, {
+                base: './' + sourcePath
+            })
             .pipe(gulp.dest('./' + sourceBuild))
             .pipe(md5(10, sourceBuild + "/**/*.html"))
-            .pipe(reload({ stream: true }))
+            .pipe(reload({
+                stream: true
+            }))
     } else {
-        gulp.src(file, { base: './' + sourcePath })
+        gulp.src(file, {
+                base: './' + sourcePath
+            })
             .pipe(gulp.dest('./' + sourceBuild))
-            .pipe(reload({ stream: true }))
+            .pipe(reload({
+                stream: true
+            }))
     }
 
 }
 
 
-gulp.task('mergeFile', function(cb) {
+gulp.task('mergeFile', function (cb) {
     // 默认是 "dist/pages"
     findFileMerge(folder.dist + "/" + app.package.folder);
 
     cb();
 });
-gulp.task('clean-tmp', function(cb) {
+gulp.task('clean-tmp', function (cb) {
     return del([sourceTemp], cb);
 });
-gulp.task('index-babel-mini', function(cb) {
+gulp.task('index-babel-mini', function (cb) {
     return gulp.src(folder.dist + "/index.js")
         // .pipe(changed(config.output.root))
         // error end task
         .pipe(plumber({
-            errorHandler: function(error) {
+            errorHandler: function (error) {
                 console.log(error)
                 this.emit('end');
             }
@@ -509,7 +533,7 @@ gulp.task('index-babel-mini', function(cb) {
         .pipe(uglify(app.uglify))
         .pipe(gulp.dest(folder.temp));
 });
-gulp.task('move-tmp-index', function(cb) {
+gulp.task('move-tmp-index', function (cb) {
     return gulp.src(folder.temp + "/index.js")
         .pipe(gulp.dest(folder.dist));
 });
@@ -520,21 +544,21 @@ function getTime() {
     return "" + date.getFullYear() + (date.getMonth() + 1) + date.getDate() + date.getHours() + date.getMinutes() + date.getSeconds();
 }
 // 模块化打包
-gulp.task('dist-zip', function(cb) {
+gulp.task('dist-zip', function (cb) {
     var tag = getTime();
     console.log('dist/dist' + tag + '.zip 文件创建成功')
     return gulp.src('dist/**')
         .pipe(zip('dist' + tag + '.zip'))
         .pipe(gulp.dest(folder.dist))
-        // cb();
+    // cb();
 })
 
-gulp.task('backup', function(cb) {
+gulp.task('backup', function (cb) {
     var tag = getTime();
     return gulp.src('src/**')
         .pipe(zip('src' + tag + '.zip'))
         .pipe(gulp.dest('backup'))
-        // cb();
+    // cb();
 })
 
 
@@ -546,14 +570,18 @@ function findFileMerge(startPath) {
     function finder(path) {
         let files = fs.readdirSync(path)
 
-        files.forEach(function(val) {
+        files.forEach(function (val) {
             let fPath = join(path, val);
             let stats = fs.statSync(fPath)
             if (stats.isDirectory()) {
                 finder(fPath)
             }
             if (stats.isFile() && val.lastIndexOf(".js") > -1 && val.lastIndexOf(".json") < 0) {
-                results.push({ path: fPath, name: val, relativePath: path.substr(folder.temp.length) })
+                results.push({
+                    path: fPath,
+                    name: val,
+                    relativePath: path.substr(folder.temp.length)
+                })
             }
         })
 
@@ -561,104 +589,104 @@ function findFileMerge(startPath) {
     // 查找dist目录
     finder(startPath);
 
-    let res = results.forEach(function(item, index) {
+    let res = results.forEach(function (item, index) {
 
-                item.path = item.path.replace(/\\/g, '/');
-                let moduleName = item.path.replace(startFolder + "/" + app.package.folder, app.package.folder).replace(".js", "");
-                let _moduleName = moduleName;
-                // 读取每个文件
-                let data = fs.readFileSync(item.path, 'utf-8');
+        item.path = item.path.replace(/\\/g, '/');
+        let moduleName = item.path.replace(startFolder + "/" + app.package.folder, app.package.folder).replace(".js", "");
+        let _moduleName = moduleName;
+        // 读取每个文件
+        let data = fs.readFileSync(item.path, 'utf-8');
 
-                let datastr = data.toString();
-                let templateFile = startFolder + "/" + moduleName + ".html";
-                let templateHtml = "";
-                // 能否读取模板
-                try {
-                    fs.accessSync(templateFile, fs.constants.R_OK);
-                    templateHtml = fs.readFileSync(templateFile, "utf-8") || "";
-                } catch (err) {
-                    templateHtml = "";
-                }
+        let datastr = data.toString();
+        let templateFile = startFolder + "/" + moduleName + ".html";
+        let templateHtml = "";
+        // 能否读取模板
+        try {
+            fs.accessSync(templateFile, fs.constants.R_OK);
+            templateHtml = fs.readFileSync(templateFile, "utf-8") || "";
+        } catch (err) {
+            templateHtml = "";
+        }
 
-                // 把html模板变成一个function
-                let template = `function(){
+        // 把html模板变成一个function
+        let template = `function(){
 					   return ${"\`"+templateHtml+"\`"};
 		 }`
-		 
-		// 匹配 loader.define() 括号里面的内容, 里面有5种书写格式,
-		/*
-			1. loader.define(function(){});
-			2. loader.define("name",function(){});
-			3. loader.define("name",["pages/main"],function(main){});
-			4. loader.define(["pages/main"],function(main){});
-			5. loader.define({
-				moduleName:"",
-				depend: [],
-				loaded: function(){}
-			});
-		*/
-		 let rule = /(?<=loader\.define\()\s*([\s\S]+)\)/gm;
-		 let ruleName = /^"([\s\S]+?)",/gm;
-		 // 前面是数组的时候,loader.define([],function(){});
-		 let ruleDepend = /[\s,]*(\[[.|\s\S]+?])[,|\s]*?/;
-		 // 必须出现,前面必须有loader.define("",[],function(){});
-		 let ruleDepend2 = /[,]+(\[[.|\s\S]+?])[,|\s]*?/;
-		 let ruleFunction = /(function[\s\S]+\([\s\S]+\})/gm;
-		 // 提取 loader.define里面的内容
-		 let datas = rule.exec(datastr) || [];
-		 // 第2个是返回的值
-		 let result = datas[1] || "";
-		 // 获取
-		 let getRuleName = ruleName.exec(result);
-		 // 
-		moduleName = getRuleName && getRuleName[1] ? (getRuleName[1]||moduleName) : moduleName;
-		// 如果入口的配置
-		if( _moduleName === app.package.main || item.path === app.package.main ){
-			moduleName = "main";
-		}
-		 
-		 let hasName = result && (result.indexOf('"') == 0 || result.indexOf("'") == 0 );
-		 let isObject = result && result.indexOf('{') == 0;
-		 let isArray = result && result.indexOf('[') == 0;
-		 let isFunctioin = result && result.indexOf('function') == 0;
-		 if( isObject ){
-					   // 把值增加到 bundle.js , 这个文件会被首先引用进去, 等于所有模块都已经加载.
-					   fs.appendFileSync(startFolder+'/'+bundleFile,`;loader.set("${moduleName}",{
+
+        // 匹配 loader.define() 括号里面的内容, 里面有5种书写格式,
+        /*
+        	1. loader.define(function(){});
+        	2. loader.define("name",function(){});
+        	3. loader.define("name",["pages/main"],function(main){});
+        	4. loader.define(["pages/main"],function(main){});
+        	5. loader.define({
+        		moduleName:"",
+        		depend: [],
+        		loaded: function(){}
+        	});
+        */
+        let rule = /(?<=loader\.define\()\s*([\s\S]+)\)/gm;
+        let ruleName = /^"([\s\S]+?)",/gm;
+        // 前面是数组的时候,loader.define([],function(){});
+        let ruleDepend = /[\s,]*(\[[.|\s\S]+?])[,|\s]*?/;
+        // 必须出现,前面必须有loader.define("",[],function(){});
+        let ruleDepend2 = /[,]+(\[[.|\s\S]+?])[,|\s]*?/;
+        let ruleFunction = /(function[\s\S]+\([\s\S]+\})/gm;
+        // 提取 loader.define里面的内容
+        let datas = rule.exec(datastr) || [];
+        // 第2个是返回的值
+        let result = datas[1] || "";
+        // 获取
+        let getRuleName = ruleName.exec(result);
+        // 
+        moduleName = getRuleName && getRuleName[1] ? (getRuleName[1] || moduleName) : moduleName;
+        // 如果入口的配置
+        if (_moduleName === app.package.main || item.path === app.package.main) {
+            moduleName = "main";
+        }
+
+        let hasName = result && (result.indexOf('"') == 0 || result.indexOf("'") == 0);
+        let isObject = result && result.indexOf('{') == 0;
+        let isArray = result && result.indexOf('[') == 0;
+        let isFunctioin = result && result.indexOf('function') == 0;
+        if (isObject) {
+            // 把值增加到 bundle.js , 这个文件会被首先引用进去, 等于所有模块都已经加载.
+            fs.appendFileSync(startFolder + '/' + bundleFile, `;loader.set("${moduleName}",{
 						   template:${template}});
 						   loader.set("${moduleName}",${result})`,
-						   'utf8')
-					   console.log(moduleName+'对象模块合并成功');
-		 }else{
-					   
-					   let newloader = "";
-					   if( isFunctioin ){
-						   // 如果是只有回调, result = function(){}
-						   newloader = `;loader.set("${moduleName}",{
+                'utf8')
+            console.log(moduleName + '对象模块合并成功');
+        } else {
+
+            let newloader = "";
+            if (isFunctioin) {
+                // 如果是只有回调, result = function(){}
+                newloader = `;loader.set("${moduleName}",{
 							   template:${template},
 							   loaded:${result}});`;
-					   }else if( hasName || isArray ){
-						   // 如果有依赖 result = [],function(){}
-						   // 只有数组开头的时候, loader.define([],function(){}) 或者 loader.define("",[],function(){})
-						   let depend1 = isArray ? ruleDepend.exec(result)||[]: [];
-						   let depend2 = hasName ? ruleDepend2.exec(result) || [] : [];
-						   let depend = isArray ? depend1 : depend2;
-						   // if( moduleName.indexOf("store/template") > -1){
-							   // console.log(ruleDepend.exec(result)[1]+"测试")
-						   // }
-						   let loaded = ruleFunction.exec(result) || [];
-						   newloader = `;loader.set("${moduleName}",{
+            } else if (hasName || isArray) {
+                // 如果有依赖 result = [],function(){}
+                // 只有数组开头的时候, loader.define([],function(){}) 或者 loader.define("",[],function(){})
+                let depend1 = isArray ? ruleDepend.exec(result) || [] : [];
+                let depend2 = hasName ? ruleDepend2.exec(result) || [] : [];
+                let depend = isArray ? depend1 : depend2;
+                // if( moduleName.indexOf("store/template") > -1){
+                // console.log(ruleDepend.exec(result)[1]+"测试")
+                // }
+                let loaded = ruleFunction.exec(result) || [];
+                newloader = `;loader.set("${moduleName}",{
 							   template:${template},
 							   depend:${depend[1]||[]},
 							   loaded:${loaded[1]}});`;
-					   }
-					   
-					   // 把值增加到 bundle.js , 这个文件会被首先引用进去, 等于所有模块都已经加载.
-					   fs.appendFileSync(startFolder+'/'+bundleFile,newloader,'utf8')
-					   console.log(moduleName+'define模块合并成功');
-		 }
-		 if( index === results.length-1){
-			 console.log("合并完成")
-		 }
+            }
+
+            // 把值增加到 bundle.js , 这个文件会被首先引用进去, 等于所有模块都已经加载.
+            fs.appendFileSync(startFolder + '/' + bundleFile, newloader, 'utf8')
+            console.log(moduleName + 'define模块合并成功');
+        }
+        if (index === results.length - 1) {
+            console.log("合并完成")
+        }
 
     })
     return res
@@ -676,8 +704,8 @@ gulp.task('dev', ['server-sync']);
 gulp.task('default', ['dev']);
 
 // 打包成一个独立脚本,是否压缩
-if( app.package && app.package.uglify ){
-	gulp.task("package",sequence('clean-tmp', 'clean-dist', 'move', 'css-minify', 'images', 'html', 'less-build', 'mergeFile','index-babel-mini','move-tmp-index','dist-zip'));
-}else{
-	gulp.task("package",sequence('clean-tmp', 'clean-dist', 'move', 'css-minify', 'images', 'html', 'less-build', 'mergeFile','dist-zip'));
+if (app.package && app.package.uglify) {
+    gulp.task("package", sequence('clean-tmp', 'clean-dist', 'move', 'css-minify', 'images', 'html', 'less-build', 'mergeFile', 'index-babel-mini', 'move-tmp-index', 'dist-zip'));
+} else {
+    gulp.task("package", sequence('clean-tmp', 'clean-dist', 'move', 'css-minify', 'images', 'html', 'less-build', 'mergeFile', 'dist-zip'));
 }

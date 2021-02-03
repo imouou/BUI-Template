@@ -421,6 +421,7 @@ function getTime() {
 task('index-babel-mini', cb => {
     return src(folder.dist + "/index.js")
         .pipe(babel({
+            compact: false, // 取消压缩文件超500k提醒
             presets: ['@babel/preset-env'],
             plugins: ['@babel/plugin-transform-runtime', '@babel/plugin-transform-object-assign']
         }))
