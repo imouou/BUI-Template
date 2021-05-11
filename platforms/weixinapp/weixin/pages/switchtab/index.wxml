@@ -1,0 +1,17 @@
+<view class="swiper-tab">
+    <view class="swiper-tab-list {{currentTab==0 ? 'on' : ''}}" data-current="0" bindtap="swichNav">产品</view>
+    <view class="swiper-tab-list {{currentTab==1 ? 'on' : ''}}" data-current="1" bindtap="swichNav">金融</view>
+    <view class="swiper-tab-list {{currentTab==2 ? 'on' : ''}}" data-current="2" bindtap="swichNav">理财</view>
+</view>
+
+<swiper current="{{currentTab}}" class="swiper-box" duration="300" style="height:{{winHeight - 31}}px" bindchange="bindChange">
+    <swiper-item>
+        <view>产品</view>
+    </swiper-item>
+    <swiper-item>
+        <view>金融</view>
+    </swiper-item>
+    <swiper-item>
+        <view>理财</view>
+    </swiper-item>
+</swiper>
