@@ -1,0 +1,27 @@
+<div class="bui-page bui-box-vertical">
+    <header>
+       <div class="bui-bar">
+        <div class="bui-bar-left">
+            <a class="bui-btn" onclick="bui.back();"><i class="icon-back"></i></a>
+        </div>
+        <div class="bui-bar-main">微信小程序接口</div>
+        <div class="bui-bar-right">
+            <!-- 右边按钮 -->
+        </div>
+       </div>
+    </header>
+    <main>
+        <!-- 正文内容 -->
+        <div class="container-xy bui-interval">
+            <div class="bui-btn" b-click="webview.getEnv()">获取当前环境</div>
+            <div class="bui-btn" b-click="webview.checkEnv()">是否在小程序环境</div>
+            <div class="bui-btn" b-click="webview.navigateTo('/pages/webapp/index?id=1&t=123')">小程序跳转指定页面</div>
+            <div class="bui-btn" b-click='webview.navigateBack()'>小程序后退</div>
+            <div class="bui-btn" b-click='webview.postMessage({"id":"123"})'>发送消息给小程序</div>
+            <div class="bui-btn" b-click='webview.redirectTo("/pages/webapp/index?id=1")'>关闭当前页面，跳转到应用内的某个页面</div>
+            <div class="bui-btn" b-click='webview.reLaunch("/pages/webapp/index?id=1")'>关闭所有页面, 打开到应用内的某个页面</div>
+            <div class="bui-btn" b-click='webview.switchTab("/pages/switchtab/index?id=1")'>小程序切换首页第2个tab</div>
+        </div>
+        
+    </main>
+</div>
