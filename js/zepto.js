@@ -895,9 +895,10 @@ var Zepto = (function() {
                     else if (!parent) return $(node).remove()
 
                     traverseNode(parent.insertBefore(node, target), function(el) {
-                        if (el.nodeName != null && el.nodeName.toUpperCase() === 'SCRIPT' &&
-                            (!el.type || el.type === 'text/javascript') && !el.src)
-                            window['eval'].call(window, el.innerHTML)
+                        // 针对script标签做执行处理，这段会被安全筛选出漏洞，禁止通过动态插入script的方式
+                        // if (el.nodeName != null && el.nodeName.toUpperCase() === 'SCRIPT' &&
+                        //     (!el.type || el.type === 'text/javascript') && !el.src)
+                        //     window['eval'].call(window, el.innerHTML)
                     })
                 })
             })
