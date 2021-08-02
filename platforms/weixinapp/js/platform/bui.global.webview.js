@@ -270,8 +270,9 @@ loader.global(function(global){
         return this;
     }
 
-// webview操作小程序图像接口的方法
-/*-------------------------------*/
+
+    // webview操作小程序图像接口的方法
+    /*-------------------------------*/
 
 
     return {
