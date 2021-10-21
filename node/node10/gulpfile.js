@@ -498,6 +498,9 @@ function findFileMerge(startPath) {
     let results = []
     let startFolder = "dist";
     let bundleFile = "index.js"; // 合并到首页
+
+    let indexImports = [];  // 首页用到import的地方
+
     function finder(path) {
         let files = fs.readdirSync(path)
 
@@ -517,9 +520,34 @@ function findFileMerge(startPath) {
         })
 
     }
+
+    // 单独寻找首页匹配 import 
+    function findeIndex(){
+        let data = fs.readFileSync("src/index.js", 'utf-8');
+
+        // 去掉注释的字符
+        let datastr = data.toString().replace(/\/\*[\s\S]*\*\/|\/\/.*/gm,"");
+            
+        let importrule = /import\s[\{|\}]*.+['|;]*/gm;
+        let importModules = datastr.match(importrule) || [];
+
+        // 去空格
+        importModules = importModules.map((item)=>{
+            let str = item.replace(/{\s*/g,'{').replace(/\s*}/g,'}').replace(/[\s]*,[\s]/g,',');
+            
+            return str;
+        })
+
+        indexImports = [...importModules];
+
+    }
+    findeIndex();
     // 查找dist目录
     finder(startPath);
 
+
+    // 导入的所有依赖模块
+    let importAllModules = [];
     let res = results.forEach((item, index) => {
 
         item.path = item.path.replace(/\\/g, '/');
@@ -528,7 +556,7 @@ function findFileMerge(startPath) {
         // 读取每个文件
         let data = fs.readFileSync(item.path, 'utf-8');
 
-        let datastr = data.toString();
+        let datastr = data.toString().replace(/\/\*[\s\S]*\*\/|\/\/.*/gm,"");
         let templateFile = startFolder + "/" + moduleName + ".html";
 
         let templateHtml = "";
@@ -577,11 +605,19 @@ function findFileMerge(startPath) {
             moduleName = "main";
         }
         // 通过import 导入的模块也要进行打包
-        let importrule = /(import[\s\S|.]+from\s+["|'].+?["|'])/gm;
+        // let importrule = /(import[\s\S|.]+from\s+["|'].+?["|'])/gm;
+        let importrule = /import\s[\{|\}]*.+['|;]*/gm;
         let importModules = datastr.match(importrule) || [];
         // 当前文件路径
         let apath = item.relativePath.split("/");
         apath[0] = ".";
+
+        // 去空格
+        importModules = importModules.map((item)=>{
+            let str = item.replace(/{\s*/g,'{').replace(/\s*}/g,'}').replace(/[\s]*,[\s]/g,',');
+            
+            return str;
+        })
 
         importModules.forEach(function (el, index) {
             // 有多少个 ../
@@ -592,7 +628,13 @@ function findFileMerge(startPath) {
             }
             // 把路径处理成相对根路径
             let importfile = el.indexOf("../") > -1 ? el.replace("../", newpath).replace(/\.\.\//g, "") : el.replace("./", "." + item.relativePath + "/");
+            
+            // 如果里面有相同，则不导入
+            if( importAllModules.includes(importfile) || indexImports.includes(importfile) ){
+                return;
+            }
 
+            importAllModules.push(importfile);
             fs.appendFileSync(startFolder + '/' + bundleFile, ";" + importfile);
         })
 
@@ -606,7 +648,7 @@ function findFileMerge(startPath) {
 						   template:${template}});
 						   loader.set("${moduleName}",${result})`,
                 'utf8')
-            console.log(moduleName + '对象模块合并成功');
+            console.log(moduleName + ' 对象模块合并成功');
         } else {
 
             let newloader = "";
