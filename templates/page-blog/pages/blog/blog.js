@@ -3,7 +3,7 @@
  * 默认模块名: pages/blog/blog
  * @return {[object]}  [ 返回一个对象 ]
  */
-loader.define(function(require, exports, module) {
+loader.define(function(requires, exports, module) {
 
     // 接收url传参
     var pageParams = router.getPageParams();

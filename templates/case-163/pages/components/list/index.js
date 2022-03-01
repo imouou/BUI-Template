@@ -1,7 +1,7 @@
 /**
  * [下拉刷新,滚动分页公共component]
  */
-loader.define(function(require, exports, module) {
+loader.define(function(requires, exports, module) {
     var pageview = {
       init: function(){
         // 初始化列表

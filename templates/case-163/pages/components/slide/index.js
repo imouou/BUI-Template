@@ -1,7 +1,7 @@
 /**
  * [头条模块]
  */
-loader.define(function(require, exports, module) {
+loader.define(function(requires, exports, module) {
     var pageview = {
       init: function(){
         console.log(bui.history.getParams(module.id))

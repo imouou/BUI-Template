@@ -1,4 +1,4 @@
-loader.define(function(require, exports, module) {
+loader.define(function(requires, exports, module) {
     var pageview = {
         init: function() {
             this.listInit();

@@ -1,7 +1,7 @@
 /**
  * [新闻模块]
  */
-loader.define(function(require, exports, module) {
+loader.define(function(requires, exports, module) {
     var pageview = {
         init: function() {
             // 初始化导航

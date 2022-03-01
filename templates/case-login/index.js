@@ -4,7 +4,7 @@ window.router = bui.router();
 window.storage = bui.storage();
 
 // 全局登录页
-bui.ready(function() {
+bui.ready(function(global) {
 
     // 初始化数据行为存储
     window.store = bui.store({

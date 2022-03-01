@@ -9,7 +9,7 @@
       mod.init()
    })
  */
-loader.define(function(require, exports, module, global) {
+loader.define(function(requires, exports, module, global) {
     // 定义
     var pageview = {
         init: function() {

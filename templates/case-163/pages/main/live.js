@@ -1,4 +1,4 @@
-loader.define(function(require, exports, module) {
+loader.define(function(requires, exports, module) {
     console.log("live was loaded")
     var pageview = {
         init: function() {

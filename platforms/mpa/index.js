@@ -1,5 +1,5 @@
 // 多页的初始化都在 bui.ready
-bui.ready(function() {
+bui.ready(function(global) {
 
 
     // 绑定事件

@@ -3,7 +3,7 @@
  * 默认模块名: pages/list/list
  * @return {[object]}  [ 返回一个对象 ]
  */
-loader.define(function(require, exports, module) {
+loader.define(function(requires, exports, module) {
 
     // 接收component传过来的参数
     var param = bui.history.getParams(module.id);

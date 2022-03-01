@@ -60,7 +60,7 @@
 // 开启单页路由
 window.router = bui.router();
 
-bui.ready(function() {
+bui.ready(function(global) {
     // 初始化路由
     router.init({
         id: "#bui-router",

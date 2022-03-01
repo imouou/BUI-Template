@@ -1,7 +1,7 @@
 window.router = bui.router();
 
 
-bui.ready(function ready() {
+bui.ready(function(global) {
     // 初始化路由
     router.init({
         id: "#bui-router",
@@ -21,6 +21,11 @@ bui.ready(function ready() {
         $("#bui-router").on("click", ".btn-back", function(e) {
             // 支持后退多层,支持回调
             bui.back();
+        })
+
+        router.on("pageshow",function(e){
+            // 修改后退的标题
+            document.title = e.target?.exports?.title || e.target?.exports?.$data.title || "BUI";
         })
     }
 })

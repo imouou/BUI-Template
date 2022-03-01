@@ -7,7 +7,7 @@ window.storage = bui.storage();
 var roleList = ["pages/personal/index"];
 
 // 全局登录页
-bui.ready(function() {
+bui.ready(function(global) {
 
 
     // 初始化数据行为存储

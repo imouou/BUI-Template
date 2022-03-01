@@ -1,4 +1,4 @@
-loader.define(function(require,
+loader.define(function(requires,
     export, module) {
     // 接收`component` 标签上的属性参数
     var params = bui.history.getParams(module.id);

@@ -1,4 +1,4 @@
-loader.define(function(require,exports,module){
+loader.define(function(requires,exports,module){
 
     var pageParams = bui.history.getParams(module.id);
     // 如果type是在评论页进来, 则不需要显示多少条评论

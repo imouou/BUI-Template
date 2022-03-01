@@ -316,6 +316,12 @@ task('clean-tmp', cb => {
 // less 初始化的时候编译, 并生成sourcemap 便于调试
 task('less', function () {
     let autoprefixOpt = {}; //参考 https://github.com/postcss/autoprefixer#options
+
+    src([sourcePath + '/pages/**/*.less', '!' + sourcePath + '/pages/**/_*.less'])
+    .pipe(less())
+    .pipe(app.autoprefixer ? autoprefixer(autoprefixOpt) : plumber())
+    .pipe(dest(sourceBuild + "/pages/"))
+
     return src(config.source.less)
         .pipe(sourcemaps.init())
         .pipe(less())
@@ -328,6 +334,13 @@ task('less', function () {
 task('less-build', function (cb) {
     let autoprefixOpt = {}; //参考 https://github.com/postcss/autoprefixer#options
     del([sourceBuild + '/css/*.css.map']);
+
+    // 输出单独组件的less文件
+    src([sourcePath + '/pages/**/*.less', '!' + sourcePath + '/pages/**/_*.less'])
+    .pipe(less())
+    .pipe(app.autoprefixer ? autoprefixer(autoprefixOpt) : plumber())
+    .pipe(dest(sourceBuild + "/pages/"))
+
     return src(config.source.less)
         .pipe(less())
         .pipe(app.autoprefixer ? autoprefixer(autoprefixOpt) : plumber())
@@ -498,6 +511,9 @@ function findFileMerge(startPath) {
     let results = []
     let startFolder = "dist";
     let bundleFile = "index.js"; // 合并到首页
+
+    let indexImports = [];  // 首页用到import的地方
+
     function finder(path) {
         let files = fs.readdirSync(path)
 
@@ -517,9 +533,34 @@ function findFileMerge(startPath) {
         })
 
     }
+
+    // 单独寻找首页匹配 import 
+    function findeIndex(){
+        let data = fs.readFileSync("src/index.js", 'utf-8');
+
+        // 去掉注释的字符
+        let datastr = data.toString().replace(/\/\*[\s\S]*\*\/|^\s*\/\/.*/gm,"");
+            
+        let importrule = /import\s[\{|\}]*.+['|;]*/gm;
+        let importModules = datastr.match(importrule) || [];
+
+        // 去空格
+        importModules = importModules.map((item)=>{
+            let str = item.replace(/{\s*/g,'{').replace(/\s*}/g,'}').replace(/[\s]*,[\s]/g,',');
+            
+            return str;
+        })
+
+        indexImports = [...importModules];
+
+    }
+    findeIndex();
     // 查找dist目录
     finder(startPath);
 
+
+    // 导入的所有依赖模块
+    let importAllModules = [];
     let res = results.forEach((item, index) => {
 
         item.path = item.path.replace(/\\/g, '/');
@@ -528,7 +569,7 @@ function findFileMerge(startPath) {
         // 读取每个文件
         let data = fs.readFileSync(item.path, 'utf-8');
 
-        let datastr = data.toString();
+        let datastr = data.toString().replace(/\/\*[\s\S]*\*\/|^\s*\/\/.*/gm,"");
         let templateFile = startFolder + "/" + moduleName + ".html";
 
         let templateHtml = "";
@@ -577,11 +618,19 @@ function findFileMerge(startPath) {
             moduleName = "main";
         }
         // 通过import 导入的模块也要进行打包
-        let importrule = /(import[\s\S|.]+from\s+["|'].+?["|'])/gm;
+        // let importrule = /(import[\s\S|.]+from\s+["|'].+?["|'])/gm;
+        let importrule = /import\s[\{|\}]*.+['|;]*/gm;
         let importModules = datastr.match(importrule) || [];
         // 当前文件路径
         let apath = item.relativePath.split("/");
         apath[0] = ".";
+
+        // 去空格
+        importModules = importModules.map((item)=>{
+            let str = item.replace(/{\s*/g,'{').replace(/\s*}/g,'}').replace(/[\s]*,[\s]/g,',');
+            
+            return str;
+        })
 
         importModules.forEach(function (el, index) {
             // 有多少个 ../
@@ -592,7 +641,13 @@ function findFileMerge(startPath) {
             }
             // 把路径处理成相对根路径
             let importfile = el.indexOf("../") > -1 ? el.replace("../", newpath).replace(/\.\.\//g, "") : el.replace("./", "." + item.relativePath + "/");
+            
+            // 如果里面有相同，则不导入
+            if( importAllModules.includes(importfile) || indexImports.includes(importfile) ){
+                return;
+            }
 
+            importAllModules.push(importfile);
             fs.appendFileSync(startFolder + '/' + bundleFile, ";" + importfile);
         })
 
@@ -606,7 +661,7 @@ function findFileMerge(startPath) {
 						   template:${template}});
 						   loader.set("${moduleName}",${result})`,
                 'utf8')
-            console.log(moduleName + '对象模块合并成功');
+            console.log(moduleName + ' 对象模块合并成功');
         } else {
 
             let newloader = "";
@@ -633,7 +688,7 @@ function findFileMerge(startPath) {
 
             // 把值增加到 bundle.js , 这个文件会被首先引用进去, 等于所有模块都已经加载.
             fs.appendFileSync(startFolder + '/' + bundleFile, newloader, 'utf8')
-            console.log(moduleName + 'define模块合并成功');
+            console.log(moduleName + ' define模块合并成功');
         }
         if (index === results.length - 1) {
             console.log("合并完成")
@@ -700,16 +755,28 @@ function changeFile(file) {
 
     } else if (isLess) {
 
-        gulp.src(config.source.less)
-            .pipe(sourcemaps.init())
+        if( file.indexOf("pages/") > -1 ){
+            // 输出单独组件的less文件
+            
+            gulp.src(file)
             .pipe(less())
             .pipe(app.autoprefixer ? autoprefixer(autoprefixOpt) : plumber())
-            .pipe(sourcemaps.write('./'))
-            .pipe(dest(sourceBuild + "/css"))
-            .pipe(dest(sourcePath + "/css"))
+            .pipe(dest(path.dirname(file)))
             .pipe(reload({
                 stream: true
             }));
+        }else{
+            gulp.src(config.source.less)
+                .pipe(sourcemaps.init())
+                .pipe(less())
+                .pipe(app.autoprefixer ? autoprefixer(autoprefixOpt) : plumber())
+                .pipe(sourcemaps.write('./'))
+                .pipe(dest(sourceBuild + "/css"))
+                .pipe(dest(sourcePath + "/css"))
+                .pipe(reload({
+                    stream: true
+                }));
+        }
 
     } else if (isHtml) {
 
@@ -766,7 +833,7 @@ task('server', function () {
             port: portObj.devPort + 1
         },
         server: {
-            baseDir: sourcePath,
+            baseDir: sourceBuild,
             middleware: proxys
         },
         port: portObj.devPort,

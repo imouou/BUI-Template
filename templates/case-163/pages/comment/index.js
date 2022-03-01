@@ -1,4 +1,4 @@
-loader.define(function(require, exports, module) {
+loader.define(function(requires, exports, module) {
     // 获取新闻的参数
     var pageParams = router.getPageParams();
 

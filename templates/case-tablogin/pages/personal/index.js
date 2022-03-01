@@ -1,4 +1,4 @@
-loader.define(function(require, exports, module) {
+loader.define(function(requires, exports, module) {
 
     // 初始化数据行为存储
     var bs = bui.store({
