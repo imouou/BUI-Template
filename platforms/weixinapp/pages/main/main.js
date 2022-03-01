@@ -1,11 +1,12 @@
-loader.define(function(require,exports,module,global){
-
-
+loader.define(function(requires,exports,module,global){
+    //  进入页面的时候，修改微信标题
+    document.title = "首页";
     // 初始化数据行为存储
     var bs = bui.store({
         el: `#${module.id}`,
         scope: "webview",
         data: {
+            title:"首页"// 后退的时候给全局修改标题
         },
         methods: {
             getEnv:function(){

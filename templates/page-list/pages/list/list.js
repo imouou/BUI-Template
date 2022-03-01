@@ -3,7 +3,7 @@
  * 默认模块名: pages/list/list
  * @return {[object]}  [ 返回一个对象 ]
  */
-loader.define(function(require, exports, module) {
+loader.define(function(requires, exports, module) {
 
     var pageview = {
         init: function() {

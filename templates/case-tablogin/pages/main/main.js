@@ -1,4 +1,4 @@
-﻿loader.define(function(require, exports, module) {
+﻿loader.define(function(requires, exports, module) {
 
     // 用户的登录状态
     var uiTab = null;

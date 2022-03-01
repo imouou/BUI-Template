@@ -14,7 +14,7 @@
 	})
 	
 */
-loader.define("weixin", function(require, exports, module) {
+loader.define("weixin", function(requires, exports, module) {
 
     var uiStorage = bui.storage();
 

@@ -9,7 +9,7 @@ bui.isWebapp = true;
 // 路由初始化给全局变量,必须是router
 window.router = bui.router();
 
-bui.ready(function() {
+bui.ready(function(global) {
     // 第3步: 初始化路由
     router.init({
         id: "#bui-router",

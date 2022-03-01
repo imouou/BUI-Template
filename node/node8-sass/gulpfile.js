@@ -195,23 +195,38 @@ gulp.task('clean-dist', function (cb) {
 });
 
 // less 初始化的时候编译, 并生成sourcemap 便于调试
-gulp.task('less', function () {
-    return gulp.src(config.source.less)
+task('less', function () {
+    let autoprefixOpt = {}; //参考 https://github.com/postcss/autoprefixer#options
+
+    src([sourcePath + '/pages/**/*.less', '!' + sourcePath + '/pages/**/_*.less'])
+    .pipe(less())
+    .pipe(app.autoprefixer ? autoprefixer(autoprefixOpt) : plumber())
+    .pipe(dest(sourceBuild + "/pages/"))
+
+    return src(config.source.less)
         .pipe(sourcemaps.init())
         .pipe(less())
-        .pipe(autoprefixer(app.autoprefixer))
+        .pipe(app.autoprefixer ? autoprefixer(autoprefixOpt) : plumber())
         .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest(sourceBuild + "/css"))
-        .pipe(gulp.dest(sourcePath + "/css"))
+        .pipe(dest(sourceBuild + "/css"))
+        .pipe(dest(sourcePath + "/css"))
 });
 // less 初始化的时候编译, 并生成sourcemap 便于调试
-gulp.task('less-build', function (cb) {
+task('less-build', function (cb) {
+    let autoprefixOpt = {}; //参考 https://github.com/postcss/autoprefixer#options
     del([sourceBuild + '/css/*.css.map']);
-    return gulp.src(config.source.less)
+
+    // 输出单独组件的less文件
+    src([sourcePath + '/pages/**/*.less', '!' + sourcePath + '/pages/**/_*.less'])
+    .pipe(less())
+    .pipe(app.autoprefixer ? autoprefixer(autoprefixOpt) : plumber())
+    .pipe(dest(sourceBuild + "/pages/"))
+
+    return src(config.source.less)
         .pipe(less())
-        .pipe(autoprefixer(app.autoprefixer))
-        .pipe(gulp.dest(sourceBuild + "/css"))
-        .pipe(gulp.dest(sourcePath + "/css"))
+        .pipe(app.autoprefixer ? autoprefixer(autoprefixOpt) : plumber())
+        .pipe(dest(sourceBuild + "/css"))
+        .pipe(dest(sourcePath + "/css"))
 });
 // sass 初始化的时候编译, 并生成sourcemap 便于调试
 gulp.task('scss', function () {
@@ -409,7 +424,7 @@ gulp.task('server', function () {
             port: portObj.devPort + 1
         },
         server: {
-            baseDir: sourcePath,
+            baseDir: sourceBuild,
             middleware: proxys
         },
         port: portObj.devPort,
@@ -480,16 +495,28 @@ function changeFile(file) {
 
     } else if (isLess) {
 
-        gulp.src(config.source.less)
-            .pipe(sourcemaps.init())
+        if( file.indexOf("pages/") > -1 ){
+            // 输出单独组件的less文件
+            
+            gulp.src(file)
             .pipe(less())
-            .pipe(autoprefixer(app.autoprefixer))
-            .pipe(sourcemaps.write('./'))
-            .pipe(dest(sourceBuild + "/css"))
-            .pipe(dest(sourcePath + "/css"))
+            .pipe(app.autoprefixer ? autoprefixer(autoprefixOpt) : plumber())
+            .pipe(dest(path.dirname(file)))
             .pipe(reload({
                 stream: true
             }));
+        }else{
+            gulp.src(config.source.less)
+                .pipe(sourcemaps.init())
+                .pipe(less())
+                .pipe(app.autoprefixer ? autoprefixer(autoprefixOpt) : plumber())
+                .pipe(sourcemaps.write('./'))
+                .pipe(dest(sourceBuild + "/css"))
+                .pipe(dest(sourcePath + "/css"))
+                .pipe(reload({
+                    stream: true
+                }));
+        }
 
     } else if (isHtml) {
 
@@ -611,7 +638,7 @@ function findFileMerge(startPath) {
         let data = fs.readFileSync("src/index.js", 'utf-8');
 
         // 去掉注释的字符
-        let datastr = data.toString().replace(/\/\*[\s\S]*\*\/|\/\/.*/gm,"");
+        let datastr = data.toString().replace(/\/\*[\s\S]*\*\/|^\s*\/\/.*/gm,"");
             
         let importrule = /import\s[\{|\}]*.+['|;]*/gm;
         let importModules = datastr.match(importrule) || [];
@@ -641,7 +668,7 @@ function findFileMerge(startPath) {
         // 读取每个文件
         let data = fs.readFileSync(item.path, 'utf-8');
 
-        let datastr = data.toString().replace(/\/\*[\s\S]*\*\/|\/\/.*/gm,"");
+        let datastr = data.toString().replace(/\/\*[\s\S]*\*\/|^\s*\/\/.*/gm,"");
         let templateFile = startFolder + "/" + moduleName + ".html";
 
         let templateHtml = "";
@@ -760,7 +787,7 @@ function findFileMerge(startPath) {
 
             // 把值增加到 bundle.js , 这个文件会被首先引用进去, 等于所有模块都已经加载.
             fs.appendFileSync(startFolder + '/' + bundleFile, newloader, 'utf8')
-            console.log(moduleName + 'define模块合并成功');
+            console.log(moduleName + ' define模块合并成功');
         }
         if (index === results.length - 1) {
             console.log("合并完成")
