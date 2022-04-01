@@ -49,11 +49,11 @@
         "os": "^0.1.1",
         "path": "^0.12.7",
         "qrcode-terminal": "^0.12.0",
+        "vconsole": "^3.12.1",
         "vinyl-buffer": "^1.0.1",
         "vinyl-source-stream": "^2.0.0"
     },
     "dependencies": {
-        "@babel/runtime": "^7.7.7",
-        "vconsole": "^3.10.1"
+        "@babel/runtime": "^7.7.7"
     }
 }
