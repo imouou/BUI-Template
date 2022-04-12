@@ -25,9 +25,9 @@ const stream = require('vinyl-source-stream');
 // 任务流
 const es = require('event-stream');
 // 文件读取
-const fs = require('fs');
+// const fs = require('fs');
 // 读写保存配置
-const fse = require("fs-extra");
+const fs = require("fs-extra");
 const join = require('path').join;
 
 // 生成css,js map图
@@ -190,11 +190,11 @@ function getServerPort() {
     // 写入端口
     if (!devServer.port) {
         app.devServer.port = devPort;
-        fse.writeFileSync(path.resolve(configName), JSON.stringify(app, null, 2));
+        fs.writeFileSync(path.resolve(configName), JSON.stringify(app, null, 2));
     }
     if (!distServer.port) {
         app.distServer.port = distPort;
-        fse.writeFileSync(path.resolve(configName), JSON.stringify(app, null, 2));
+        fs.writeFileSync(path.resolve(configName), JSON.stringify(app, null, 2));
     }
 
     return {
@@ -898,7 +898,7 @@ task('server-sync', function () {
         .on('unlink', function (file) {
             //删除文件
             let distFile = './' + sourceBuild + '/' + path.relative('./' + sourcePath, file); //计算相对路径
-            fse.existsSync(distFile) && fse.unlink(distFile);
+            fs.existsSync(distFile) && fs.unlink(distFile);
             console.warn(file, "deleted")
         });
 });

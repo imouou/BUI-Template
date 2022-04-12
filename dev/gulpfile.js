@@ -722,7 +722,7 @@ function changeFile(file) {
     // 复制一次文件，再输出一次编译后的文件，避免文件夹未创建导致服务报错
     let relativePath = path.relative('./' + sourcePath, file);
     let distfile = './' + folder.dist + '/' + relativePath;
-    fs.copySync(file, distfile);
+    fse.copySync(file, distfile);
 
     if (isJs) {
         // 文件单独打包成es5
