@@ -25,9 +25,9 @@ const stream = require('vinyl-source-stream');
 // 任务流
 const es = require('event-stream');
 // 文件读取
-const fs = require('fs');
+// const fs = require('fs');
 // 读写保存配置
-const fse = require("fs-extra");
+const fs = require("fs-extra");
 const join = require('path').join;
 
 // 生成css,js map图
@@ -190,11 +190,11 @@ function getServerPort() {
     // 写入端口
     if (!devServer.port) {
         app.devServer.port = devPort;
-        fse.writeFileSync(path.resolve(configName), JSON.stringify(app, null, 2));
+        fs.writeFileSync(path.resolve(configName), JSON.stringify(app, null, 2));
     }
     if (!distServer.port) {
         app.distServer.port = distPort;
-        fse.writeFileSync(path.resolve(configName), JSON.stringify(app, null, 2));
+        fs.writeFileSync(path.resolve(configName), JSON.stringify(app, null, 2));
     }
 
     return {
@@ -718,11 +718,10 @@ function changeFile(file) {
     let isLess = file.lastIndexOf(".less") > -1;
     let autoprefixOpt = {}; //参考 https://github.com/postcss/autoprefixer#options
 
-
     // 复制一次文件，再输出一次编译后的文件，避免文件夹未创建导致服务报错
     let relativePath = path.relative('./' + sourcePath, file);
     let distfile = './' + folder.dist + '/' + relativePath;
-    fse.copySync(file, distfile);
+    fs.copySync(file, distfile);
 
     if (isJs) {
         // 文件单独打包成es5
@@ -899,7 +898,7 @@ task('server-sync', function () {
         .on('unlink', function (file) {
             //删除文件
             let distFile = './' + sourceBuild + '/' + path.relative('./' + sourcePath, file); //计算相对路径
-            fse.existsSync(distFile) && fse.unlink(distFile);
+            fs.existsSync(distFile) && fs.unlink(distFile);
             console.warn(file, "deleted")
         });
 });
