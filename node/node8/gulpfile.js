@@ -195,39 +195,39 @@ gulp.task('clean-dist', function (cb) {
     return del([sourceBuild + '/**/*'], cb);
 });
 // less 初始化的时候编译, 并生成sourcemap 便于调试
-gulp.task('less', function () {
+task('less', function () {
     let autoprefixOpt = {}; //参考 https://github.com/postcss/autoprefixer#options
 
-    gulp.src([sourcePath + '/pages/**/*.less', '!' + sourcePath + '/pages/**/_*.less'])
-        .pipe(less())
-        .pipe(app.autoprefixer ? autoprefixer(autoprefixOpt) : plumber())
-        .pipe(gulp.dest(sourceBuild + "/pages/"))
+    src([sourcePath + '/pages/**/*.less', '!' + sourcePath + '/pages/**/_*.less'])
+    .pipe(less())
+    .pipe(app.autoprefixer ? autoprefixer(autoprefixOpt) : plumber())
+    .pipe(dest(sourceBuild + "/pages/"))
 
-    return gulp.src(config.source.less)
+    return src(config.source.less)
         .pipe(sourcemaps.init())
         .pipe(less())
         .pipe(app.autoprefixer ? autoprefixer(autoprefixOpt) : plumber())
         .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest(sourceBuild + "/css"))
-        .pipe(gulp.dest(sourcePath + "/css"))
+        .pipe(dest(sourceBuild + "/css"))
+        .pipe(dest(sourcePath + "/css"))
 });
 
 // less 初始化的时候编译, 并生成sourcemap 便于调试
-gulp.task('less-build', function (cb) {
+task('less-build', function (cb) {
     let autoprefixOpt = {}; //参考 https://github.com/postcss/autoprefixer#options
     del([sourceBuild + '/css/*.css.map']);
 
     // 输出单独组件的less文件
-    gulp.src([sourcePath + '/pages/**/*.less', '!' + sourcePath + '/pages/**/_*.less'])
-        .pipe(less())
-        .pipe(app.autoprefixer ? autoprefixer(autoprefixOpt) : plumber())
-        .pipe(gulp.dest(sourceBuild + "/pages/"))
+    src([sourcePath + '/pages/**/*.less', '!' + sourcePath + '/pages/**/_*.less'])
+    .pipe(less())
+    .pipe(app.autoprefixer ? autoprefixer(autoprefixOpt) : plumber())
+    .pipe(dest(sourceBuild + "/pages/"))
 
-    return gulp.src(config.source.less)
+    return src(config.source.less)
         .pipe(less())
         .pipe(app.autoprefixer ? autoprefixer(autoprefixOpt) : plumber())
-        .pipe(gulp.dest(sourceBuild + "/css"))
-        .pipe(gulp.dest(sourcePath + "/css"))
+        .pipe(dest(sourceBuild + "/css"))
+        .pipe(dest(sourcePath + "/css"))
 });
 // sass 初始化的时候编译, 并生成sourcemap 便于调试
 // gulp.task('scss', function() {
@@ -443,8 +443,8 @@ gulp.task('server', function () {
 function addFile(file) {
     console.log(file, "added");
     gulp.src(file, {
-        base: './' + sourcePath
-    }) //指定这个文件
+            base: './' + sourcePath
+        }) //指定这个文件
         .pipe(gulp.dest('./' + sourceBuild))
 
 
@@ -462,8 +462,8 @@ function changeFile(file) {
 
     if (isJs) {
         gulp.src(file, {
-            base: './' + sourcePath
-        }) //指定这个文件
+                base: './' + sourcePath
+            }) //指定这个文件
             .pipe(plumber({
                 errorHandler: function (error) {
                     console.log(error)
@@ -479,24 +479,24 @@ function changeFile(file) {
             .pipe(md5(10, sourceBuild + '/**/*.html'))
     } else if (isLess) {
 
-        if (file.indexOf("pages/") > -1) {
+        if( file.indexOf("pages/") > -1 ){
             // 输出单独组件的less文件
-
+            
             gulp.src(file)
-                .pipe(less())
-                .pipe(app.autoprefixer ? autoprefixer(autoprefixOpt) : plumber())
-                .pipe(gulp.dest(path.dirname(file)))
-                .pipe(reload({
-                    stream: true
-                }));
-        } else {
+            .pipe(less())
+            .pipe(app.autoprefixer ? autoprefixer(autoprefixOpt) : plumber())
+            .pipe(dest(path.dirname(file)))
+            .pipe(reload({
+                stream: true
+            }));
+        }else{
             gulp.src(config.source.less)
                 .pipe(sourcemaps.init())
                 .pipe(less())
                 .pipe(app.autoprefixer ? autoprefixer(autoprefixOpt) : plumber())
                 .pipe(sourcemaps.write('./'))
-                .pipe(gulp.dest(sourceBuild + "/css"))
-                .pipe(gulp.dest(sourcePath + "/css"))
+                .pipe(dest(sourceBuild + "/css"))
+                .pipe(dest(sourcePath + "/css"))
                 .pipe(reload({
                     stream: true
                 }));
@@ -505,8 +505,8 @@ function changeFile(file) {
     } else if (isHtml) {
 
         gulp.src(file, {
-            base: './' + sourcePath
-        })
+                base: './' + sourcePath
+            })
             .pipe(plumber())
             .pipe(htmlmin(app.htmlmin))
             .pipe(gulp.dest('./' + sourceBuild))
@@ -517,8 +517,8 @@ function changeFile(file) {
     } else if (isCss) {
 
         gulp.src(file, {
-            base: './' + sourcePath
-        })
+                base: './' + sourcePath
+            })
             .pipe(gulp.dest('./' + sourceBuild))
             .pipe(md5(10, sourceBuild + "/**/*.html"))
             .pipe(reload({
@@ -526,8 +526,8 @@ function changeFile(file) {
             }))
     } else {
         gulp.src(file, {
-            base: './' + sourcePath
-        })
+                base: './' + sourcePath
+            })
             .pipe(gulp.dest('./' + sourceBuild))
             .pipe(reload({
                 stream: true
@@ -618,19 +618,19 @@ function findFileMerge(startPath) {
     }
 
     // 单独寻找首页匹配 import 
-    function findeIndex() {
+    function findeIndex(){
         let data = fs.readFileSync("src/index.js", 'utf-8');
 
         // 去掉注释的字符
-        let datastr = data.toString().replace(/\/\*[\s\S]*\*\/|^\s*\/\/.*/gm, "");
-
+        let datastr = data.toString().replace(/\/\*[\s\S]*\*\/|^\s*\/\/.*/gm,"");
+            
         let importrule = /import\s[\{|\}]*.+['|;]*/gm;
         let importModules = datastr.match(importrule) || [];
 
         // 去空格
-        importModules = importModules.map((item) => {
-            let str = item.replace(/{\s*/g, '{').replace(/\s*}/g, '}').replace(/[\s]*,[\s]/g, ',');
-
+        importModules = importModules.map((item)=>{
+            let str = item.replace(/{\s*/g,'{').replace(/\s*}/g,'}').replace(/[\s]*,[\s]/g,',');
+            
             return str;
         })
 
@@ -652,7 +652,7 @@ function findFileMerge(startPath) {
         // 读取每个文件
         let data = fs.readFileSync(item.path, 'utf-8');
 
-        let datastr = data.toString().replace(/\/\*[\s\S]*\*\/|^\s*\/\/.*/gm, "");
+        let datastr = data.toString().replace(/\/\*[\s\S]*\*\/|^\s*\/\/.*/gm,"");
         let templateFile = startFolder + "/" + moduleName + ".html";
 
         let templateHtml = "";
@@ -666,20 +666,20 @@ function findFileMerge(startPath) {
 
         // 把html模板变成一个function
         let template = `function(){
-					   return ${"\`" + templateHtml + "\`"};
+					   return ${"\`"+templateHtml+"\`"};
 		 }`
 
         // 匹配 loader.define() 括号里面的内容, 里面有5种书写格式,
         /*
-            1. loader.define(function(){});
-            2. loader.define("name",function(){});
-            3. loader.define("name",["pages/main"],function(main){});
-            4. loader.define(["pages/main"],function(main){});
-            5. loader.define({
-                moduleName:"",
-                depend: [],
-                loaded: function(){}
-            });
+        	1. loader.define(function(){});
+        	2. loader.define("name",function(){});
+        	3. loader.define("name",["pages/main"],function(main){});
+        	4. loader.define(["pages/main"],function(main){});
+        	5. loader.define({
+        		moduleName:"",
+        		depend: [],
+        		loaded: function(){}
+        	});
         */
         let rule = /(?<=loader\.define\()\s*([\s\S]+)\)/gm;
         let ruleName = /^"([\s\S]+?)",/gm;
@@ -709,9 +709,9 @@ function findFileMerge(startPath) {
         apath[0] = ".";
 
         // 去空格
-        importModules = importModules.map((item) => {
-            let str = item.replace(/{\s*/g, '{').replace(/\s*}/g, '}').replace(/[\s]*,[\s]/g, ',');
-
+        importModules = importModules.map((item)=>{
+            let str = item.replace(/{\s*/g,'{').replace(/\s*}/g,'}').replace(/[\s]*,[\s]/g,',');
+            
             return str;
         })
 
@@ -724,9 +724,9 @@ function findFileMerge(startPath) {
             }
             // 把路径处理成相对根路径
             let importfile = el.indexOf("../") > -1 ? el.replace("../", newpath).replace(/\.\.\//g, "") : el.replace("./", "." + item.relativePath + "/");
-
+            
             // 如果里面有相同，则不导入
-            if (importAllModules.includes(importfile) || indexImports.includes(importfile)) {
+            if( importAllModules.includes(importfile) || indexImports.includes(importfile) ){
                 return;
             }
 
@@ -765,7 +765,7 @@ function findFileMerge(startPath) {
                 let loaded = ruleFunction.exec(result) || [];
                 newloader = `;loader.set("${moduleName}",{
 							   template:${template},
-							   depend:${depend[1] || []},
+							   depend:${depend[1]||[]},
 							   loaded:${loaded[1]}});`;
             }
 
