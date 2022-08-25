@@ -37,7 +37,7 @@ const plumber = require('gulp-plumber');
 // html压缩
 const htmlmin = require('gulp-htmlmin');
 // 图片压缩
-const imagemin = require('gulp-imagemin');
+// const imagemin = require('gulp-imagemin');
 // less 编译
 const less = require('gulp-less');
 const minifycss = require('gulp-clean-css');
@@ -287,9 +287,9 @@ task('browserify', cb => {
         let relativeFile = process.env.NODE_ENV ? sourceBuild + entry.relativePath.substr(5) : folder.dist + entry.relativePath;
 
         return browserify({
-                entries: entry.path,
-                debug: false
-            })
+            entries: entry.path,
+            debug: false
+        })
             .bundle()
             .on('error', function (error) {
                 console.log(error.toString())
@@ -318,9 +318,9 @@ task('less', function () {
     let autoprefixOpt = {}; //参考 https://github.com/postcss/autoprefixer#options
 
     src([sourcePath + '/pages/**/*.less', '!' + sourcePath + '/pages/**/_*.less'])
-    .pipe(less())
-    .pipe(app.autoprefixer ? autoprefixer(autoprefixOpt) : plumber())
-    .pipe(dest(sourceBuild + "/pages/"))
+        .pipe(less())
+        .pipe(app.autoprefixer ? autoprefixer(autoprefixOpt) : plumber())
+        .pipe(dest(sourceBuild + "/pages/"))
 
     return src(config.source.less)
         .pipe(sourcemaps.init())
@@ -337,9 +337,9 @@ task('less-build', function (cb) {
 
     // 输出单独组件的less文件
     src([sourcePath + '/pages/**/*.less', '!' + sourcePath + '/pages/**/_*.less'])
-    .pipe(less())
-    .pipe(app.autoprefixer ? autoprefixer(autoprefixOpt) : plumber())
-    .pipe(dest(sourceBuild + "/pages/"))
+        .pipe(less())
+        .pipe(app.autoprefixer ? autoprefixer(autoprefixOpt) : plumber())
+        .pipe(dest(sourceBuild + "/pages/"))
 
     return src(config.source.less)
         .pipe(less())
@@ -391,31 +391,6 @@ task('html', function () {
 
 });
 
-// compress image
-task('images', function () {
-    // 有大图会很慢,默认不开启
-    return src(config.source.images)
-        // .pipe(changed(config.output.images))
-        .pipe(app.imagemin ? imagemin([
-            imagemin.jpegtran({
-                progressive: true
-            }),
-            imagemin.optipng({
-                optimizationLevel: 5
-            }),
-            imagemin.svgo({
-                plugins: [{
-                        removeViewBox: true
-                    },
-                    {
-                        cleanupIDs: false
-                    }
-                ]
-            })
-        ]) : changed(config.output.images))
-        .pipe(dest(config.output.images));
-
-});
 
 task('mergeFile', function (cb) {
     // 默认是 "dist/pages"
@@ -470,9 +445,9 @@ task('index-browserify', cb => {
     // 这里需要找到多个文件再进行合并,是异步的, 会造成dist-zip压缩的时候,文件还是没有编译混淆的版本
     var task = files.map(entry => {
         return browserify({
-                entries: entry.path,
-                debug: false
-            })
+            entries: entry.path,
+            debug: false
+        })
             .bundle()
             .on('error', function (error) {
                 console.log(error.toString())
@@ -491,6 +466,15 @@ task('index-browserify', cb => {
 
 // 模块化打包
 task('dist-zip', cb => {
+    var tag = getTime();
+    console.log('dist/dist' + tag + '.zip 文件创建成功')
+    return src('dist/**')
+        .pipe(zip('dist' + tag + '.zip'))
+        .pipe(gulp.dest(folder.dist))
+    cb();
+})
+// 模块化打包
+task('zip', cb => {
     var tag = getTime();
     console.log('dist/dist' + tag + '.zip 文件创建成功')
     return src('dist/**')
@@ -535,19 +519,19 @@ function findFileMerge(startPath) {
     }
 
     // 单独寻找首页匹配 import 
-    function findeIndex(){
+    function findeIndex() {
         let data = fs.readFileSync("src/index.js", 'utf-8');
 
         // 去掉注释的字符
-        let datastr = data.toString().replace(/\/\*[\s\S]*\*\/|^\s*\/\/.*/gm,"");
-            
+        let datastr = data.toString().replace(/\/\*[\s\S]*\*\/|^\s*\/\/.*/gm, "");
+
         let importrule = /import\s[\{|\}]*.+['|;]*/gm;
         let importModules = datastr.match(importrule) || [];
 
         // 去空格
-        importModules = importModules.map((item)=>{
-            let str = item.replace(/{\s*/g,'{').replace(/\s*}/g,'}').replace(/[\s]*,[\s]/g,',');
-            
+        importModules = importModules.map((item) => {
+            let str = item.replace(/{\s*/g, '{').replace(/\s*}/g, '}').replace(/[\s]*,[\s]/g, ',');
+
             return str;
         })
 
@@ -569,7 +553,7 @@ function findFileMerge(startPath) {
         // 读取每个文件
         let data = fs.readFileSync(item.path, 'utf-8');
 
-        let datastr = data.toString().replace(/\/\*[\s\S]*\*\/|^\s*\/\/.*/gm,"");
+        let datastr = data.toString().replace(/\/\*[\s\S]*\*\/|^\s*\/\/.*/gm, "");
         let templateFile = startFolder + "/" + moduleName + ".html";
 
         let templateHtml = "";
@@ -583,20 +567,20 @@ function findFileMerge(startPath) {
 
         // 把html模板变成一个function
         let template = `function(){
-					   return ${"\`"+templateHtml+"\`"};
+					   return ${"\`" + templateHtml + "\`"};
 		 }`
 
         // 匹配 loader.define() 括号里面的内容, 里面有5种书写格式,
         /*
-        	1. loader.define(function(){});
-        	2. loader.define("name",function(){});
-        	3. loader.define("name",["pages/main"],function(main){});
-        	4. loader.define(["pages/main"],function(main){});
-        	5. loader.define({
-        		moduleName:"",
-        		depend: [],
-        		loaded: function(){}
-        	});
+            1. loader.define(function(){});
+            2. loader.define("name",function(){});
+            3. loader.define("name",["pages/main"],function(main){});
+            4. loader.define(["pages/main"],function(main){});
+            5. loader.define({
+                moduleName:"",
+                depend: [],
+                loaded: function(){}
+            });
         */
         let rule = /(?<=loader\.define\()\s*([\s\S]+)\)/gm;
         let ruleName = /^"([\s\S]+?)",/gm;
@@ -626,9 +610,9 @@ function findFileMerge(startPath) {
         apath[0] = ".";
 
         // 去空格
-        importModules = importModules.map((item)=>{
-            let str = item.replace(/{\s*/g,'{').replace(/\s*}/g,'}').replace(/[\s]*,[\s]/g,',');
-            
+        importModules = importModules.map((item) => {
+            let str = item.replace(/{\s*/g, '{').replace(/\s*}/g, '}').replace(/[\s]*,[\s]/g, ',');
+
             return str;
         })
 
@@ -641,9 +625,9 @@ function findFileMerge(startPath) {
             }
             // 把路径处理成相对根路径
             let importfile = el.indexOf("../") > -1 ? el.replace("../", newpath).replace(/\.\.\//g, "") : el.replace("./", "." + item.relativePath + "/");
-            
+
             // 如果里面有相同，则不导入
-            if( importAllModules.includes(importfile) || indexImports.includes(importfile) ){
+            if (importAllModules.includes(importfile) || indexImports.includes(importfile)) {
                 return;
             }
 
@@ -682,7 +666,7 @@ function findFileMerge(startPath) {
                 let loaded = ruleFunction.exec(result) || [];
                 newloader = `;loader.set("${moduleName}",{
 							   template:${template},
-							   depend:${depend[1]||[]},
+							   depend:${depend[1] || []},
 							   loaded:${loaded[1]}});`;
             }
 
@@ -702,8 +686,8 @@ function findFileMerge(startPath) {
 function addFile(file) {
     console.log(file, "added");
     gulp.src(file, {
-            base: './' + sourcePath
-        }) //指定这个文件
+        base: './' + sourcePath
+    }) //指定这个文件
         .pipe(gulp.dest('./' + sourceBuild))
 }
 // 监测新增
@@ -758,17 +742,17 @@ function changeFile(file) {
 
     } else if (isLess) {
 
-        if( file.indexOf("pages/") > -1 ){
+        if (file.indexOf("pages/") > -1) {
             // 输出单独组件的less文件
-            
+
             gulp.src(file)
-            .pipe(less())
-            .pipe(app.autoprefixer ? autoprefixer(autoprefixOpt) : plumber())
-            .pipe(dest(path.dirname(file)))
-            .pipe(reload({
-                stream: true
-            }));
-        }else{
+                .pipe(less())
+                .pipe(app.autoprefixer ? autoprefixer(autoprefixOpt) : plumber())
+                .pipe(dest(path.dirname(file)))
+                .pipe(reload({
+                    stream: true
+                }));
+        } else {
             gulp.src(config.source.less)
                 .pipe(sourcemaps.init())
                 .pipe(less())
@@ -784,8 +768,8 @@ function changeFile(file) {
     } else if (isHtml) {
 
         gulp.src(file, {
-                base: './' + sourcePath
-            })
+            base: './' + sourcePath
+        })
             .pipe(plumber())
             .pipe(htmlmin(app.htmlmin))
             .pipe(gulp.dest('./' + sourceBuild))
@@ -796,8 +780,8 @@ function changeFile(file) {
     } else if (isCss) {
 
         gulp.src(file, {
-                base: './' + sourcePath
-            })
+            base: './' + sourcePath
+        })
             .pipe(gulp.dest('./' + sourceBuild))
             .pipe(md5(10, sourceBuild + "/**/*.html"))
             .pipe(reload({
@@ -805,8 +789,8 @@ function changeFile(file) {
             }))
     } else {
         gulp.src(file, {
-                base: './' + sourcePath
-            })
+            base: './' + sourcePath
+        })
             .pipe(gulp.dest('./' + sourceBuild))
             .pipe(reload({
                 stream: true
@@ -905,13 +889,13 @@ task('server-sync', function () {
 
 
 // 清空缓存, 重新编译
-exports.build = series('clean-tmp', 'clean-dist', 'move', 'css-minify', 'images', 'html', 'less-build', 'babel-mini', 'browserify') //series是gulpV4中新方法，按顺序执行
+exports.build = series('clean-tmp', 'clean-dist', 'move', 'css-minify', 'html', 'less-build', 'babel-mini', 'browserify') //series是gulpV4中新方法，按顺序执行
 
 // 先编译再起服务,不需要每次都清除文件夹的内容 如果有scss目录,会在最后才生成, 如果没有,则以src/css/style.css 作为主要样式
-exports.dev = series('move', 'html', 'css', 'images', 'less', 'babel', 'browserify', 'server-sync')
+exports.dev = series('move', 'html', 'css', 'less', 'babel', 'browserify', 'server-sync')
 // 打包成一个独立脚本,是否压缩
 if (app.package && app.package.uglify) {
-    exports.package = series('clean-tmp', 'clean-dist', 'move', 'css-minify', 'images', 'html', 'less-build', 'babel-mini', 'browserify', 'mergeFile', 'index-babel-mini', 'index-browserify');
+    exports.package = series('clean-tmp', 'clean-dist', 'move', 'css-minify', 'html', 'less-build', 'babel-mini', 'browserify', 'mergeFile', 'index-babel-mini', 'index-browserify');
 } else {
-    exports.package = series('clean-tmp', 'clean-dist', 'move', 'css-minify', 'images', 'html', 'less-build', 'babel', 'browserify', 'mergeFile', 'dist-zip');
+    exports.package = series('clean-tmp', 'clean-dist', 'move', 'css-minify', 'html', 'less-build', 'babel', 'browserify', 'mergeFile', 'dist-zip');
 }

@@ -35,7 +35,6 @@
         "gulp-clean-css": "^4.2.0",
         "gulp-connect": "^5.7.0",
         "gulp-htmlmin": "^5.0.1",
-        "gulp-imagemin": "^6.2.0",
         "gulp-less": "^4.0.1",
         "gulp-md5-assets": "^1.0.1",
         "gulp-plumber": "^1.2.1",
