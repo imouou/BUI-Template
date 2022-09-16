@@ -1,0 +1,44 @@
+<!-- 这里还是一个标准的BUI页面 bui-box-vertical 用来解决微信IOS的前进后退历史记录问题 -->
+<div class="bui-page bui-box-vertical">
+    <main>
+        <div id="tabDynamic" class="bui-tab bui-box-vertical">
+            <div class="bui-tab-main">
+                <ul>
+                    <li>
+                        <!-- 首页 -->
+                        <component id="tab0" name="pages/main/home"></component>
+                    </li>
+                    <li>
+                        <!-- 新闻tab -->
+                        <component id="tab1" name="pages/main/category" delay="true"></component>
+                    </li>
+                    <li>
+                        <!-- 图片tab -->
+                        <component id="tab2" name="pages/main/photo" delay="true"></component>
+                    </li>
+                    <li>
+                        <!-- 设置tab -->
+                        <component id="tab3" name="pages/main/personal" delay="true"></component>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </main>
+    <footer>
+        <ul id="tabDynamicNav" class="bui-nav">
+            <li class="bui-btn bui-box-vertical active"><i class="icon-home"></i>
+                <div class="span1">首页</div>
+            </li>
+            <li class="bui-btn bui-box-vertical"><i class="icon-menu"></i>
+                <div class="span1">分类</div>
+            </li>
+            <li class="bui-btn bui-box-vertical"><i class="icon-pic"><span class="bui-badges"></span></i>
+                <div class="span1">图片</div>
+            </li>
+            <li class="bui-btn bui-box-vertical"><i class="icon-user"></i>
+                <div class="span1">个人</div>
+            </li>
+        </ul>
+    </footer>
+</div>

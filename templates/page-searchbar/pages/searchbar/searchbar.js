@@ -3,11 +3,12 @@
  * 默认模块名: pages/searchbar/searchbar
  * @return {[object]}  [ 返回一个对象 ]
  */
-loader.define(function(requires, exports, module) {
+loader.define(function (requires, exports, module, global) {
     var pageview = {
-        init: function() {
+        init: function () {
 
             // 列表加载
+            // 把数据改为本地地址方可预览，或者把路径改为 demo/json/shop.json ，默认已经代理到 easybui.com 
             var uiList = bui.list({
                 id: "#scrollSearch",
                 url: "http://www.easybui.com/demo/json/shop.json",
@@ -19,9 +20,9 @@ loader.define(function(requires, exports, module) {
                 },
                 page: 1,
                 pageSize: 5,
-                template: function(data) {
+                template: function (data) {
                     var html = "";
-                    data.map(function(el, index) {
+                    data.map(function (el, index) {
 
                         html += `<li class="bui-btn bui-box">
                           <div class="bui-thumbnail"><img src="${el.image}" alt=""></div>
@@ -42,22 +43,20 @@ loader.define(function(requires, exports, module) {
             //搜索条的初始化
             var uiSearchbar = bui.searchbar({
                 id: "#searchbar",
-                onInput: function(e, keyword) {
+                onInput: function (e, keyword) {
                     //实时搜索
                     // console.log(++n)
                 },
-                onRemove: function(e, keyword) {
+                onRemove: function (e, keyword) {
                     //删除关键词需要做什么其它处理
                     // console.log(keyword);
                 },
-                callback: function(e, keyword) {
+                callback: function (e, keyword) {
 
                     if (uiList) {
 
-                        //点击搜索清空数据
-                        uiList.empty();
                         // 重新初始化数据
-                        uiList.init({
+                        uiList.replace({
                             page: 1,
                             data: {
                                 "keyword": keyword
