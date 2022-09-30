@@ -1,0 +1,231 @@
+<style>
+    .page-form .bui-fluid-space-3 .span1 {
+        margin-bottom: .2rem;
+    }
+    
+    .page-form .bui-pickerdate {
+        text-align: right;
+        padding-right: .2rem;
+    }
+    
+    .selected-val {
+        margin-right: .1rem;
+    }
+</style>
+<div class="bui-page page-form bui-box-vertical">
+    <header>
+        <div class="bui-bar">
+            <div class="bui-bar-left">
+                <div class="bui-btn" onclick="bui.back();"><i class="icon-back"></i></div>
+            </div>
+            <div class="bui-bar-main">表单</div>
+            <div class="bui-bar-right">
+            </div>
+        </div>
+    </header>
+    <main>
+        <h3 class="section-title">表单展示</h3>
+        <div class="bui-list">
+            <label class="bui-btn bui-box">
+        <div class="bui-label">身份证号码</div>
+        <div class="span1">
+          <div class="bui-value" b-text="page.view.id"></div>
+        </div>
+      </label>
+            <label class="bui-btn bui-box">
+        <div class="bui-label">姓名</div>
+        <div class="span1">
+          <div class="bui-value" b-text="page.view.name">王小o</div>
+        </div>
+      </label>
+            <label class="bui-btn bui-box">
+        <div class="bui-label">手机号码</div>
+        <div class="span1">
+          <div class="bui-value" b-text="page.view.phone">13800138000</div>
+        </div>
+      </label>
+            <label class="bui-btn bui-box">
+        <div class="bui-label">邮箱</div>
+        <div class="span1">
+          <div class="bui-value" b-text="page.view.mail">XXX@qq.com</div>
+        </div>
+      </label>
+            <label class="bui-btn bui-box">
+        <div class="bui-label">公司</div>
+        <div class="span1">
+          <div class="bui-value" b-text="page.view.company">广州xxx公司</div>
+        </div>
+      </label>
+        </div>
+        <h3 class="section-title">表单填写</h3>
+        <ul class="bui-list">
+            <li class="bui-btn bui-box clearactive">
+                <label class="bui-label" for="phonenumber">手机号:</label>
+                <div class="span1">
+                    <div class="bui-input user-input">
+                        <input id="phonenumber" type="number" b-model="page.login.phone" value="" placeholder="请输入手机号"> </div>
+                </div>
+            </li>
+            <li class="bui-btn bui-box clearactive">
+                <label class="bui-label" for="password">密码:</label>
+                <div class="span1">
+                    <div id="passwordInput" class="bui-input">
+                        <input id="password" type="password" b-model="page.login.password" placeholder="请输入密码"> </div>
+                </div>
+            </li>
+            <li class="bui-btn bui-box clearactive">
+                <label class="bui-label">验证码:</label>
+                <div class="span1">
+                    <input type="text" class="bui-input" value="" b-model="page.login.code" placeholder="请输入验证码" maxlength="4"> </div>
+                <div class="bui-btn primary-reverse mini ring" id="btnSend">发送验证码</div>
+            </li>
+        </ul>
+        <h3 class="section-title">评论</h3>
+        <ul class="bui-list">
+            <li class="bui-btn clearactive">
+                <div id="commentContent" class="bui-input">
+                    <textarea class="bui-input" id="" cols="30" rows="4" b-model="page.form.comment" placeholder="请输入内容"></textarea>
+                </div>
+            </li>
+        </ul>
+        <h3 class="section-title">表单选择</h3>
+        <ul class="bui-list">
+            <li class="bui-btn bui-box">
+                <label class="bui-label">滑动值:</label>
+                <div class="span1"></div>
+                <div class="bui-value">
+                    <input type="range" class="bui-range" b-model="page.form.range" min="0" max="255" value="200"> </div>
+            </li>
+            <li class="bui-btn bui-box">
+                <label class="bui-label">切换</label>
+                <div class="span1"></div>
+                <div class="bui-value">
+                    <input type="checkbox" class="bui-switch-text" value="ON" uncheck-value="OFF" check-value="ON" uncheck="OFF" check="ON" b-model="page.form.toggle"> </div>
+            </li>
+            <li class="bui-btn bui-box">
+                <label class="bui-label">开启蓝牙</label>
+                <div class="span1"></div>
+                <div class="bui-value">
+                    <input type="checkbox" name="bluetooth" class="bui-switch" value="bluetooth" b-model="page.form.bluetooth"> </div>
+            </li>
+            <li class="bui-btn bui-box">
+                <label class="bui-label">收藏</label>
+                <div class="span1"></div>
+                <div class="bui-value">
+                    <input type="checkbox" name="fav" class="bui-like warning" value="fav" b-model="page.form.fav"> </div>
+            </li>
+        </ul>
+        <h3 class="section-title">独立控件</h3>
+        <ul class="bui-list">
+            <li class="bui-btn bui-box clearactive">
+                <label class="bui-label">选择数量:</label>
+                <div class="span1"></div>
+                <div class="bui-value">
+                    <div id="uiNumber" class="bui-number"></div>
+                </div>
+            </li>
+            <li class="bui-btn bui-box clearactive">
+                <label class="bui-label">物流速度:</label>
+                <div class="span1"> </div>
+                <div class="bui-value">
+                    <div id="uiRating" class="bui-rating"></div>
+                </div>
+            </li>
+            <li class="bui-btn bui-box">
+                <label class="bui-label">区域多选</label>
+                <div class="span1"> </div>
+                <div id="select" class="bui-select">请选择 </div> <i class="icon-listright"></i> </li>
+            <li id="chooseCity" class="bui-btn bui-box clearactive">
+                <label class="bui-label">城市选择</label>
+                <div class="span1"> </div>
+                <div>
+                    <div class="bui-box" b-click="page.showCity()">
+                        <div class="selected-val"></div>
+                        <div class="selected-val"></div>
+                        <div class="selected-val"></div>
+                    </div>
+                </div> <i class="icon-listright"></i> </li>
+            <li class="bui-btn bui-box clearactive">
+                <label class="bui-label">出生日期</label>
+                <div class="span1"> </div>
+                <div class="bui-value">
+                    <input type="text" id="pickerdateInput" readonly class="bui-pickerdate">
+                </div>
+                <i class="icon-listright"></i> </li>
+        </ul>
+        <h3 class="section-title">多选列表 -- 您的兴趣是: <span b-text="page.form.interest"></span></h3>
+        <ul id="selectList2" class="bui-list">
+            <li class="bui-btn bui-box">
+                <label class="bui-label">羽毛球</label>
+                <div class="span1"></div>
+                <div class="bui-value">
+                    <input type="checkbox" class="bui-choose" name="interest" text="羽毛球" value="yumaoqiu"> </div>
+            </li>
+            <li class="bui-btn bui-box">
+                <label class="bui-label">足球</label>
+                <div class="span1"></div>
+                <div class="bui-value">
+                    <input type="checkbox" class="bui-choose" name="interest" text="足球" value="zuqiu"> </div>
+            </li>
+        </ul>
+        <h3 class="section-title">单选列表-样式1 -- 您的性别是: <span b-text="page.form.sex"></span></h3>
+        <ul id="selectList4" class="bui-list">
+            <li class="bui-btn bui-box">
+                <label class="bui-label">男</label>
+                <div class="span1"></div>
+                <div class="bui-value">
+                    <input type="radio" class="bui-radio" name="sex2" value="man" text="男"> </div>
+            </li>
+            <li class="bui-btn bui-box">
+                <label class="bui-label">女</label>
+                <div class="span1"></div>
+                <div class="bui-value">
+                    <input type="radio" class="bui-radio" name="sex2" value="woman" text="女"> </div>
+            </li>
+        </ul>
+        <h3 class="section-title">单选列表-样式2 -- 您的性别是: <span b-text="page.form.sex2"></span></h3>
+        <ul id="selectList3" class="bui-list">
+            <li class="bui-btn bui-box">
+                <label class="bui-label">男</label>
+                <div class="span1"></div>
+                <div class="bui-value">
+                    <input type="radio" class="bui-choose" name="sex" value="man" text="男"> </div>
+            </li>
+            <li class="bui-btn bui-box">
+                <label class="bui-label">女</label>
+                <div class="span1"></div>
+                <div class="bui-value">
+                    <input type="radio" class="bui-choose" name="sex" value="woman" text="女"> </div>
+            </li>
+        </ul>
+        <div class="section-title">自定义单选</div>
+        <div class="bui-fluid-space-3">
+            <div class="span1">
+                <input type="radio" class="bui-check" b-model="page.form.custom" name="chongzhi1" value="50" uncheck="50元" check="50元"> </div>
+            <div class="span1">
+                <input type="radio" class="bui-check" b-model="page.form.custom" name="chongzhi1" value="100" uncheck="100元" check="100元"> </div>
+            <div class="span1">
+                <input type="radio" class="bui-check" b-model="page.form.custom" name="chongzhi1" value="200" uncheck="200元" check="200元"> </div>
+            <div class="span1">
+                <input type="radio" class="bui-check" b-model="page.form.custom" name="chongzhi1" value="300" uncheck="300元" check="300元"> </div>
+            <div class="span1">
+                <input type="radio" class="bui-check" b-model="page.form.custom" name="chongzhi1" value="500" uncheck="50元" check="50元"> </div>
+        </div>
+        <div class="section-title"> 拍照上传: </div>
+        <div id="facePhoto" class="bui-upload bui-fluid-space-4">
+            <div class="span1">
+                <div class="bui-btn"> <i class="icon-plus large"></i> </div>
+            </div>
+        </div>
+        <div class="container-y">
+            <div class="bui-box-space">
+                <div class="span1">
+                    <div class="bui-btn round">次按钮</div>
+                </div>
+                <div class="span1">
+                    <div class="bui-btn round primary" b-click="page.submit">提交</div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

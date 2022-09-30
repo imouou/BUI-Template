@@ -1,0 +1,40 @@
+<style>
+    .container-box {
+        background: #fff;
+    }
+</style>
+
+<div class="bui-page page-feedback bui-box-vertical">
+    <header>
+        <div class="bui-bar">
+            <div class="bui-bar-left">
+                <div class="bui-btn" onclick="bui.back();"><i class="icon-back"></i></div>
+            </div>
+            <div class="bui-bar-main">评论</div>
+            <div class="bui-bar-right">
+            </div>
+        </div>
+    </header>
+    <main>
+        <ul class="bui-list">
+            <li class="bui-btn clearactive">
+                <div id="feedback" class="bui-input">
+                    <textarea placeholder="请填写你的回复,必填(500字以内)" id="" cols="30" rows="10"></textarea>
+                </div>
+            </li>
+        </ul>
+        <div class="container-box">
+            <!-- 上传的结构 -->
+            <div id="buiPhoto" class="bui-upload bui-fluid-space-4">
+                <div class="span1">
+                    <div id="btnUpload" class="bui-btn">
+                        <i class="icon-plus large"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-xy">
+            <div class="bui-btn primary round">提交</div>
+        </div>
+    </main>
+</div>

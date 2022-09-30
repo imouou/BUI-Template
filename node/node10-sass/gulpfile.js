@@ -729,6 +729,7 @@ function addFile(file) {
 }
 // 监测新增
 
+
 function changeFile(file) {
     console.info(file, "changed");
 
@@ -742,56 +743,35 @@ function changeFile(file) {
     // 复制一次文件，再输出一次编译后的文件，避免文件夹未创建导致服务报错
     let relativePath = path.relative('./' + sourcePath, file);
     let distfile = './' + folder.dist + '/' + relativePath;
-    fs.copySync(file, distfile);
 
-    if (isJs) {
-        // 文件单独打包成es5
-        browserify(file)
-            .transform("babelify", {
-                presets: ["@babel/preset-env"],
-                plugins: ['@babel/plugin-transform-runtime', '@babel/plugin-transform-object-assign']
-            })
-            .bundle()
-            .pipe(fs.createWriteStream(distfile))
+    try {
+        // fs.copySync(file, distfile);
 
-        // 刷新
-        gulp.src(distfile)
-            .pipe(reload({
-                stream: true
-            }))
+        if (isJs) {
+            // 文件单独打包成es5
+            browserify(file)
+                .transform("babelify", {
+                    presets: ["@babel/preset-env"],
+                    plugins: ['@babel/plugin-transform-runtime', '@babel/plugin-transform-object-assign']
+                })
+                .bundle()
+                .pipe(fs.createWriteStream(distfile))
 
-    } else if (isScss) {
-
-        let sassOpt = {
-            "outputStyle": "compressed"
-        }
-        gulp.src(config.source.scss)
-            // 生成css对应的sourcemap
-            .pipe(sourcemaps.init())
-            .pipe(sass(sassOpt).on('error', sass.logError))
-            .pipe(app.autoprefixer ? autoprefixer(autoprefixOpt) : plumber())
-            .pipe(sourcemaps.write('./'))
-            .pipe(dest(sourceBuild + "/css"))
-            .pipe(dest(sourcePath + "/css"))
-            .pipe(reload({
-                stream: true
-            }));
-
-    } else if (isLess) {
-        if (file.indexOf("pages/") > -1) {
-            // 输出单独组件的less文件
-
-            gulp.src(file)
-                .pipe(less())
-                .pipe(app.autoprefixer ? autoprefixer(autoprefixOpt) : plumber())
-                .pipe(dest(path.dirname(file)))
+            // 刷新
+            gulp.src(distfile)
                 .pipe(reload({
                     stream: true
-                }));
-        } else {
-            gulp.src(config.source.less)
+                }))
+
+        } else if (isScss) {
+
+            let sassOpt = {
+                "outputStyle": "compressed"
+            }
+            gulp.src(config.source.scss)
+                // 生成css对应的sourcemap
                 .pipe(sourcemaps.init())
-                .pipe(less())
+                .pipe(sass(sassOpt).on('error', sass.logError))
                 .pipe(app.autoprefixer ? autoprefixer(autoprefixOpt) : plumber())
                 .pipe(sourcemaps.write('./'))
                 .pipe(dest(sourceBuild + "/css"))
@@ -799,40 +779,67 @@ function changeFile(file) {
                 .pipe(reload({
                     stream: true
                 }));
+
+        } else if (isLess) {
+
+            if (file.indexOf("pages/") > -1) {
+                // 输出单独组件的less文件
+
+                gulp.src(file)
+                    .pipe(less())
+                    .pipe(app.autoprefixer ? autoprefixer(autoprefixOpt) : plumber())
+                    .pipe(dest(path.dirname(file)))
+                    .pipe(reload({
+                        stream: true
+                    }));
+            } else {
+                gulp.src(config.source.less)
+                    .pipe(sourcemaps.init())
+                    .pipe(less())
+                    .pipe(app.autoprefixer ? autoprefixer(autoprefixOpt) : plumber())
+                    .pipe(sourcemaps.write('./'))
+                    .pipe(dest(sourceBuild + "/css"))
+                    .pipe(dest(sourcePath + "/css"))
+                    .pipe(reload({
+                        stream: true
+                    }));
+            }
+
+        } else if (isHtml) {
+
+            gulp.src(file, {
+                base: './' + sourcePath
+            })
+                .pipe(plumber())
+                .pipe(htmlmin(app.htmlmin))
+                .pipe(gulp.dest('./' + sourceBuild))
+                .pipe(md5(10))
+                .pipe(reload({
+                    stream: true
+                }))
+        } else if (isCss) {
+
+            gulp.src(file, {
+                base: './' + sourcePath
+            })
+                .pipe(gulp.dest('./' + sourceBuild))
+                .pipe(md5(10, sourceBuild + "/**/*.html"))
+                .pipe(reload({
+                    stream: true
+                }))
+        } else {
+            gulp.src(file, {
+                base: './' + sourcePath
+            })
+                .pipe(gulp.dest('./' + sourceBuild))
+                .pipe(reload({
+                    stream: true
+                }))
         }
+    } catch (e) {
+        console.log(e);
 
-    } else if (isHtml) {
-
-        gulp.src(file, {
-            base: './' + sourcePath
-        })
-            .pipe(plumber())
-            .pipe(htmlmin(app.htmlmin))
-            .pipe(gulp.dest('./' + sourceBuild))
-            .pipe(md5(10))
-            .pipe(reload({
-                stream: true
-            }))
-    } else if (isCss) {
-
-        gulp.src(file, {
-            base: './' + sourcePath
-        })
-            .pipe(gulp.dest('./' + sourceBuild))
-            .pipe(md5(10, sourceBuild + "/**/*.html"))
-            .pipe(reload({
-                stream: true
-            }))
-    } else {
-        gulp.src(file, {
-            base: './' + sourcePath
-        })
-            .pipe(gulp.dest('./' + sourceBuild))
-            .pipe(reload({
-                stream: true
-            }))
     }
-
 }
 
 // 起一个普通服务
