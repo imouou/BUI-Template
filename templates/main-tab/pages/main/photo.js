@@ -1,6 +1,6 @@
-loader.define(function(requires, exports, module) {
+loader.define(function (requires, exports, module, global) {
     var pageview = {
-        init: function() {
+        init: function () {
             // 这里写业务
         }
     };

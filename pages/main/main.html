@@ -1,3 +1,9 @@
+<!-- 局部样式 -->
+<style>
+    .bui-pic-img {
+        width: 2rem;
+    }
+</style>
 <!-- 一个标准的BUI页面 -->
 <div class="bui-page bui-box-vertical">
     <header>
@@ -6,15 +12,26 @@
                 <!-- 左边有图标示例 -->
                 <div class="bui-btn btn-back"><i class="icon-back"></i></div>
             </div>
-            <div class="bui-bar-main">BUI单页开发工程模板</div>
+            <div class="bui-bar-main">BUI</div>
             <div class="bui-bar-right">
-                <!-- 右边有图标示例 -->
-                <div class="bui-btn"><i class="icon-search"></i></div>
             </div>
         </div>
     </header>
     <main>
-        <!-- 中间滚动内容 -->
+        <article class="bui-article">
+            <h1 b-text="main.title"></h1>
+            <h3 b-text="main.desc"></h3>
+
+            <h3>特点</h3>
+            <ul class="bui-list-pic bui-fluid-space-2" b-template="main.tplFeatures(main.features)">
+                <!-- <li class="span1">
+                    <div class="bui-pic">
+                        <div class="bui-pic-img"><img src="images/img.svg" alt=""></div>
+                        <div class="bui-pic-title">图片标题</div>
+                    </div>
+                </li>-->
+            </ul>
+        </article>
     </main>
     <footer>
         <!-- 底部固定内容 -->

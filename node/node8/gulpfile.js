@@ -54,7 +54,7 @@ var reload = browserSync.reload;
 const folder = {
     src: 'src',
     dist: 'dist',
-    temp: '.tmp'
+    temp: '.bui'
 }
 // 获取package的项目配置
 var configName = package['projects'] && package['projects'][process.env.NODE_ENV] || 'app.json';

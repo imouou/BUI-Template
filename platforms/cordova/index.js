@@ -1,7 +1,21 @@
 /*-----------------------------------------
- 打包需要设置isWebapp为false 才能绑定后退按键
- 并且 bui.upload,bui.download 默认使用web方式,
- 如果需要原生,请全局配置 bui.config.upload = { needNative:true }
+# Cordova开发步骤
+
+1. 剪切 config.xml 到根目录，gulpfile.js 同级
+2. 修改 gulpfile.js 的dist目录，改为 www
+```
+const folder = {
+    src: 'src',
+    dist: 'www',
+    temp: '.bui'
+}
+```
+3. 全局安装 npm install -g cordova
+4. 增加原生插件 cordova platform add browser
+5. BUI只负责当前的UI构建，打包及使用Cordova原生插件，请查看Cordova官方文档  https://cordova.apache.org/
+6. 打包前请确认 bui.isWebapp = false, 才能调用到原生方法，相当于 deviceready 
+7. 打包前请先执行 npm run build ，会把es6编译成es5 
+
 -------------------------------------------*/
 /*
   bui.isWebapp = false;
@@ -58,25 +72,26 @@
 // 开启单页路由
 window.router = bui.router();
 
-bui.ready(function(global) {
-    // 初始化路由
-    router.init({
-        id: "#bui-router",
-        progress: true,
-        hash: true,
-    })
+bui.ready(function (global) {
+  // 初始化路由
+  router.init({
+    id: "#bui-router",
+    progress: true,
+    hash: true,
+  })
 
-    // 绑定事件
-    bind();
+  // 绑定事件
+  bind();
 
-    function bind() {
-        // 绑定页面的所有按钮有href跳转
-        bui.btn({ id: "#bui-router", handle: ".bui-btn,a" }).load();
-
-        // 统一绑定页面所有的后退按钮
-        $("#bui-router").on("click", ".btn-back", function(e) {
-            // 支持后退多层,支持回调
-            bui.back();
-        })
-    }
 })
+
+function bind() {
+  // 绑定页面的所有按钮有href跳转
+  bui.btn({ id: "#bui-router", handle: ".bui-btn,a" }).load();
+
+  // 统一绑定页面所有的后退按钮
+  $("#bui-router").on("click", ".btn-back", function (e) {
+    // 支持后退多层,支持回调
+    bui.back();
+  })
+}
