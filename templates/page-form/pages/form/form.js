@@ -3,7 +3,7 @@
  * 默认模块名: pages/form/form
  * @return {[object]}  [ 返回一个对象 ]
  */
-loader.define(function(requires, exports, module) {
+loader.define(function (requires, exports, module, global) {
     var citySelect = null;
 
     // 初始化数据行为存储
@@ -40,14 +40,14 @@ loader.define(function(requires, exports, module) {
             }
         },
         methods: {
-            submit: function() {
+            submit: function () {
                 console.log(this.$data.form)
             },
-            loginInit: function() {
+            loginInit: function () {
                 // 手机号,帐号是同个样式名, 获取值的时候,取的是最后一个focus的值
                 var userInput = bui.input({
                     id: ".user-input",
-                    callback: function(e) {
+                    callback: function (e) {
                         // 清空数据
                         this.empty();
                     }
@@ -57,7 +57,7 @@ loader.define(function(requires, exports, module) {
                 var password = bui.input({
                     id: "#passwordInput",
                     iconClass: ".icon-eye",
-                    onBlur: function(e) {
+                    onBlur: function (e) {
 
                         if (e.target.value == '') { return false; }
                         // 注册的时候校验只能4-18位密码
@@ -69,7 +69,7 @@ loader.define(function(requires, exports, module) {
 
                         return true;
                     },
-                    callback: function(e) {
+                    callback: function (e) {
                         //切换类型
                         this.toggleType();
                         //
@@ -80,17 +80,17 @@ loader.define(function(requires, exports, module) {
                 // 验证码示例
                 var $btnSend = router.$("#btnSend");
                 var timer = bui.timer({
-                    onEnd: function() {
+                    onEnd: function () {
                         $btnSend.removeClass("disabled").text("重新获取验证码");
                     },
-                    onProcess: function(e) {
+                    onProcess: function (e) {
                         var valWithZero = e.count < 10 ? "0" + e.count : e.count;
                         $btnSend.text(valWithZero + "后重新获取");
                     },
                     times: 10
                 });
 
-                $btnSend.click(function(argument) {
+                $btnSend.click(function (argument) {
                     var hasDisabled = $(this).hasClass("disabled");
                     if (!hasDisabled) {
                         $(this).addClass("disabled")
@@ -100,14 +100,14 @@ loader.define(function(requires, exports, module) {
                 })
 
             },
-            showCity: function() {
+            showCity: function () {
                 citySelect && citySelect.show();
             }
         },
         watch: {},
         computed: {},
         templates: {},
-        mounted: function() {
+        mounted: function () {
             // 数据解析后执行
             var that = this;
             // 登录表单的示例处理, 数据自动绑定到this.login
@@ -115,7 +115,7 @@ loader.define(function(requires, exports, module) {
             // 选择数量
             var uiNumber = bui.number({
                 id: '#uiNumber',
-                onChange: function() {
+                onChange: function () {
                     // 跟bs的数据关联
                     that.form.num = this.value();
                 }
@@ -145,14 +145,14 @@ loader.define(function(requires, exports, module) {
                     "name": "南京",
                     "value": "66"
                 }],
-                onChange: function() {
+                onChange: function () {
                     // 跟bs的数据关联
                     that.form.area = this.text();
                 }
             });
 
             // 绑定数据
-            loader.import("http://www.easybui.com/demo/js/plugins/citys.js", function() {
+            loader.import("http://www.easybui.com/demo/js/plugins/citys.js", function () {
 
                 // 普通初始化
                 citySelect = bui.levelselect({
@@ -165,7 +165,7 @@ loader.define(function(requires, exports, module) {
                         name: "n",
                         data: ["c", "a"],
                     },
-                    onChange: function() {
+                    onChange: function () {
                         // console.log(this.value())
                         // 跟bs的数据关联
                         that.form.city = this.value();
@@ -185,7 +185,7 @@ loader.define(function(requires, exports, module) {
                     minute: "none",
                     second: "none"
                 },
-                onChange: function(value) {
+                onChange: function (value) {
                     // 跟bs的数据关联
                     that.form.birthday = value;
                 }
@@ -198,7 +198,7 @@ loader.define(function(requires, exports, module) {
                 showLength: true,
                 showIcon: false,
                 maxLength: 100,
-                onChange: function(value) {
+                onChange: function (value) {
                     // 跟bs的数据关联
                     that.form.comment = this.value();
                 }
@@ -209,7 +209,7 @@ loader.define(function(requires, exports, module) {
             var uiRating = bui.rating({
                 id: "#uiRating",
                 value: 3,
-                onChange: function() {
+                onChange: function () {
                     // 跟bs的数据关联
                     that.form.speed = this.value();
                 }
@@ -221,15 +221,15 @@ loader.define(function(requires, exports, module) {
             var $facePhoto = $("#facePhoto");
             var uiUpload = bui.upload();
 
-            $(".bui-upload .bui-btn").on("click", function() {
+            $(".bui-upload .bui-btn").on("click", function () {
 
                 uiUpload.add({
                     "from": "camera",
-                    "onSuccess": function(val, data) {
+                    "onSuccess": function (val, data) {
                         // $output.text(val);
                         // 展示本地图片
                         this.toBase64({
-                            onSuccess: function(url) {
+                            onSuccess: function (url) {
                                 $facePhoto.prepend(templatePhoto(url))
 
                             }
@@ -253,7 +253,7 @@ loader.define(function(requires, exports, module) {
                 id: "#selectList2",
                 type: "checkbox",
                 popup: false,
-                onChange: function() {
+                onChange: function () {
                     that.form.interest = this.text();
                 }
             });
@@ -263,7 +263,7 @@ loader.define(function(requires, exports, module) {
                 id: "#selectList4",
                 type: "radio",
                 popup: false,
-                onChange: function() {
+                onChange: function () {
                     that.form.sex = this.text();
                 }
             });
@@ -272,14 +272,14 @@ loader.define(function(requires, exports, module) {
                 id: "#selectList3",
                 type: "radio",
                 popup: false,
-                onChange: function() {
+                onChange: function () {
                     that.form.sex2 = this.text();
                 }
             });
 
             // 修复ios 光标跟着一起滚动问题
             if (bui.platform.isIos()) {
-                router.$("main").on("scroll", function() {
+                router.$("main").on("scroll", function () {
                     $('input').toggleClass('focus-fixed');
                 })
             }

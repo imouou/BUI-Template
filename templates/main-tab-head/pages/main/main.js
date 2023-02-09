@@ -3,58 +3,77 @@
  * 默认模块名: main
  * @return {[object]}  [ 返回一个对象 ]
  */
-loader.define(function(requires, exports, module) {
+loader.define(function (requires, exports, module, global) {
 
+    var navconfig = [{
+        id: "tab0",
+        icon: "icon-home",
+        title: "首页",
+        name: "pages/main/home",
+        param: { type: "news" }
+    }, {
+        id: "tab1",
+        icon: "icon-menu",
+        title: "分类",
+        name: "pages/main/category",
+        param: { type: "photo" },
+        everytime: true
+    },
+    {
+        id: "tab2",
+        icon: "icon-pic",
+        title: "图片",
+        name: "pages/main/photo",
+        param: { type: "video" }
+    }, {
+        id: "tab3",
+        icon: "icon-user",
+        title: "个人",
+        name: "pages/main/personal",
+        param: { type: "class" }
+    }
+    ];
 
-    var pageview = {
-        init: function() {
-            // 初始化tab
-            this.tab();
+    // 初始化数据行为存储
+    var bs = bui.store({
+        el: `#${module.id}`,
+        scope: "main",
+        data: {
+            title: "首页",
         },
-        navTitle: [{
-            name: "首页"
-        }, {
-            name: "分类"
-        }, {
-            name: "图片"
-        }, {
-            name: "个人"
-        }],
-        setTitle: function(title) {
-            router.$(".bui-bar .bui-bar-main").text(title);
-        },
-        tab: function() {
-            var that = this;
-            //menu在tab外层,menu需要传id
-            var tab = bui.tab({
-                    id: "#tabDynamic",
-                    // animate: false, // 跳转无动画
-                    swipe: false, // 不滑动
-                })
-                // 2: 监听加载后的事件
-            tab.on("to", function() {
-                var index = this.index();
-                // 设置标题
-                that.setTitle(that.navTitle[index]["name"]);
-                // 只加载一次, 如果需要每次都重新渲染
-                // if (bui.history.checkComponent(`tab${index}`)) {
-                //     loader.component({
-                //         id: `#tab${index}`,
-                //     })
-                //     return;
-                // }
-                loader.delay({
-                    id: `#tab${index}`,
+        methods: {
+            tab(opt) {
+
+                let that = this;
+                var uiTab = bui.tab({
+                    id: "#uiTab",
+                    position: "top",
+                    iconPosition: "left",
+                    data: opt.data
                 })
 
-            }).to(0);
+                uiTab.on("to", function () {
+                    let index = this.index();
+                    let item = opt.data[index];
+                    // 没次切换赋值
+                    that.title = item.title;
+                })
+
+                return uiTab;
+            }
+        },
+        watch: {},
+        computed: {},
+        templates: {},
+        mounted: function () {
+            // 数据解析后执行
+            this.tab({
+                data: navconfig
+            });
         }
-    };
-
-    // 初始化
-    pageview.init();
+    })
 
     // 输出模块
-    return pageview;
+    return bs;
 
 })

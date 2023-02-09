@@ -3,29 +3,29 @@
  * 默认模块名: pages/login/login
  * @return {[object]}  [ 返回一个对象 ]
  */
-loader.define(function(requires, exports, module, global) {
+loader.define(function (requires, exports, module, global, global) {
 
     var pageview = {
-        init: function() {
+        init: function () {
 
             // 绑定事件
             this.bind();
         },
-        bind: function() {
+        bind: function () {
 
             // 手机号,帐号是同个样式名, 获取值的时候,取的是最后一个focus的值
             var userInput = bui.input({
-                    id: ".user-input",
-                    callback: function(e) {
-                        // 清空数据
-                        this.empty();
-                    }
-                })
-                // 密码显示或者隐藏
+                id: ".user-input",
+                callback: function (e) {
+                    // 清空数据
+                    this.empty();
+                }
+            })
+            // 密码显示或者隐藏
             var password = bui.input({
                 id: ".password-input",
                 iconClass: ".icon-eye",
-                onBlur: function(e) {
+                onBlur: function (e) {
                     if (e.target.value == '') { return false; }
                     // 注册的时候校验只能4-18位密码
                     var rule = /^[a-zA-Z0-9_-]{4,18}$/;
@@ -36,7 +36,7 @@ loader.define(function(requires, exports, module, global) {
 
                     return true;
                 },
-                callback: function(e) {
+                callback: function (e) {
                     //切换类型
                     this.toggleType();
                     //

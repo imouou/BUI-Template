@@ -1,63 +1,15 @@
-<!-- 这里还是一个标准的BUI页面 bui-box-vertical 用来解决微信IOS的前进后退历史记录问题 -->
-<style>
-    .bui-nav.primary {
-        border-bottom: 0;
-    }
-    
-    .bui-nav.primary .bui-btn {
-        background: #39a4ff;
-        color: #fff;
-    }
-    
-    .bui-nav.primary .bui-btn.active:after {
-        background: #fff;
-        transform: scaleX(.3);
-        bottom: 2px;
-    }
-</style>
 <div class="bui-page bui-box-vertical">
     <header>
         <div class="bui-bar">
             <div class="bui-bar-left">
                 <!-- <a class="bui-btn"><i class="icon-back"></i></a> -->
             </div>
-            <div class="bui-bar-main">首页</div>
+            <div class="bui-bar-main" b-text="main.title">首页</div>
             <div class="bui-bar-right">
-                <a class="bui-btn"><i class="icon-menu"></i></a>
             </div>
         </div>
     </header>
     <main>
-        <div id="tabDynamic" class="bui-tab bui-box-vertical">
-            <div class="bui-tab-head">
-                <ul class="bui-nav primary">
-                    <li class="bui-btn active">首页</li>
-                    <li class="bui-btn">分类</li>
-                    <li class="bui-btn">图片</li>
-                    <li class="bui-btn">个人</li>
-                </ul>
-            </div>
-            <div class="bui-tab-main">
-                <ul>
-                    <li>
-                        <!-- 首页 -->
-                        <component id="tab0" name="pages/main/home"></component>
-                    </li>
-                    <li>
-                        <!-- 新闻tab -->
-                        <component id="tab1" name="pages/main/category" delay="true"></component>
-                    </li>
-                    <li>
-                        <!-- 图片tab -->
-                        <component id="tab2" name="pages/main/photo" delay="true"></component>
-                    </li>
-                    <li>
-                        <!-- 设置tab -->
-                        <component id="tab3" name="pages/main/personal" delay="true"></component>
-                    </li>
-                </ul>
-
-            </div>
-        </div>
+        <div id="uiTab" class="bui-tab"></div>
     </main>
 </div>

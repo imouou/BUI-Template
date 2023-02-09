@@ -1,12 +1,12 @@
-loader.define(function(requires, exports, module) {
+loader.define(function (requires, exports, module, global) {
 
     var pageview = {
-        init: function() {
+        init: function () {
             // 绑定分享
             var uiActionsheet = bui.actionsheet({
                 trigger: ".btn-share",
                 buttons: [{ name: "分享到微博", value: "weibo" }, { name: "朋友圈", value: "pyq" }],
-                callback: function(e) {
+                callback: function (e) {
                     var val = $(e.target).attr("value");
                     if (val == "cancel") {
                         this.hide();
