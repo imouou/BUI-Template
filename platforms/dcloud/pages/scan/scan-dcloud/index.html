@@ -1,0 +1,37 @@
+<style type="text/css">
+    .scan-load {
+        width: 100%;
+        position: absolute;
+        top: 0px;
+        bottom: 44px;
+        text-align: center;
+    }
+
+    .tip {
+        color: #FFFFFF;
+        font-weight: bold;
+        text-shadow: 0px -1px #103E5C;
+    }
+
+    .page-scan main {
+        background-color: #000000;
+    }
+</style>
+<div class="bui-page page-scan bui-box-vertical">
+    <main>
+        <div id="bcid" class="scan-load">
+            <div style="height:40%"></div>
+            <p class="tip">...载入中...</p>
+        </div>
+    </main>
+    <footer>
+        <div class="bui-box">
+            <div class="span1">
+                <div class="bui-btn danger" b-click="scan.back()">取消</div>
+            </div>
+            <div class="span1">
+                <div class="bui-btn warning" b-click="scan.scanPicture()">从相册选择二维码</div>
+            </div>
+        </div>
+    </footer>
+</div>

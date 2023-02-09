@@ -1,0 +1,29 @@
+<div class="bui-page bui-box-vertical">
+    <header>
+        <div class="bui-bar">
+            <div class="bui-bar-left">
+                <a class="bui-btn" onclick="bui.back();"><i class="icon-back"></i></a>
+            </div>
+            <div class="bui-bar-main">扫码动效</div>
+            <div class="bui-bar-right">
+                <!-- 右边按钮 -->
+            </div>
+        </div>
+
+    </header>
+    <main>
+
+        <component id="scan" name="pages/scan/index" delay="true"></component>
+
+    </main>
+    <footer>
+        <div class="subtitle">扫码结果展示</div>
+        <div class="bui-align-center"><img b-src="scanpage.placeholderImg" style="height: 160px;" /></div>
+        <div class="subtitle bui-box">
+            <div class="span1">扫码历史记录</div>
+            <div class="bui-btn mini" b-click="scanpage.cleanHistroy()">清空历史记录</div>
+        </div>
+        <ul class="bui-list" b-template="scanpage.tplHistory(scanpage.historyList)">
+        </ul>
+    </footer>
+</div>

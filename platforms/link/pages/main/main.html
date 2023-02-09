@@ -1,0 +1,26 @@
+<!-- 一个标准的BUI页面 -->
+<div class="bui-page bui-box-vertical">
+    <header>
+        <div class="bui-bar">
+            <div class="bui-bar-left">
+                <!-- LINK 轻应用的退出应用需要使用 app.back , 路由后退使用 bui.back() -->
+                <a class="bui-btn" onclick="app.back();"><i class="icon-back"></i></a>
+            </div>
+            <div class="bui-bar-main">LINK API 示例</div>
+            <div class="bui-bar-right">
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="bui-interval container-xy">
+            <div class="bui-btn" b-click="main.getApp">获取应用信息</div>
+            <div class="bui-btn" b-click="main.getUserinfo">获取用户登录信息</div>
+            <div class="bui-btn" b-click="main.getToken">获取Link用户Token</div>
+            <div class="bui-btn" b-click="main.getData">请求跨域地址</div>
+            <div class="bui-btn" b-click="main.recordVideo">录制视频</div>
+        </div>
+    </main>
+    <footer>
+        <!-- 底部固定内容 -->
+    </footer>
+</div>

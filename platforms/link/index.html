@@ -5,7 +5,8 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
     <title>BUI</title>
     <meta name="format-detection" content="telephone=no" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no,viewport-fit=cover">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no,viewport-fit=cover">
     <link rel="stylesheet" href="css/bui.css" />
     <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -15,13 +16,22 @@
     <div id="bui-router"></div>
 
     <script src="js/zepto.js"></script>
-    <script src="js/platform/cordova.js"></script>
+    <!--BingoTouch依赖
+        cordova：原生库（相机，扫码，提示框等原生接口）
+        BingoTouch：cordova进行二次封装扩展的基础库
+        linkplugins：与link交互的库（获取link的登录用户信息，打开link名片页等）
+    -->
+    <script src="js/platform/cordova/cordova.js"></script>
     <script src="js/platform/bingotouch.js"></script>
-    <!-- link原生插件,Link轻应用才引入,打包不用引入 -->
     <script src="js/platform/linkplugins.js"></script>
     <script src="js/bui.js"></script>
-    <!-- 修正iphone全屏问题, 打包引入,link轻应用不用引入 -->
-    <!-- <script src="js/plugins/fixStatusBar.js"></script> -->
+    <!-- 全局方法及配置 -->
+    <script src="js/global.js"></script>
+    <!-- 调试时打开，上架时注释掉 -->
+    <script src="js/plugins/vconsole.min.js"></script>
+    <script>
+        var vConsole = new VConsole();
+    </script>
     <!-- 初始化单页 -->
     <script src="index.js"></script>
 </body>

@@ -1,9 +1,9 @@
 let enviroment = process.env.NODE_ENV || 'development';
-// 默认文件夹配置 .tmp为临时babel编译的临时文件, mac上是隐藏文件夹, 实际打包应该为 dist 目录里面的
+// 默认文件夹配置 .bui为临时babel编译的临时文件, mac上是隐藏文件夹, 实际打包应该为 dist 目录里面的
 const folder = {
     src: 'src',
     dist: 'dist',
-    temp: '.tmp'
+    temp: '.bui'
 }
 
 const gulp = require('gulp');
@@ -44,8 +44,6 @@ const minifycss = require('gulp-clean-css');
 const autoprefixer = require('gulp-autoprefixer');
 // 脚本压缩
 const uglify = require('gulp-uglify');
-// 静态服务器
-const connect = require('gulp-connect');
 // 跨域代理
 const proxy = require('http-proxy-middleware');
 // 配合fs
@@ -115,7 +113,7 @@ var config = {
     },
     watcher: {
         rootRule: sourcePath + '/**',
-        moveRule: [sourcePath + '/**', '!' + sourcePath + '/scss'],
+        moveRule: [sourcePath + '/**', '!' + sourcePath + '/scss', '!' + sourcePath + '/less'],
         jsRule: [sourcePath + '/**/*.js', '!' + sourcePath + '/js/bui.js', '!' + sourcePath + '/js/zepto.js', '!' + sourcePath + '/js/platform/**/*.js', '!' + sourcePath + '/js/plugins/**/*.js', '!' + sourcePath + '/**/*.min.js', '!' + sourcePath + '/**/*.json'],
         htmlRule: [sourcePath + '/**/*.html'],
     }
@@ -217,7 +215,7 @@ function findSync(startPath) {
             if (stats.isDirectory()) {
                 finder(fPath)
             }
-            if (stats.isFile() && val.lastIndexOf(".js") > -1) {
+            if (stats.isFile() && val.lastIndexOf(".js") > -1 && val.lastIndexOf(".json") < 0) {
                 result.push({
                     path: fPath,
                     name: val,
@@ -441,7 +439,7 @@ task('index-browserify', cb => {
     }];
 
     var tag = getTime();
-    console.log('dist/dist' + tag + '.zip 文件创建成功')
+    console.log(folder.dist + `/${folder.dist + tag}.zip 文件创建成功`)
     // 这里需要找到多个文件再进行合并,是异步的, 会造成dist-zip压缩的时候,文件还是没有编译混淆的版本
     var task = files.map(entry => {
         return browserify({
@@ -455,8 +453,8 @@ task('index-browserify', cb => {
             .pipe(stream(entry.name))
             .pipe(buffer())
             .pipe(dest(folder.dist))
-            .pipe(src('dist/**'))
-            .pipe(zip('dist' + tag + '.zip'))
+            .pipe(src(`${folder.dist}/**`))
+            .pipe(zip(`${folder.dist + tag}.zip`))
             .pipe(gulp.dest(folder.dist))
     })
     // 任务合并
@@ -467,18 +465,18 @@ task('index-browserify', cb => {
 // 模块化打包
 task('dist-zip', cb => {
     var tag = getTime();
-    console.log('dist/dist' + tag + '.zip 文件创建成功')
-    return src('dist/**')
-        .pipe(zip('dist' + tag + '.zip'))
+    console.log(`${folder.dist}/${folder.dist + tag}.zip 文件创建成功`)
+    return src(`${folder.dist}/**`)
+        .pipe(zip(`${folder.dist}tag.zip`))
         .pipe(gulp.dest(folder.dist))
     cb();
 })
 // 模块化打包
 task('zip', cb => {
     var tag = getTime();
-    console.log('dist/dist' + tag + '.zip 文件创建成功')
-    return src('dist/**')
-        .pipe(zip('dist' + tag + '.zip'))
+    console.log(`${folder.dist}/${folder.dist + tag}.zip 文件创建成功`)
+    return src(`${folder.dist}/**`)
+        .pipe(zip(`${folder.dist}tag.zip`))
         .pipe(gulp.dest(folder.dist))
     cb();
 })
@@ -493,7 +491,7 @@ task('backup', cb => {
 // 找到文件进行打包处理
 function findFileMerge(startPath) {
     let results = []
-    let startFolder = "dist";
+    let startFolder = folder.dist;
     let bundleFile = "index.js"; // 合并到首页
 
     let indexImports = [];  // 首页用到import的地方
