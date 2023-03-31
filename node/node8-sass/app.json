@@ -29,7 +29,9 @@
         "compatibility": "ie8"
     },
     "autoprefixer": {
-        "browsers": ["last 2 versions"],
+        "browsers": [
+            "last 2 versions"
+        ],
         "remove": false,
         "cascade": false
     },
@@ -40,7 +42,7 @@
     },
     "uglify": {
         "compress": {
-            "drop_debugger": false
+            "drop_debugger": true
         },
         "output": {
             "max_line_len": false

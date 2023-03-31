@@ -270,7 +270,7 @@ task('babel-mini', cb => {
         // 混淆
         .pipe(app.uglify ? uglify({
             "compress": {
-                "drop_debugger": false
+                "drop_debugger": true
             },
             "output": {
                 "max_line_len": false,

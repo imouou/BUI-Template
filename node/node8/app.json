@@ -42,7 +42,7 @@
     },
     "uglify": {
         "compress": {
-            "drop_debugger": false
+            "drop_debugger": true
         },
         "output": {
             "max_line_len": false
