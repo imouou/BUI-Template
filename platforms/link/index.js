@@ -2,10 +2,20 @@
 
 var pageview = {
   init() {
+    let that = this;
     // dom准备完成
     this.webready();
-    // 原生方法初始化完毕
-    this.nativeready();
+    // 原生 ready
+    if (bui.platform.isIos()) {
+      window.onload = function () {
+
+        that.nativeready();
+
+      }
+    } else {
+      that.nativeready();
+    }
+
   },
   webready() {
 
@@ -13,17 +23,18 @@ var pageview = {
     window.router = bui.router();
 
     // DOM准备完毕
-    bui.ready(function (global) {
+    bui.ready((global) => {
 
       // Web初始化路由
       router.init({
         id: "#bui-router",
         progress: true,
         hash: true,
+        firstAnimate: false,  // 跳转动画优先
       })
 
       // 绑定事件
-      bind();
+      this.bind();
 
     })
   },
@@ -32,13 +43,17 @@ var pageview = {
     // 安卓的初始化设备会更慢，要放在 window.onload 里面
     window.document.addEventListener("deviceready", function () {
 
-      // LINK 调试
-      app.link.getToken(function (result) {
+      try {
 
-        let token = result.accessToken;
+        // LINK 调试
+        app.link.getToken(function (result) {
 
-        console.log(token)
-      });
+          let token = result.accessToken;
+
+        });
+      } catch (e) {
+
+      }
 
     }, false);
 
