@@ -1,11 +1,11 @@
 window.router = bui.router();
 
-bui.ready(function(global) {
+bui.ready(function (global) {
     // 初始化路由
     router.init({
         id: "#bui-router",
         progress: true,
-        hash: true,
+        firstAnimate: true,
     })
 
     // 绑定事件
@@ -19,7 +19,7 @@ function bind() {
     bui.btn({ id: "#bui-router", handle: ".bui-btn" }).load();
 
     // 统一绑定页面所有的后退按钮
-    $("#bui-router").on("click", ".btn-back", function(e) {
+    $("#bui-router").on("click", ".btn-back", function (e) {
         // 支持后退多层,支持回调
         bui.back();
     })
