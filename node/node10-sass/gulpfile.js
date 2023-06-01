@@ -65,7 +65,7 @@ const del = require('del');
 const qrcode = require('qrcode-terminal');
 // 用于获取本机信息
 const os = require('os');
-const ip = getNetwork().ip || "localhost";
+const ip = getNetwork()["en0:1"] || "localhost";
 // 读取配置
 const package = require('./package.json');
 // 起服务

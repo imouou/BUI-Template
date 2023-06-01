@@ -1,0 +1,15 @@
+{
+    "short_name": "BUI",
+    "name": "BUI",
+    "icons": [
+        {
+            "src": "images/applogo.png",
+            "type": "image/png",
+            "sizes": "144x144"
+        }
+    ],
+    "theme_color": "#0072c6",
+    "background_color": "#ffffff",
+    "display": "fullscreen",
+    "start_url": "index.html"
+}

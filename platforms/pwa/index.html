@@ -1,14 +1,13 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="zh-CN">
 
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
     <title>BUI</title>
-    <meta name="msapplication-tap-highlight" content="no">
-    <meta name="color-scheme" content="light dark">
     <meta name="format-detection" content="telephone=no" />
     <meta name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no,viewport-fit=cover">
+    <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="css/bui.css" />
     <link rel="stylesheet" href="font/bootstrap-icons.min.css" />
     <link rel="stylesheet" href="css/style.css" />
@@ -19,11 +18,22 @@
     <div id="bui-router"></div>
 
     <script src="js/zepto.js"></script>
-    <script src="cordova.js"></script>
-    <!-- BUI库 -->
     <script src="js/bui.js"></script>
+    <script src="js/global.js"></script>
     <!-- 初始化单页 -->
     <script src="index.js"></script>
+    <script>
+        // 开启离线缓存
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('/sw.v1.js', { scope: '/' }).then(function (registration) {
+                    console.log('ServiceWorker registration successful with scope: ' + registration.scope);
+                }, function (err) {
+                    console.log('ServiceWorker registration failed: ' + err);
+                });
+            });
+        }
+    </script>
 </body>
 
 </html>
