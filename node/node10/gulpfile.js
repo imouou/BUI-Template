@@ -61,7 +61,7 @@ const del = require('del');
 const qrcode = require('qrcode-terminal');
 // 用于获取本机信息
 const os = require('os');
-const ip = getNetwork().ip || "localhost";
+const ip = getNetwork()["en0:1"] || "localhost";
 // 读取配置
 const package = require('./package.json');
 // 起服务
@@ -154,6 +154,9 @@ if ("ignored" in app) {
 }
 
 // 获取本机IP
+// 获取ip
+// 局域网ip：iptable["en0:1"]
+// 本机ip：iptable["lo0"]
 function getNetwork() {
     let iptable = {},
         ifaces = os.networkInterfaces();
@@ -169,6 +172,8 @@ function getNetwork() {
 
     return iptable;
 }
+
+
 
 // 获取随机端口
 function getRandomPort() {

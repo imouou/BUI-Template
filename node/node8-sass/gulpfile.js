@@ -44,7 +44,7 @@ const less = require('gulp-less');
 var qrcode = require('qrcode-terminal');
 // 用于获取本机信息
 var os = require('os');
-var ip = getNetwork().ip || "localhost";
+var ip = getNetwork()["en0:1"] || "localhost";
 
 var package = require('./package.json');
 // 同步刷新

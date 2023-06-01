@@ -1,5 +1,3 @@
-
-
 var pageview = {
   init() {
     let that = this;
