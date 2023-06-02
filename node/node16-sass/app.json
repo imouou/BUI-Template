@@ -1,0 +1,36 @@
+{
+    "distServer": {
+        "livereload": true
+    },
+    "devServer": {
+        "livereload": false
+    },
+    "qrcode": "/index.html",
+    "ignored": [
+        "!src/README.md",
+        "!src/preview.png"
+    ],
+    "proxy": {
+        "/demo": {
+            "target": "http://www.easybui.com",
+            "changeOrigin": true,
+            "ssl": false
+        }
+    },
+    "babel": {
+        "presets": [
+            "es2015"
+        ]
+    },
+    "package": {
+        "uglify": true,
+        "folder": "pages",
+        "main": "pages/main/main"
+    },
+    "cleancss": false,
+    "autoprefixer": true,
+    "uglify": true,
+    "htmlmin": false,
+    "imagemin": false,
+    "license": "MIT"
+}
