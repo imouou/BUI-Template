@@ -1,0 +1,44 @@
+{
+    "status":200,
+    "data":[{
+        "id": "s1",
+        "title": "图片标题",
+        "desc": "图片描述",
+        "image": "images/img.svg",
+        "price": 10,
+        "tag": "BUI",
+        "url": "main"
+    },{
+        "id": "s2",
+        "title": "图片标题2",
+        "desc": "图片描述2",
+        "image": "images/img.svg",
+        "price": 90,
+        "tag": "BUI",
+        "url": "main"
+    },{
+        "id": "s3",
+        "title": "图片标题3",
+        "desc": "图片描述3",
+        "image": "images/img.svg",
+        "price": 10,
+        "tag": "BUI",
+        "url": "main"
+    },{
+        "id": "s4",
+        "title": "图片标题4",
+        "desc": "图片描述4",
+        "image": "images/img.svg",
+        "price": 90,
+        "tag": "BUI",
+        "url": "main"
+    },{
+        "id": "s5",
+        "title": "图片标题5",
+        "desc": "图片描述5",
+        "image": "images/img.svg",
+        "price": 90,
+        "tag": "BUI",
+        "url": "main"
+    }]
+}

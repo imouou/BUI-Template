@@ -1,0 +1,21 @@
+<div class="bui-page bui-box-vertical">
+    <header>
+       <div class="bui-bar">
+        <div class="bui-bar-left">
+            <a class="bui-btn" onclick="bui.back();"><i class="icon-back"></i></a>
+        </div>
+        <div class="bui-bar-main">页面跳转传参</div>
+        <div class="bui-bar-right">
+            <!-- 右边按钮 -->
+        </div>
+       </div>
+    </header>
+    <main>
+        <!-- 正文内容 -->
+        <div class="container-xy bui-interval">
+            <div class="bui-btn" href="pages/demo/router/load/load.html?id=bui">属性跳转传参 id=bui</div>
+            <div class="bui-btn" b-click="page.load">事件跳转传参  id=easybui</div>
+            <div class="bui-btn success" b-click="page.getProps">获取页面参数</div>
+        </div>
+    </main>
+</div>

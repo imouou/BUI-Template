@@ -17,22 +17,26 @@ loader.define(function (requires, exports, module, global) {
         },
         methods: {
             getToken() {
-
+                // web拿不到
                 bui.alert(global.token)
             },
             getData() {
+                // 全局的请求，在 js/global.js 定义，会根据环境自动选择
                 // 请求测试地址
-                bui.ajax({
-                    url: "https://easybui.com/demo/json/shop.json",
+                global.ajax({
+                    url: "https://www.easybui.com/demo/json/shop.json",
                     data: {},//接口请求的参数
                     // 可选参数
-                    method: "GET"
+                    method: "GET",
                 }).then(function (result) {
                     // 成功
                     bui.alert(result);
-                }, function (result, status) {
-                    // 失败 console.log(status)
-                    bui.alert("PC调试请打开跨域的Chrome，LINK调试，需要使用代理，或者切换成原生请求，查看 src/index.js 的注释说明");
+                }, function (result) {
+                    if( navigator.userAgent.indexOf("linkmessenger") > -1 ){
+                        bui.alert("请查看js/global.js 的注释，去掉注释可在LINK调试");
+                    }else{
+                        bui.alert("PC调试请打开跨域的chrome，或使用代理，具体查看 readme.md ");
+                    }
                 });
             },
             getApp() {
@@ -46,10 +50,12 @@ loader.define(function (requires, exports, module, global) {
                 });
             },
             getUserinfo() {
-                // 获取用户登录信息
-                app.link.getLoginInfo(function (res) {
-                    bui.alert(res)
-                });
+                // web拿不到
+                // 获取用户登录信息，新工程可以用 global.userinfo获取
+                bui.alert(global.userinfo)
+                // app.link.getLoginInfo(function (res) {
+                //     bui.alert(res)
+                // });
             },
             recordVideo() {
                 // 视频录制
@@ -71,6 +77,7 @@ loader.define(function (requires, exports, module, global) {
                     duration: 4
                 })
             }
+            
         },
         watch: {},
         computed: {},

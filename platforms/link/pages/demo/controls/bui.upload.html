@@ -1,0 +1,66 @@
+﻿<style>
+    output {
+        word-break: break-all;
+    }
+    
+    .bui-box-space {
+        margin-bottom: .2rem;
+    }
+</style>
+<div class="bui-page">
+    <header class="bui-bar">
+        <div class="bui-bar-left">
+            <a class="bui-btn" onclick="bui.back();"><i class="icon-back"></i></a>
+        </div>
+        <div class="bui-bar-main">文件上传</div>
+        <div class="bui-bar-right">
+        </div>
+    </header>
+    <main>
+        <!-- 上传示例 -->
+        <div class="section-title">
+            上传:
+        </div>
+        <div id="buiPhoto" class="bui-upload bui-fluid-space-4" b-template="page.tplPhoto(page.photos)" b-command="prepend">
+            <div class="span1">
+                <div id="btnUpload" class="bui-btn">
+                    <i class="icon-plus large"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- 操作示例 -->
+        <div class="container-y">
+
+            <div class="bui-box-space">
+                <div class="span1">
+                    <div class="bui-btn" b-click="page.removeSelect">删除第1个图片</div>
+                </div>
+                <div class="span1">
+                    <div class="bui-btn" b-click="page.removeAllSelect">删除所有选择</div>
+                </div>
+            </div>
+            <div class="bui-box-space">
+                <div class="span1">
+                    <div class="bui-btn" b-click="page.upload">上传文件</div>
+                </div>
+                <div class="span1">
+                    <div class="bui-btn" b-click="page.stopUpload">停止上传</div>
+                </div>
+            </div>
+            <div class="bui-box-space">
+                <div class="span1">
+                    <div class="bui-btn" b-click="page.selectMore">选择多张图片</div>
+                </div>
+                <div class="span1">
+                    <div class="bui-btn" b-click="page.uploadAll">分批上传，一次一文件</div>
+                </div>
+            </div>
+            <div class="bui-box-space">
+                <div class="span1">
+                    <div class="bui-btn" b-click="page.uploadOneMore">批量上传，一次多文件，需要接口支持</div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

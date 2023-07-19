@@ -1,0 +1,81 @@
+﻿<style>
+    /*示例样式*/
+    
+    .bui-btn {
+        padding-left: .1rem;
+        padding-right: .1rem;
+    }
+    
+    .bui-list .bui-btn i {
+        font-size: 0.4rem;
+        margin-right: 0.2rem;
+    }
+    
+    output {
+        word-break: break-all;
+    }
+    
+    .bui-box-space {
+        margin-bottom: .2rem;
+    }
+</style>
+<div class="bui-page">
+    <header class="bui-bar">
+        <div class="bui-bar-left">
+            <a class="bui-btn" onclick="bui.back();"><i class="icon-back"></i></a>
+        </div>
+        <div class="bui-bar-main">文件下载</div>
+        <div class="bui-bar-right">
+        </div>
+    </header>
+    <main>
+        <div class="section-title">
+            下载: 支持安卓,ios不支持, web不支持
+        </div>
+        <div class="bui-box-space">
+            <div class="span1">
+                <div class="bui-btn" b-click="page.downloadImage">下载图片</div>
+            </div>
+            <div class="span1">
+                <div class="bui-btn" b-click="page.getDownloadOpen">打开图片</div>
+            </div>
+            <div class="span1">
+                <div class="bui-btn" b-click="page.getDownloadShow">插入图片</div>
+            </div>
+        </div>
+        <div class="bui-box-space">
+            <div class="span1">
+                <div class="bui-btn" b-click="page.downloadpdf">下载打开pdf</div>
+            </div>
+            <div class="span1">
+                <div class="bui-btn" b-click="page.downloadVideo">下载视频</div>
+            </div>
+            <div class="span1">
+                <div class="bui-btn" b-click="page.getDownloadApp">下载应用</div>
+            </div>
+        </div>
+        <div class="bui-box-space">
+            <div class="span1">
+                <div class="bui-btn" b-click="page.removeDownload">删除下载图片</div>
+            </div>
+            <div class="span1">
+                <div class="bui-btn" b-click="page.removeAllDownload">删除所有下载</div>
+            </div>
+            <div class="span1">
+                <div class="bui-btn" b-click="page.stopDownload">停止下载</div>
+            </div>
+        </div>
+        <div class="bui-box-space">
+            <div class="span1">
+                <div class="bui-btn" b-click="page.downloadImagePublic">安卓下载图片到图库，ios下载在应用内部</div>
+            </div>
+        </div>
+        <div class="section-title">
+            结果:
+        </div>
+        <div class="container-xy">
+            <output id="output" b-html="page.output">
+            </output>
+        </div>
+    </main>
+</div>

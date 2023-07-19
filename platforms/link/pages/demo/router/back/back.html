@@ -1,0 +1,21 @@
+<div class="bui-page bui-box-vertical">
+    <header>
+       <div class="bui-bar">
+        <div class="bui-bar-left">
+            <a class="bui-btn" onclick="bui.back();"><i class="icon-back"></i></a>
+        </div>
+        <div class="bui-bar-main">页面后退</div>
+        <div class="bui-bar-right">
+            <!-- 右边按钮 -->
+        </div>
+       </div>
+    </header>
+    <main>
+        <!-- 正文内容 -->
+        <div class="container-xy bui-interval">
+            <div class="bui-btn" b-click="page.back">普通后退</div>
+            <div class="bui-btn" b-click="page.backRefresh">后退刷新</div>
+            <div class="bui-btn" b-click="page.backCallback">后退局部刷新</div>
+        </div>
+    </main>
+</div>

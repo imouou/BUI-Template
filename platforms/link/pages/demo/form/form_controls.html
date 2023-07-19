@@ -1,0 +1,208 @@
+﻿<style>
+    .bui-fluid-space-3 .bui-check {
+        margin-bottom: .2rem;
+    }
+    
+    .selected-val {
+        margin-right: .1rem;
+    }
+    
+    .bui-pickerdate {
+        text-align: right;
+        padding-right: .1rem;
+    }
+</style>
+<div class="bui-page">
+    <header class="bui-bar">
+        <div class="bui-bar-left">
+            <a class="bui-btn" onclick="bui.back();"><i class="icon-back"></i></a>
+        </div>
+        <div class="bui-bar-main">表单控件</div>
+        <div class="bui-bar-right">
+        </div>
+    </header>
+    <main>
+
+        <h3 class="section-title">表单输入的交互</h3>
+        <ul class="bui-list">
+            <li class="bui-btn bui-box clearactive">
+                <label class="bui-label" for="phonenumber">手机号:</label>
+                <div class="span1">
+                    <div class="bui-input user-input">
+                        <input id="phonenumber" type="number" value="" placeholder="请输入手机号" b-model="page.form.phone">
+                    </div>
+                </div>
+            </li>
+            <li class="bui-btn bui-box clearactive">
+                <label class="bui-label" for="password">密码:</label>
+                <div class="span1">
+                    <div id="passwordInput" class="bui-input">
+                        <input id="password" type="password" placeholder="请输入密码" b-model="page.form.password">
+                    </div>
+                </div>
+            </li>
+            <li class="bui-btn bui-box clearactive">
+                <label class="bui-label">验证码:</label>
+                <div class="span1">
+                    <input type="text" class="bui-input" value="" placeholder="请输入验证码" maxlength="4">
+                </div>
+                <div class="bui-btn primary-reverse mini ring" b-class="page.sendDisable" b-click="page.sendCode($this)" b-text="page.sendText">发送验证码</div>
+            </li>
+        </ul>
+        <h3 class="section-title">字数限制</h3>
+        <ul class="bui-list">
+            <li class="bui-btn clearactive">
+                <div id="commentContent" class="bui-input">
+                    <textarea class="bui-input" id="" cols="30" rows="4" placeholder="请输入内容" b-model="page.form.comment"></textarea>
+                </div>
+            </li>
+        </ul>
+        <h3 class="section-title">表单选择</h3>
+        <ul class="bui-list">
+            <li class="bui-btn bui-box">
+                <label class="bui-label">滑动值:</label>
+                <div class="span1"></div>
+                <div class="bui-value">
+                    <input type="range" class="bui-range" min="0" max="255" value="200" b-model="page.form.range">
+                </div>
+                <b b-text="page.form.range"></b>
+            </li>
+            <li class="bui-btn bui-box clearactive">
+                <label class="bui-label">选择数量:</label>
+                <div class="span1"></div>
+                <div class="bui-value">
+                    <div id="uiNumber" class="bui-number"></div>
+                </div>
+            </li>
+            <li class="bui-btn bui-box clearactive">
+                <label class="bui-label">物流速度:</label>
+                <div class="span1">
+                </div>
+                <div class="bui-value">
+                    <div id="uiRating" class="bui-rating"></div>
+                </div>
+            </li>
+            <li class="bui-btn bui-box clearactive">
+                <label class="bui-label">下拉选择:</label>
+                <div class="span1"></div>
+                <div class="bui-value"  style="width:2.4rem">
+                    <div id="uiDropdown" class="bui-dropdown">
+                        <div class="bui-btn bui-box">
+                            <div class="span1">菜单名称</div>
+                            <i class="icon-dropdown"></i>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="bui-btn bui-box">
+                <label class="bui-label">区域多选</label>
+                <div class="span1">
+                </div>
+                <div id="select" class="bui-select">请选择</div>
+                <i class="icon-listright"></i>
+            </li>
+            <li id="chooseCity" class="bui-btn bui-box clearactive">
+                <label class="bui-label">城市选择</label>
+                <div class="span1">
+                </div>
+                <div>
+                    <div class="bui-box ">
+                        <div class="selected-val"></div>
+                        <div class="selected-val"></div>
+                        <div class="selected-val"></div>
+                    </div>
+                </div>
+                <i class="icon-listright"></i>
+            </li>
+            <li id="chooseCity" class="bui-btn bui-box clearactive">
+                <label class="bui-label">出生日期</label>
+                <div class="span1">
+                </div>
+                <input type="text" id="pickerdateInput" readonly class="bui-pickerdate" b-model="page.form.birthday">
+                <i class="icon-listright"></i>
+            </li>
+        </ul>
+        <h3 class="section-title">多选列表 -- 您的兴趣是: <span b-text="page.interests"></span></h3>
+        <ul class="bui-list" b-template="page.tplInterest(page.interestData)">
+            <!-- <li class="bui-btn bui-box">
+                <label class="bui-label">羽毛球</label>
+                <div class="span1"></div>
+                <div class="bui-value">
+                    <input type="checkbox" b-model="form.userinfo.interest" class="bui-choose" name="interest" text="羽毛球" value="羽毛球">
+                </div>
+            </li> -->
+        </ul>
+        <h3 class="section-title">单选的展示</h3>
+        <ul class="bui-list">
+            <li class="bui-btn bui-box">
+                <label class="bui-label">切换</label>
+                <div class="span1"></div>
+                <div class="bui-value">
+                    <input type="checkbox" class="bui-switch-text" value="1" uncheck="OFF" check="ON" b-model="page.form.switchtext">
+                </div>
+            </li>
+            <li class="bui-btn bui-box">
+                <label class="bui-label">开启蓝牙</label>
+                <div class="span1"></div>
+                <div class="bui-value">
+                    <input type="checkbox" class="bui-switch" value="1"  b-model="page.form.switch">
+                </div>
+            </li>
+            <li class="bui-btn bui-box">
+                <label class="bui-label">收藏</label>
+                <div class="span1"></div>
+                <div class="bui-value">
+                    <input id="like" type="checkbox" name="fav" class="bui-like warning" value="1" b-model="page.form.fav">
+                </div>
+            </li>
+            <li class="bui-btn bui-box">
+                <label class="bui-label">收藏</label>
+                <div class="span1"></div>
+                <div class="bui-value">
+                    <input id="like" type="checkbox" name="fav" class="bui-fav warning" value="1" b-model="page.form.fav2">
+                </div>
+            </li>
+        </ul>
+
+        <div class="section-title">自定义单选</div>
+        <div class="bui-fluid-space-3">
+            <div class="span1">
+                <input b-model="page.form.money" type="radio" class="bui-check" name="chongzhi1" value="50" uncheck="50元" check="50元">
+            </div>
+            <div class="span1">
+                <input b-model="page.form.money" type="radio" class="bui-check" name="chongzhi1" value="100" uncheck="100元" check="100元">
+            </div>
+            <div class="span1">
+                <input b-model="page.form.money" type="radio" class="bui-check" name="chongzhi1" value="200" uncheck="200元" check="200元">
+            </div>
+            <div class="span1">
+                <input b-model="page.form.money" type="radio" class="bui-check" name="chongzhi1" value="300" uncheck="300元" check="300元">
+            </div>
+            <div class="span1">
+                <input b-model="page.form.money" type="radio" class="bui-check" name="chongzhi1" value="500" uncheck="50元" check="50元">
+            </div>
+        </div>
+        <div class="section-title">
+            拍照上传:
+        </div>
+        <div id="facePhoto" class="bui-upload bui-fluid-space-4">
+            <div class="span1" b-click="page.addPhoto">
+                <div class="bui-btn">
+                    <i class="icon-plus large"></i>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="container-y">
+            <div class="bui-box-space">
+                <div class="span1">
+                    <div class="bui-btn round">次按钮</div>
+                </div>
+                <div class="span1">
+                    <div class="bui-btn round primary" b-click="page.submit">提交</div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>

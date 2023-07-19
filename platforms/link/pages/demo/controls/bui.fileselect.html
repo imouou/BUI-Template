@@ -1,0 +1,59 @@
+﻿
+<style>
+    .bui-list .bui-btn i {
+        font-size: 0.4rem;
+        margin-right: 0.2rem;
+    }
+    output {
+        word-break: break-all;
+    }
+    .bui-box-space {
+        margin-bottom: .2rem;
+    }
+</style>
+<div class="bui-page">
+	<header class="bui-bar">
+		<div class="bui-bar-left">
+			<a class="bui-btn" onclick="bui.back();"><i class="icon-back"></i></a>
+		</div>
+		<div class="bui-bar-main">fileselect 选择文件</div>
+		<div class="bui-bar-right">
+		</div>
+	</header>
+	<main>
+        <div class="section-title">
+            文件选择:
+        </div>
+        <div class="bui-box-space">
+            <div class="span1">
+                <div class="bui-btn" b-click="page.select">选择图片</div>
+            </div>
+            <div class="span1">
+                <div class="bui-btn" b-click="page.camera">选择拍照</div>
+            </div>
+        </div>
+        <div class="bui-box-space">
+            <div class="span1">
+                <div class="bui-btn" b-click="page.selectMore">选择多张图片</div>
+            </div>
+            <div class="span1">
+                <div class="bui-btn" b-click="page.getSelect">获取文件信息</div>
+            </div>
+        </div>
+        <div class="bui-box-space">
+            <div class="span1">
+                <div class="bui-btn" b-click="page.removeAllSelect">删除所有选择</div>
+            </div>
+            <div class="span1">
+                <div class="bui-btn" b-click="page.removeSelect">删除选择</div>
+            </div>
+        </div>
+        <div class="section-title">
+            结果:
+        </div>
+        <div class="container-xy">
+            <output b-html="page.output">
+            </output>
+        </div>
+	</main>
+</div>
