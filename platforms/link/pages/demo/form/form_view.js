@@ -5,7 +5,16 @@ loader.define(function (require, exports, module, global) {
         el: `#${module.id}`,
         scope: "formview",
         data: {
-           userinfo: null,
+            userinfo: {
+                "name":"",
+                "uid":"",
+                "phone":"",
+                "email":"",
+                "company":"",
+                "qq":"",
+                "interest":[],
+                "sex":"男"
+            }
         },
         methods: {
             getUserinfo(){
