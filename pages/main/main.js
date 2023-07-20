@@ -32,7 +32,15 @@ loader.define(function (requires, exports, module, global) {
                 icon: "https://www.easybui.com/static/images/features/icon4.png"
             }]
         },
-        methods: {},
+        methods: {
+            getLocalData(){
+                // 获取本地数据
+            },
+            getData(){
+                // 获取跨域数据
+                
+            }
+        },
         watch: {},
         computed: {},
         templates: {

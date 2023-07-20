@@ -103,7 +103,7 @@ var config = {
     watcher: {
         rootRule: sourcePath + '/**',
         moveRule: [sourcePath + '/**', '!' + sourcePath + '/scss'],
-        jsRule: [sourcePath + '/**/*.js', '!' + sourcePath + '/js/bui.js', '!' + sourcePath + '/js/zepto.js', '!' + sourcePath + '/js/platform/**/*.js', '!' + sourcePath + '/js/plugins/**/*.js', '!' + sourcePath + '/**/*.min.js', '!' + sourcePath + '/**/*.json'],
+        jsRule: [sourcePath + '/**/*.js', '!' + sourcePath + '/js/bui.js', '!' + sourcePath + '/js/zepto.js', '!' + sourcePath + '/js/platform/**/*.js', '!' + sourcePath + '/js/plugins/**/*.js', '!' + sourcePath + '/**/*.min.js', '!' + sourcePath + '/**/*.json','!' + sourcePath + '/js/cordova/**/*.js'],
         htmlRule: [sourcePath + '/**/*.html'],
     }
 }

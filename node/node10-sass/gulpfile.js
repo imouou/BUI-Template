@@ -118,7 +118,7 @@ var config = {
     watcher: {
         rootRule: sourcePath + '/**',
         moveRule: [sourcePath + '/**', '!' + sourcePath + '/scss'],
-        jsRule: [sourcePath + '/**/*.js', '!' + sourcePath + '/js/bui.js', '!' + sourcePath + '/js/zepto.js', '!' + sourcePath + '/js/platform/**/*.js', '!' + sourcePath + '/js/plugins/**/*.js', '!' + sourcePath + '/**/*.min.js', '!' + sourcePath + '/**/*.json'],
+        jsRule: [sourcePath + '/**/*.js', '!' + sourcePath + '/js/bui.js', '!' + sourcePath + '/js/zepto.js', '!' + sourcePath + '/js/platform/**/*.js', '!' + sourcePath + '/js/plugins/**/*.js', '!' + sourcePath + '/**/*.min.js', '!' + sourcePath + '/**/*.json','!' + sourcePath + '/js/cordova/**/*.js'],
         htmlRule: [sourcePath + '/**/*.html'],
     }
 }
@@ -504,18 +504,18 @@ task('index-browserify', cb => {
 // 模块化打包
 task('dist-zip', cb => {
     var tag = getTime();
-    console.log(folder.dist + `/${folder.dist + tag}.zip 文件创建成功`)
+    console.log(`${folder.dist}/${folder.dist + tag}.zip 文件创建成功`)
     return src(`${folder.dist}/**`)
-        .pipe(zip(`${folder.dist + tag}.zip`))
+        .pipe(zip(`${folder.dist+tag}.zip`))
         .pipe(gulp.dest(folder.dist))
     cb();
 })
 // 模块化打包
 task('zip', cb => {
     var tag = getTime();
-    console.log(folder.dist + `/${folder.dist + tag}.zip 文件创建成功`)
+    console.log(`${folder.dist}/${folder.dist + tag}.zip 文件创建成功`)
     return src(`${folder.dist}/**`)
-        .pipe(zip(`${folder.dist + tag}.zip`))
+        .pipe(zip(`${folder.dist+tag}.zip`))
         .pipe(gulp.dest(folder.dist))
     cb();
 })
@@ -932,7 +932,7 @@ task('server-sync', function () {
 
 
 // 清空缓存, 重新编译
-exports.build = series('clean-tmp', 'clean-dist', 'move', 'css-minify', 'html', 'sass-build', 'less-build', 'babel-mini', 'browserify') //series是gulpV4中新方法，按顺序执行
+exports.build = series('clean-tmp', 'clean-dist', 'move', 'css-minify', 'html', 'sass-build', 'less-build', 'babel-mini', 'browserify', 'dist-zip') //series是gulpV4中新方法，按顺序执行
 
 // 先编译再起服务,不需要每次都清除文件夹的内容 如果有scss目录,会在最后才生成, 如果没有,则以src/css/style.css 作为主要样式
 exports.dev = series('move', 'html', 'css', 'sass', 'less', 'babel', 'browserify', 'server-sync')

@@ -6,18 +6,42 @@
                 <!-- LINK 轻应用的退出应用需要使用 app.back , 路由后退使用 bui.back() -->
                 <a class="bui-btn" onclick="app.back();"><i class="icon-back"></i></a>
             </div>
-            <div class="bui-bar-main">LINK API 示例</div>
+            <div class="bui-bar-main">BUI LINK 示例</div>
             <div class="bui-bar-right">
             </div>
         </div>
     </header>
     <main>
+        <div class="subtitle">原生方法</div>
         <div class="bui-interval container-xy">
             <div class="bui-btn" b-click="main.getApp">获取应用信息</div>
             <div class="bui-btn" b-click="main.getUserinfo">获取用户登录信息</div>
             <div class="bui-btn" b-click="main.getToken">获取Link用户Token</div>
             <div class="bui-btn" b-click="main.getData">请求跨域地址</div>
             <div class="bui-btn" b-click="main.recordVideo">录制视频</div>
+        </div>
+        <div class="subtitle">常用控件</div>
+        <div class="bui-interval container-xy">
+            <div class="bui-btn" href="pages/demo/controls/bui.upload.html">文件上传</div>
+            <div class="bui-btn" href="pages/demo/controls/bui.download.html">文件下载</div>
+            <div class="bui-btn" href="pages/demo/components/list/demo.html">列表分页加载及下拉刷新</div>
+            <div class="bui-btn" href="pages/demo/controls/bui.tab.html">底部Tab加载列表组件</div>
+            <div class="bui-btn" href="pages/demo/controls/bui.page.html">弹窗加载组件</div>
+            <div class="bui-btn" href="pages/demo/form/form_controls.html">表单控件</div>
+        </div>
+        <div class="subtitle">模板</div>
+        <div class="bui-interval container-xy">
+            <div class="bui-btn" href="pages/demo/form/form_view.html">表单展示</div>
+            <div class="bui-btn" href="pages/demo/form/form_edit.html">表单编辑提交</div>
+        </div>
+        <div class="subtitle">路由操作</div>
+        <div class="bui-interval container-xy">
+            <div class="bui-btn" href="pages/demo/router/load/load.html">页面跳转传参</div>
+            <div class="bui-btn" href="pages/demo/router/back/back.html">页面后退</div>
+            <div class="bui-btn" href="pages/demo/router/refresh/refresh.html">页面刷新</div>
+            <div class="bui-btn" href="pages/demo/router/replace/replace.html">页面替换</div>
+            <div class="bui-btn" href="pages/demo/router/life/life.html">页面生命周期</div>
+            <div class="bui-btn" href="pages/demo/router/iframe/iframe.html">IFrame加载外部URL</div>
         </div>
     </main>
     <footer>
