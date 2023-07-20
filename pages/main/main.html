@@ -1,8 +1,5 @@
 <!-- 局部样式 -->
 <style>
-    .bui-pic-img {
-        width: 2rem;
-    }
 </style>
 <!-- 一个标准的BUI页面 -->
 <div class="bui-page bui-box-vertical">
@@ -18,17 +15,12 @@
         </div>
     </header>
     <main>
-        <div class="container-xy">
-            <div class="bui-btn" b-click="main.getLocalData()">本地数据模拟请求</div>
-            <div class="bui-btn" b-click="main.getData()">跨域请求,需配置代理</div>
-            <div class="bui-btn" b-click="main.hint('Hello Word')">弹出提醒</div>
-        </div>
+
         <article class="bui-article">
             <h1 b-text="main.title"></h1>
             <h3 b-text="main.desc"></h3>
 
-            <h3>特点</h3>
-            <ul class="bui-list-pic bui-fluid-space-2" b-template="main.tplFeatures(main.features)">
+            <ul class="bui-list-pic bui-fluid-4" b-template="main.tplFeatures(main.features)">
                 <!-- <li class="span1">
                     <div class="bui-pic">
                         <div class="bui-pic-img"><img src="images/img.svg" alt=""></div>
@@ -37,8 +29,39 @@
                 </li>-->
             </ul>
         </article>
+        <div class="container-xy bui-interval">
+            <div class="bui-btn round" b-click="main.getData()">Ajax请求</div>
+            <div class="bui-btn round" b-click="main.hint('Hello BUI')">弹出提醒</div>
+        </div>
+        <div class="subtitle">远程模板示例</div>
+        <div class="container-xy bui-interval">
+            <div class="bui-btn round" href="https://www.easybui.com/demo/#pages/store/index" target="_blank">状态管理-双向数据绑定
+            </div>
+            <div class="bui-btn round" href="https://www.easybui.com/demo/#pages/main/frame" target="_blank">
+                布局和模板</div>
+                <div class="bui-btn round" href="https://www.easybui.com/demo/#pages/router/index" target="_blank">
+                    单页路由跳转传参</div>
+            <div class="bui-btn round" href="https://www.easybui.com/demo/#pages/ui/form_view" target="_blank">表单展示
+            </div>
+            <div class="bui-btn round" href="https://www.easybui.com/demo/#pages/ui/form_edit" target="_blank">表单编辑
+            </div>
+            <div class="bui-btn round" href="https://www.easybui.com/demo/#pages/ui/form_controls" target="_blank">表单控件
+            </div>
+            <div class="bui-btn round" href="https://www.easybui.com/demo/#pages/ui_controls/bui.page" target="_blank">
+                弹窗加载组件</div>
+        </div>
+        <div class="subtitle">文档</div>
+        <div class="container-xy bui-interval">
+            <div class="bui-btn round" href="https://www.easybui.com/guide/api" target="_blank" >API文档
+            </div>
+            <div class="bui-btn round" href="http://easybui.com/p/quickstart.html" target="_blank">入门文档
+            </div>
+        </div>
     </main>
     <footer>
         <!-- 底部固定内容 -->
+        <div class="container-xy bui-interval">
+            <div class="bui-btn round success" href="https://www.easybui.com/demo/" target="_blank">查看更多模板组件</div>
+        </div>
     </footer>
 </div>
