@@ -18,6 +18,11 @@
         </div>
     </header>
     <main>
+        <div class="container-xy">
+            <div class="bui-btn" b-click="main.getLocalData()">本地数据模拟请求</div>
+            <div class="bui-btn" b-click="main.getData()">跨域请求,需配置代理</div>
+            <div class="bui-btn" b-click="main.hint('Hello Word')">弹出提醒</div>
+        </div>
         <article class="bui-article">
             <h1 b-text="main.title"></h1>
             <h3 b-text="main.desc"></h3>
