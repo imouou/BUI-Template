@@ -12,7 +12,8 @@ loader.define(function (requires, exports, module, global) {
         list: function () {
             var uiList = bui.list({
                 id: "#scrollList",
-                url: "http://www.easybui.com/demo/json/shop.json",
+                // url: "http://www.easybui.com/demo/json/shop.json",
+                url: `${module.path}shop.json`,
                 pageSize: 5,
                 data: {},
                 //如果分页的字段名不一样,通过field重新定义
