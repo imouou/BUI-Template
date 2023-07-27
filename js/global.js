@@ -1,6 +1,6 @@
 loader.global(function (global) {
     // 全局方法或者变量配置，需要在 index.html 引入 js/global.js
-
+    
     return {
         path: "",
         ajax: function (opt) {
