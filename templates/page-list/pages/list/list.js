@@ -12,7 +12,8 @@ loader.define(function (requires, exports, module, global) {
         list: function () {
             var uiList = bui.list({
                 id: "#scrollList",
-                url: "http://www.easybui.com/demo/json/shop.json",
+                // url: "http://www.easybui.com/demo/json/shop.json",
+                url: `${module.path}shop.json`,
                 pageSize: 5,
                 data: {},
                 //如果分页的字段名不一样,通过field重新定义
@@ -49,7 +50,7 @@ loader.define(function (requires, exports, module, global) {
                         }
 
                         html += `<li class="bui-btn bui-box" href="pages/ui/article.html?title=${el.name}">
-                            <div class="bui-thumbnail ${subClass}" data-sub="${sub}" ><img src="${el.image}" alt=""></div>
+                            <div class="bui-thumbnail ${subClass}" data-sub="${sub}" ><img src="images/img.svg" alt=""></div>
                             <div class="span1">
                                 <h3 class="item-title">${el.name}</h3>
                                 <p class="item-text">${el.address}</p>

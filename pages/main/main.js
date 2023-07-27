@@ -7,7 +7,6 @@ loader.define(function (requires, exports, module, global) {
     // 合并接收默认参数
     let props = $.extend(true, {}, module.props);
 
-    var uiPageApi = null;
     // 初始化数据行为存储
     var bs = bui.store({
         el: `#${module.id}`,

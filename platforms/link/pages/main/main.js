@@ -33,7 +33,7 @@ loader.define(function (requires, exports, module, global) {
                     bui.alert(result);
                 }, function (result) {
                     if( navigator.userAgent.indexOf("linkmessenger") > -1 ){
-                        bui.alert("请查看js/global.js 的注释，去掉注释可在LINK调试");
+                        bui.alert("请查看readme.md link调试说明");
                     }else{
                         bui.alert("PC调试请打开跨域的chrome，或使用代理，具体查看 readme.md ");
                     }
