@@ -18,6 +18,20 @@ var pageview = {
         // 挂载到全局模块， 模块里可以通过 global.token 获取
         globalconfig.token = tokenResult;
         globalconfig.userinfo = userinfoResult;
+
+        // 配置全局的ajax 请求带上 token
+        bui.config.ajax = {
+          headers: {
+            "Authorization": `Bearer ${tokenResult.accessToken}`
+          }
+        }
+    }else{
+        // web 调试的token 需要获取link的token替换1234
+        // bui.config.ajax = {
+        //   headers: {
+        //     "Authorization": `Bearer 1234`
+        //   }
+        // }
     }
 
     // 开启单页路由
@@ -55,10 +69,13 @@ var pageview = {
     // 绑定页面的所有按钮有href跳转
     bui.btn({ id: "#bui-router", handle: ".bui-btn,a" }).load();
 
-    // 统一绑定页面所有的后退按钮
-    $("#bui-router").on("click", ".btn-back", function (e) {
+    
+    // 防止多次点击后退
+    bui.btn({ id: "#bui-router", handle: ".btn-back" }).click(function(e){
+      // 支持后退多层,支持回调
       bui.back();
-    })
+    });
+
   },
   getLinkToken() {
     // 获取用户token

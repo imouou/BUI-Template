@@ -68,10 +68,12 @@ bui.ready(function(global) {
         // 绑定页面的所有按钮有href跳转
         bui.btn({ id: "#bui-router", handle: ".bui-btn,a" }).load();
 
-        // 统一绑定页面所有的后退按钮
-        $("#bui-router").on("click", ".btn-back", function(e) {
-            // 支持后退多层,支持回调
-            bui.back();
-        })
+        
+        // 防止多次点击后退
+        bui.btn({ id: "#bui-router", handle: ".btn-back" }).click(function(e){
+          // 支持后退多层,支持回调
+          bui.back();
+        });
+
     }
 })

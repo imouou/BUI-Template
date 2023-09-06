@@ -1,0 +1,243 @@
+// 全局
+body {
+    font-family: @font-family-default;
+    font-size: @font-size-default;
+    color: @body-color;
+}
+
+//排版
+.container {
+    padding-left: @padding-left;
+    padding-right: @padding-right;
+}
+
+.container-xy {
+    padding: @padding-left;
+}
+
+.container-x {
+    padding-left: @padding-left;
+    padding-right: @padding-right;
+}
+
+.container-y {
+    padding-top: @padding-left;
+    padding-bottom: @padding-right;
+}
+
+.container-full {
+    margin-left: - @margin-base*2;
+    margin-right: - @margin-base*2;
+}
+
+// 默认按钮
+.bui-btn-default {
+    background: @btn-bg;
+    color: @color;
+}
+
+// 头部
+.header.bui-bar,
+.header .bui-bar,
+header.bui-bar,
+header .bui-bar {
+    background: @main-color;
+}
+
+.bui-bar .bui-bar-left,
+.bui-bar .bui-bar-right {
+    height: @header-height;
+}
+
+// tab reverse相反的配色
+.bui-nav>[class*=bui-btn].active {
+    color: @main-color;
+
+    &:after {
+        background: @main-color;
+        width: @tab-nav-line-width;
+        left: 50%;
+        margin-left: -@tab-nav-line-width*0.5;
+    }
+}
+
+.bui-navbar,
+.bui-tab {
+    .bui-nav .active {
+        color: @main-color;
+
+        &:after {
+            background: @main-color;
+            width: @tab-nav-line-width;
+            left: 50%;
+            margin-left: - @tab-nav-line-width*0.5;
+        }
+    }
+
+    &.reverse {
+        .bui-nav>[class*=bui-btn] {
+            background: @main-color;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .bui-nav .active {
+            background: @main-color;
+            color: @color;
+
+            &:after {
+                background: @color;
+                bottom: .15rem;
+            }
+        }
+    }
+}
+
+// 侧边栏
+.bui-tab-sidenav .active {
+    border-color: @main-color
+}
+
+// 顶部导航
+.bui-nav {
+    >[class*=bui-btn] {
+        padding-top: .28rem;
+        padding-bottom: .28rem;
+
+        .icon,
+        i {
+            max-width: .64rem;
+            height: .44rem;
+            line-height: .44rem;
+            font-size: .44rem;
+        }
+    }
+
+    >.active {
+        color: @main-color;
+    }
+}
+
+// 底部导航
+
+.bui-tab-foot .bui-nav [class*=bui-btn].bui-box-vertical,
+footer .bui-nav [class*=bui-btn].bui-box-vertical {
+    padding-top: .12rem;
+    padding-bottom: .12rem;
+}
+
+.bui-mask {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+//搜索栏
+.bui-searchbar {
+    padding-top: .14rem;
+    padding-bottom: .14rem;
+
+    .btn-search {
+        color: #999;
+
+        &:active {
+            color: @main-color;
+        }
+    }
+
+    .bui-input {
+        background: @bg-color;
+
+        i {
+            color: #999;
+        }
+    }
+}
+
+// 弹出框 
+.bui-dialog {
+    border-radius: .08rem;
+
+    .bui-dialog-text {
+        color: @default-color;
+    }
+
+    .bui-dialog-foot {
+        border-top-color: @border-color;
+
+        [class*=bui-btn] {
+            border-left: 0;
+        }
+
+        .primary-reverse {
+            color: @danger-color;
+        }
+    }
+}
+
+// 自动消失提醒
+.bui-hint {
+    background: rgba(48, 48, 48, 0.9);
+}
+
+// 图文列表
+.item-title {
+    color: @default-color;
+}
+
+.bui-icon {
+    width: 1rem;
+    height: 1rem;
+    line-height: 1rem;
+    border-radius: 1rem;
+}
+
+.bui-list {
+    .bui-box .span1 {
+        color: @default-color;
+    }
+
+    >[class*=bui-btn] {
+
+        // border-color: @border-color;
+        .icon-listright {
+            color: @gray-color;
+        }
+    }
+}
+
+.bui-switch-text:after,
+.bui-switch-text:checked:after,
+.bui-switch:checked {
+    background-color: @main-color;
+}
+
+.bui-check :checked~label,
+input.bui-tag:checked,
+input.bui-check:checked {
+    border-color: @main-color;
+    background-color: rgba(@main-color, 0.05);
+}
+
+.bui-dropdown-tab .bui-dropdown-content .bui-list .active {
+    color: @main-color;
+}
+
+.bui-choose.active:before,
+.bui-choose:checked:before,
+.bui-like.active:before,
+.bui-like:checked:before,
+.bui-fav.active:before,
+.bui-fav:checked:before,
+.bui-checkbox.active:before,
+.bui-checkbox:checked:before,
+.bui-radio.active:before,
+.bui-radio:checked:before {
+    color: @main-color;
+}
+
+// 日期控件
+.picker-item.picker-selected {
+    color: @main-color;
+}
+
+.picker-center-highlight {
+    border-color: @main-color;
+}
