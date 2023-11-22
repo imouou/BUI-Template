@@ -9,6 +9,7 @@
         "server": "gulp server",
         "start": "gulp dev",
         "build": "gulp build",
+        "zip": "gulp zip",
         "package": "gulp package",
         "backup": "gulp backup"
     },

@@ -932,7 +932,7 @@ task('server-sync', function () {
 
 
 // 清空缓存, 重新编译
-exports.build = series('clean-tmp', 'clean-dist', 'move', 'css-minify', 'html', 'sass-build', 'less-build', 'babel-mini', 'browserify', 'dist-zip') //series是gulpV4中新方法，按顺序执行
+exports.build = series('clean-tmp', 'clean-dist', 'move', 'css-minify', 'html', 'sass-build', 'less-build', 'babel-mini', 'browserify') //series是gulpV4中新方法，按顺序执行
 
 // 先编译再起服务,不需要每次都清除文件夹的内容 如果有scss目录,会在最后才生成, 如果没有,则以src/css/style.css 作为主要样式
 exports.dev = series('move', 'html', 'css', 'sass', 'less', 'babel', 'browserify', 'server-sync')

@@ -1,0 +1,259 @@
+
+@import "__var.less";
+
+@progress-bgcolor: #dedede;
+
+//几种色系
+@colorsClassName: default,primary,warning,success,danger,info;
+//将背景颜色以键值对的形式存在map中
+@colorsBg: @default-bg-color,
+    @primary-bg-color,
+    @warning-bg-color,
+    @success-bg-color,
+    @danger-bg-color,
+    @info-bg-color;
+@colorsText: @default-text-color,
+    @primary-text-color,
+    @warning-text-color,
+    @success-text-color,
+    @danger-text-color,
+    @info-text-color;
+@colorsBorder: @default-border-color,
+    @primary-border-color,
+    @warning-border-color,
+    @success-border-color,
+    @danger-border-color,
+    @info-border-color;
+@colorsActiveBg: @default-active-bg-color,
+    @primary-active-bg-color,
+    @warning-active-bg-color,
+    @success-active-bg-color,
+    @danger-active-bg-color,
+    @info-active-bg-color;
+@colorsActiveText: @default-active-text-color,
+    @primary-active-text-color,
+    @warning-active-text-color,
+    @success-active-text-color,
+    @danger-active-text-color,
+    @info-active-text-color;
+@colorsActiveBorder: @default-active-border-color,
+    @primary-active-border-color,
+    @warning-active-border-color,
+    @success-active-border-color,
+    @danger-active-border-color,
+    @info-active-border-color;
+@colorsDisableBg: @default-disable-bg,
+    @primary-disable-bg,
+    @warning-disable-bg,
+    @success-disable-bg,
+    @danger-disable-bg,
+    @info-disable-bg;
+@colorsDisableColor: @default-disable-color,
+    @primary-disable-color,
+    @warning-disable-color,
+    @success-disable-color,
+    @danger-disable-color,
+    @info-disable-color;
+@colorsLightBg: @default-light-bg-color,
+    @primary-light-bg-color,
+    @warning-light-bg-color,
+    @success-light-bg-color,
+    @danger-light-bg-color,
+    @info-light-bg-color;
+
+// 处理色系在按钮,图标,禁止状态
+.for(@data, @i: 1) when(@i =< length(@data)) {
+    @item: extract(@data, @i);
+
+    .@{item} {
+        background-color: extract(@colorsBg, @i);
+        color: extract(@colorsText, @i);
+
+        &[class^=icon-] {
+            background: none;
+            color: extract(@colorsBg, @i);
+        }
+
+        &.bui-switch {
+            background: #dfdfdf;
+
+            &:checked {
+                background-color: extract(@colorsBg, @i);
+            }
+
+            &:checked:after {
+                background: extract(@colorsText, @i);
+            }
+        }
+
+        &.@{namespace}switch-text {
+            background: #dfdfdf;
+
+
+            &:checked {
+                background: extract(@colorsBg, @i);
+            }
+        }
+
+        &.@{namespace}check,
+        &.@{namespace}switch-btn {
+            background: extract(@colorsBg, @i);
+
+            &:before {
+                color: extract(@colorsText, @i);
+            }
+
+            &:checked {
+                background: extract(@colorsLightBg, @i);
+                border-color: extract(@colorsBg, @i);
+            }
+
+            &:checked:before {
+                color: extract(@colorsBg, @i);
+            }
+        }
+
+        &.@{namespace}fav,
+        &.@{namespace}like {
+            background: none;
+            color: #999;
+
+            // &:before{
+            //     color: extract(@colorsBg, @i);
+            // }
+            &:checked:before {
+                color: extract(@colorsBg, @i);
+            }
+        }
+
+        &.@{namespace}sub {
+            background: none;
+
+            &:before {
+                border-right-color: extract(@colorsBg, @i);
+            }
+        }
+
+        &.@{namespace}tips,
+        &.@{namespace}hint {
+            background: extract(@colorsLightBg, @i);
+            color: extract(@colorsBg, @i);
+
+            i {
+                color: extract(@colorsBg, @i);
+            }
+        }
+
+        &.@{namespace}range {
+            background: none;
+
+            &::-webkit-slider-thumb {
+                background: extract(@colorsBg, @i);
+            }
+        }
+
+        &.@{namespace}stepbar {
+            background: none;
+
+            .@{namespace}stepbar-cell {
+                color: @body-color;
+
+                &.visited,
+                &.active {
+                    border-left-color: extract(@colorsBg, @i);
+
+                    .@{namespace}stepbar-dot {
+                        background-color: extract(@colorsBg, @i);
+                    }
+
+                    .@{namespace}stepbar-text {
+                        color: @body-color;
+                    }
+                }
+            }
+        }
+
+        &.@{namespace}stepbar-line {
+            background: none;
+
+            .@{namespace}stepbar-cell {
+                color: @body-color;
+
+                &.visited,
+                &.active {
+                    border-top-color: extract(@colorsBg, @i);
+
+                    .@{namespace}stepbar-dot {
+                        background-color: extract(@colorsBg, @i);
+                    }
+
+                    .@{namespace}stepbar-text {
+                        color: @body-color;
+                    }
+                }
+            }
+        }
+
+        &.@{namespace}progress {
+            background: @progress-bgcolor;
+
+            &::-webkit-progress-value {
+                background: extract(@colorsBg, @i);
+            }
+
+            .@{namespace}progress-cell {
+                background: extract(@colorsBg, @i);
+            }
+        }
+
+        &.outline,
+        &.reverse {
+            background: inherit;
+            color: extract(@colorsBg, @i);
+        }
+    }
+
+    .@{item}-outline,
+    .@{item}-text,
+    .@{item}-reverse {
+        /*background:inherit;*/
+        color: extract(@colorsBg, @i);
+        border-color: extract(@colorsBg, @i);
+    }
+
+    [class*=bui-btn].@{item} {
+        border-color: extract(@colorsBorder, @i)
+    }
+
+    [class*=bui-btn].@{item}:active {
+        background: extract(@colorsActiveBg, @i);
+        color: extract(@colorsActiveText, @i);
+        border-color: extract(@colorsActiveBorder, @i);
+    }
+
+    // 禁止状态
+    [class*=bui-btn].disabled {
+        background-color: @disabled-bg-color;
+        border-color: @disabled-border-color;
+        color: @disabled-text-color;
+
+        &.@{item} {
+            background: extract(@colorsDisableBg, @i);
+            color: extract(@colorsDisableColor, @i);
+            border-color: extract(@colorsDisableColor, @i);
+
+            &:active {
+                background: extract(@colorsDisableBg, @i);
+                color: extract(@colorsDisableColor, @i);
+                border-color: extract(@colorsDisableColor, @i);
+            }
+
+            ;
+        }
+    }
+    // 继续下一个
+    .for(@data, (@i + 1));
+}
+
+.for(@colorsClassName);
+
