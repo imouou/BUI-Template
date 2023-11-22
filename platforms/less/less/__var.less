@@ -1,0 +1,146 @@
+//
+// Variables
+// --------------------------------------------------
+@namespace: "bui-";
+// font
+// --------------------------------------------------
+@font-family-default:"PingFang SC",
+"Apple LiGothic Medium",
+"Droid Sans",
+"Microsoft YaHei",
+"Microsoft JhengHei",
+"Helvetica Neue",
+Helvetica,
+sans-serif;
+@font-size-default: .3rem;
+@font-size-mini: .26rem;
+@font-size-title: .34rem;
+// Buttons
+// --------------------------------------------------
+@button-font-size: @font-size-default;
+// Colors
+// --------------------------------------------------
+// 背景深色的文本颜色
+@color: #fff;
+// 主色
+@main-color: #5181FF;
+// 默认白色的控件
+@bg-color: #f8f8f8;
+@body-color: #777;
+@body-bg-color: #f3f5f8;
+//blue theme
+@default-color: #333;
+@gray-color: #999;
+@icon-color: #b3b3b3;
+// 默认按钮的颜色
+@btn-bg: #9b9b9b;
+// 顶部tab下划线的宽度
+@tab-nav-line-width: .84rem;
+// base
+// --------------------------------------------------
+@header-height: .88rem;
+@padding-base: .1rem;
+@margin-base: .1rem;
+// 统一上下间隙
+@padding-top: @padding-base*2;
+@padding-bottom: @padding-base*2;
+@padding-left: @padding-base*2;
+@padding-right: @padding-base*2;
+@padding-module: @padding-base*2;
+@margin-module: @margin-base*3;
+// Borders
+// --------------------------------------------------
+// 圆角
+@radius: .08rem;
+@border-color: #dbdbdb;
+@border-default: 1px solid @border-color;
+@border-radius: @radius;
+// color
+// 主色皮肤,更改以后,所有相关的控件都会保持跟这个颜色一致
+@active-color-percent: 10%;
+@button-color: #fff;
+@primary-color: @main-color;
+@info-color: #5181FF;
+@warning-color: #fcb539;
+@success-color: #52c41a;
+@danger-color: #f9342a;
+@disabled-color: #eee;
+@primary-active-color: darken(@primary-color, @active-color-percent);
+@info-active-color: darken(@info-color, @active-color-percent);
+@warning-active-color: darken(@warning-color, @active-color-percent);
+@success-active-color: darken(@success-color, @active-color-percent);
+@danger-active-color: darken(@danger-color, @active-color-percent);
+// reset color
+@colorClass: default,
+primary,
+info,
+warning,
+success,
+danger;
+// default
+@default-bg-color: #fff;
+@default-light-bg-color: #f1f1f1;
+@default-text-color: #666;
+@default-border-color: @default-bg-color;
+@default-active-bg-color: darken(@default-bg-color, @active-color-percent);
+@default-active-text-color: @default-text-color;
+@default-active-border-color: darken(@default-bg-color, @active-color-percent);
+@default-disable-color: darken(@button-color, 8%);
+@default-disable-bg: lighten(@default-bg-color, 20%);
+// info
+@info-bg-color: @info-color;
+@info-light-bg-color: rgba(235, 246, 255, 0.9);
+@info-text-color: @button-color;
+@info-border-color: @info-bg-color;
+@info-active-bg-color: @info-active-color;
+@info-active-text-color: @info-text-color;
+@info-active-border-color: @info-active-bg-color;
+@info-disable-color: darken(@button-color, 8%);
+@info-disable-bg: lighten(@info-bg-color, 20%);
+// primary
+@primary-bg-color: @primary-color;
+@primary-light-bg-color: rgba(235, 246, 255, 0.9);
+@primary-text-color: @button-color;
+@primary-border-color: @primary-bg-color;
+@primary-active-bg-color: @primary-active-color;
+@primary-active-text-color: @primary-text-color;
+@primary-active-border-color: @primary-active-bg-color;
+@primary-disable-color: darken(@button-color, 8%);
+@primary-disable-bg: lighten(@primary-bg-color, 20%);
+// wraning
+@warning-bg-color: @warning-color;
+@warning-light-bg-color: rgba(255, 252, 231, 0.9);
+@warning-text-color: @button-color;
+@warning-border-color: @warning-bg-color;
+@warning-active-bg-color: darken(@warning-bg-color, @active-color-percent);
+@warning-active-text-color: @warning-text-color;
+@warning-active-border-color: darken(@warning-bg-color, @active-color-percent);
+@warning-disable-color: darken(@button-color, 8%);
+@warning-disable-bg: lighten(@warning-bg-color, 20%);
+// success
+@success-bg-color: @success-color;
+@success-light-bg-color: rgba(248, 254, 246, 0.9);
+@success-text-color: @button-color;
+@success-border-color: @success-bg-color;
+@success-active-bg-color: darken(@success-bg-color, @active-color-percent);
+@success-active-text-color: @success-text-color;
+@success-active-border-color: darken(@success-bg-color, @active-color-percent);
+@success-disable-color: darken(@button-color, 8%);
+@success-disable-bg: lighten(@success-bg-color, 20%);
+// danger
+@danger-bg-color: @danger-color;
+@danger-light-bg-color: rgba(254, 239, 239, 0.9);
+@danger-text-color: @button-color;
+@danger-border-color: @danger-bg-color;
+@danger-active-bg-color: darken(@danger-bg-color, @active-color-percent);
+@danger-active-text-color: @danger-text-color;
+@danger-active-border-color: darken(@danger-bg-color, @active-color-percent);
+@danger-disable-color: darken(@button-color, 8%);
+@danger-disable-bg: lighten(@danger-bg-color, 20%);
+// disabled
+@disabled-bg-color: #f8f8f8;
+@disabled-text-color: #ccc;
+@disabled-border-color: @border-color;
+@disabled-active-bg-color: @disabled-bg-color;
+@disabled-active-text-color: @disabled-text-color;
+@disabled-active-border-color: @disabled-border-color;
