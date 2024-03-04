@@ -11,7 +11,7 @@ loader.global(function (global) {
                 console.log(res)
                 })
              */
-            let props = $.extend(true, { headers: {} }, opt);
+            let props = $.extend(true, { headers: {}, contentType:"application/x-www-form-urlencoded" }, opt);
             return bui.ajax(props);
         },
         hint: function (text) {

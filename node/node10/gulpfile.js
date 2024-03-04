@@ -63,13 +63,13 @@ const qrcode = require('qrcode-terminal');
 const os = require('os');
 const ip = getNetwork()["en0:1"] || "localhost";
 // 读取配置
-const package = require('./package.json');
+var packages = require('./package.json');
 // 起服务
 var browserSync = require('browser-sync').create();
 var reload = browserSync.reload;
 
 // 获取package的项目配置,支持多个项目配置
-var configName = package['projects'] && package['projects'][process.env.NODE_ENV] || 'app.json';
+var configName = packages['projects'] && packages['projects'][process.env.NODE_ENV] || 'app.json';
 var app = require("./" + configName),
     // 编译服务配置
     distServer = app.distServer || {},

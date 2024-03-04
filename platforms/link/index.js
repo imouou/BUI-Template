@@ -5,8 +5,8 @@ var pageview = {
     // 获取全局配置
     let globalconfig = loader.global();
 
-    // link 才执行，token跟路由都是异步的，所以需要比路由执行
-    if( navigator.userAgent.indexOf("linkmessenger") > -1 ){
+    // link 才执行，token跟路由都是异步的，所以需要比路由执行，appContainer 是因为有的定制link，没有linkmessenger，具体可能还会有其它不同，目前发现就这2个
+    if( navigator.userAgent.indexOf("linkmessenger") > -1 || navigator.userAgent.indexOf("appContainer") > -1){
         // ios 需要在onload才能获取到一些原生信息
         await this.onLoad();
         await this.nativeready();
