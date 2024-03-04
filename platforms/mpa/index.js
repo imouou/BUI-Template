@@ -4,7 +4,7 @@ bui.ready(function () {
     var bs = bui.store({
         scope: "page",
         data: {
-            title: "BUI",
+            title: "BUI MPA",
         },
         methods: {
             bind() {

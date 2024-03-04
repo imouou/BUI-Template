@@ -63,13 +63,13 @@ const qrcode = require('qrcode-terminal');
 const os = require('os');
 const ip = getNetwork()["en0:1"] || "localhost";
 // 读取配置
-const package = require('./package.json');
+var packages = require('./package.json');
 // 起服务
 var browserSync = require('browser-sync').create();
 var reload = browserSync.reload;
 
 // 获取package的项目配置,支持多个项目配置
-var configName = package['projects'] && package['projects'][process.env.NODE_ENV] || 'app.json';
+var configName = packages['projects'] && packages['projects'][process.env.NODE_ENV] || 'app.json';
 var app = require("./" + configName),
     // 编译服务配置
     distServer = app.distServer || {},
@@ -210,22 +210,27 @@ function getServerPort() {
 
 // 找到文件进行打包处理
 function findSync(startPath) {
-    let result = []
+    let result = [];
 
-    function finder(path) {
-        let files = fs.readdirSync(path)
+    let pathindex = startPath.length //startPath.lastIndexOf("/") > -1 ? startPath.length+1 : startPath.length;
+    function finder(pathfile) {
+        let files = fs.readdirSync(pathfile);
+
+
         files.forEach(val => {
-            let fPath = join(path, val);
+            let fPath = join(pathfile, val);
             let stats = fs.statSync(fPath)
             if (stats.isDirectory()) {
                 finder(fPath)
             }
             if (stats.isFile() && val.lastIndexOf(".js") > -1 && val.lastIndexOf(".json") < 0) {
-                result.push({
+                let item = {
                     path: fPath,
                     name: val,
-                    relativePath: path.substr(folder.temp.length)
-                })
+                    relativePath: pathfile.substr(pathindex)
+                };
+
+                result.push(item)
             }
         })
 
@@ -286,8 +291,10 @@ task('browserify', cb => {
     let files = findSync(sourceTemp)
 
     var task = files.map(entry => {
-        // 去除 .temp/ 前缀
-        let relativeFile = process.env.NODE_ENV ? sourceBuild + entry.relativePath.substr(5) : folder.dist + entry.relativePath;
+        // 去除 .temp/ 前缀 relativePath 会有错误 比如 wenjuan/ 变成 uan/ 
+        // let index = entry.path.indexOf(folder.temp);
+
+        let relativeFile = sourceBuild + entry.relativePath;
 
         return browserify({
             entries: entry.path,
@@ -397,7 +404,8 @@ task('html', function () {
 
 task('mergeFile', function (cb) {
     // 默认是 "dist/pages"
-    findFileMerge(folder.dist + "/" + app.package.folder);
+
+    findFileMerge(sourceBuild + "/" + app.package.folder);
 
     cb();
 });
@@ -410,7 +418,7 @@ function getTime() {
 }
 
 task('index-babel-mini', cb => {
-    return src(folder.dist + "/index.js")
+    return src(sourceBuild + "/index.js")
         .pipe(babel({
             compact: false, // 取消压缩文件超500k提醒
             presets: ['@babel/preset-env'],
@@ -433,18 +441,18 @@ task('index-babel-mini', cb => {
             },
             "mangle": true
         }) : plumber())
-        .pipe(dest(folder.temp));
+        .pipe(dest(sourceTemp));
 });
 // 模块化打包
 task('index-browserify', cb => {
     let files = [{
-        path: folder.temp + "/index.js",
+        path: sourceTemp + "/index.js",
         name: "index.js",
         relativePath: "index.js",
     }];
 
     var tag = getTime();
-    console.log(folder.dist + `/${folder.dist + tag}.zip 文件创建成功`)
+    console.log(sourceBuild + `/${folder.dist + tag}.zip 文件创建成功`)
     // 这里需要找到多个文件再进行合并,是异步的, 会造成dist-zip压缩的时候,文件还是没有编译混淆的版本
     var task = files.map(entry => {
         return browserify({
@@ -457,10 +465,10 @@ task('index-browserify', cb => {
             })
             .pipe(stream(entry.name))
             .pipe(buffer())
-            .pipe(dest(folder.dist))
-            .pipe(src(`${folder.dist}/**`))
+            .pipe(dest(sourceBuild))
+            .pipe(src(`${sourceBuild}/**`))
             .pipe(zip(`${folder.dist + tag}.zip`))
-            .pipe(gulp.dest(folder.dist))
+            .pipe(gulp.dest(sourceBuild))
     })
     // 任务合并
     es.merge.apply(null, task)
@@ -470,8 +478,8 @@ task('index-browserify', cb => {
 // 模块化打包
 task('dist-zip', cb => {
     var tag = getTime();
-    console.log(`${folder.dist}/${folder.dist + tag}.zip 文件创建成功`)
-    return src(`${folder.dist}/**`)
+    console.log(`${sourceBuild}/${folder.dist + tag}.zip 文件创建成功`)
+    return src(`${sourceBuild}/**`)
         .pipe(zip(`${folder.dist+tag}.zip`))
         .pipe(gulp.dest(folder.dist))
     cb();
@@ -479,8 +487,8 @@ task('dist-zip', cb => {
 // 模块化打包
 task('zip', cb => {
     var tag = getTime();
-    console.log(`${folder.dist}/${folder.dist + tag}.zip 文件创建成功`)
-    return src(`${folder.dist}/**`)
+    console.log(`${sourceBuild}/${folder.dist + tag}.zip 文件创建成功`)
+    return src(`${sourceBuild}/**`)
         .pipe(zip(`${folder.dist+tag}.zip`))
         .pipe(gulp.dest(folder.dist))
     cb();
@@ -496,25 +504,27 @@ task('backup', cb => {
 // 找到文件进行打包处理
 function findFileMerge(startPath) {
     let results = []
-    let startFolder = folder.dist;
+    let startFolder = sourceBuild;//folder.dist;
     let bundleFile = "index.js"; // 合并到首页
 
     let indexImports = [];  // 首页用到import的地方
 
-    function finder(path) {
-        let files = fs.readdirSync(path)
+
+    function finder(pathfile) {
+        let files = fs.readdirSync(pathfile)
 
         files.forEach(val => {
-            let fPath = join(path, val);
+            let fPath = join(pathfile, val);
             let stats = fs.statSync(fPath)
             if (stats.isDirectory()) {
                 finder(fPath)
             }
             if (stats.isFile() && val.lastIndexOf(".js") > -1 && val.lastIndexOf(".json") < 0) {
+
                 results.push({
                     path: fPath,
                     name: val,
-                    relativePath: path.substr(folder.temp.length)
+                    relativePath: pathfile.substr(folder.temp.length)
                 })
             }
         })
@@ -523,7 +533,9 @@ function findFileMerge(startPath) {
 
     // 单独寻找首页匹配 import 
     function findeIndex() {
-        let data = fs.readFileSync("src/index.js", 'utf-8');
+        let indexFile = path.join(sourcePath,"index.js");
+        
+        let data = fs.readFileSync(indexFile, 'utf-8');
 
         // 去掉注释的字符
         let datastr = data.toString().replace(/\/\*[\s\S]*\*\/|^\s*\/\/.*/gm, "");
@@ -635,7 +647,7 @@ function findFileMerge(startPath) {
             }
 
             importAllModules.push(importfile);
-            fs.appendFileSync(startFolder + '/' + bundleFile, ";" + importfile);
+            fs.appendFileSync(path.join(startFolder,bundleFile), ";" + importfile);
         })
 
         let hasName = result && (result.indexOf('"') == 0 || result.indexOf("'") == 0);
@@ -644,7 +656,7 @@ function findFileMerge(startPath) {
         let isFunctioin = result && result.indexOf('function') == 0;
         if (isObject) {
             // 把值增加到 bundle.js , 这个文件会被首先引用进去, 等于所有模块都已经加载.
-            fs.appendFileSync(startFolder + '/' + bundleFile, `;loader.set("${moduleName}",{
+            fs.appendFileSync(path.join(startFolder,bundleFile), `;loader.set("${moduleName}",{
 						   template:${template}});
 						   loader.set("${moduleName}",${result})`,
                 'utf8')
@@ -674,7 +686,7 @@ function findFileMerge(startPath) {
             }
 
             // 把值增加到 bundle.js , 这个文件会被首先引用进去, 等于所有模块都已经加载.
-            fs.appendFileSync(startFolder + '/' + bundleFile, newloader, 'utf8')
+            fs.appendFileSync(path.join(startFolder,bundleFile), newloader, 'utf8')
             console.log(moduleName + ' define模块合并成功');
         }
         if (index === results.length - 1) {
@@ -708,12 +720,14 @@ function changeFile(file) {
 
     // 复制一次文件，再输出一次编译后的文件，避免文件夹未创建导致服务报错
     let relativePath = path.relative('./' + sourcePath, file);
-    let distfile = './' + folder.dist + '/' + relativePath;
+    let distfile = sourceBuild + '/' + relativePath;
+
 
     try {
         // fs.copySync(file, distfile);
 
         if (isJs) {
+
             // 文件单独打包成es5
             browserify(file)
                 .transform("babelify", {
@@ -891,6 +905,7 @@ task('server-sync', function () {
         .on('unlink', function (file) {
             //删除文件
             let distFile = './' + sourceBuild + '/' + path.relative('./' + sourcePath, file); //计算相对路径
+
             fs.existsSync(distFile) && fs.unlink(distFile);
             console.warn(file, "deleted")
         });

@@ -46,7 +46,7 @@ var qrcode = require('qrcode-terminal');
 var os = require('os');
 var ip = getNetwork()["en0:1"] || "localhost";
 
-var package = require('./package.json');
+var packages = require('./package.json');
 // 同步刷新
 var browserSync = require('browser-sync').create();
 var reload = browserSync.reload;
@@ -57,7 +57,7 @@ const folder = {
     temp: '.bui'
 }
 // 获取package的项目配置
-var configName = package['projects'] && package['projects'][process.env.NODE_ENV] || 'app.json';
+var configName = packages['projects'] && packages['projects'][process.env.NODE_ENV] || 'app.json';
 var sourceTemp = process.env.NODE_ENV ? process.env.NODE_ENV + '/' + folder.temp : folder.temp;
 const join = require('path').join;
 

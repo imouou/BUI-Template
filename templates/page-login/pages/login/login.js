@@ -3,7 +3,7 @@
  * 默认模块名: pages/login/login
  * @return {[object]}  [ 返回一个对象 ]
  */
-loader.define(function (requires, exports, module, global, global) {
+loader.define(function (requires, exports, module, global) {
 
     var pageview = {
         init: function () {

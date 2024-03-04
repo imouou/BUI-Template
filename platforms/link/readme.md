@@ -103,6 +103,8 @@ LINK的扫码调试或者上架，现在需要配置以下参数，区分不同�
 
 例如：旧版调试 http://localhost:4141/index.html?engine=cordova260 
 
+部分特殊定制的LINK，底层默认的是旧版的Cordova，调试新版工程需要加 `useNewCordova=1`; 上架是在启动参数那里加。
+
 ## 其他参考
 
 1. LINK文档：http://linkdoc.bingosoft.net:8088/sidebars/bingoTouch/src/lightApp/intro.html
