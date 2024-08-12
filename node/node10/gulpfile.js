@@ -82,10 +82,11 @@ var app = require("./" + configName),
     // 源文件目录
     sourcePath = process.env.NODE_ENV ? process.env.NODE_ENV + '/' + folder.src : folder.src,
     // 源文件目录
-    sourceBuild = process.env.NODE_ENV ? process.env.NODE_ENV + '/' + folder.dist : folder.dist;
+    sourceBuild = process.env.NODE_ENV ? process.env.NODE_ENV + '/' + folder.dist : folder.dist,
 // 源文件es5缓存目录
 sourceTemp = process.env.NODE_ENV ? process.env.NODE_ENV + '/' + folder.temp : folder.temp;
 
+let localhostpath = "";
 
 // 配置编译的服务
 var config = {
@@ -709,7 +710,6 @@ function addFile(file) {
 
 
 function changeFile(file) {
-    console.info(file, "changed");
 
     let isJs = file.lastIndexOf(".js") > -1 && file.lastIndexOf(".json") < 0;
     let isHtml = file.lastIndexOf(".html") > -1;
@@ -722,6 +722,8 @@ function changeFile(file) {
     let relativePath = path.relative('./' + sourcePath, file);
     let distfile = sourceBuild + '/' + relativePath;
 
+    console.info(file, "changed");
+    console.info(localhostpath+"/#"+relativePath, "preview");
 
     try {
         // fs.copySync(file, distfile);
@@ -851,6 +853,8 @@ task('server', function () {
         codeSync: isDevLivereload
     });
 
+    localhostpath = "http://" + ip + ":" + portObj.devPort;
+
     // 插入二维码,手机扫码调试
     var qrurl = "http://" + ip + ":" + portObj.devPort + app.qrcode;
     qrcode.generate(qrurl, {
@@ -889,6 +893,8 @@ task('server-sync', function () {
         codeSync: isDistLivereload,
         // plugins: ['bs-console-qrcode']
     });
+
+    localhostpath = "http://" + ip + ":" + portObj.distPort;
 
     // 插入二维码,手机扫码调试
     var qrurl = "http://" + ip + ":" + portObj.distPort + app.qrcode;
