@@ -43,7 +43,7 @@
         "gulp-sourcemaps": "^2.6.5",
         "gulp-uglify": "^3.0.2",
         "gulp-watch": "^5.0.1",
-        "gulp-zip": "^5.0.1",
+        "gulp-zip": "5.1.0",
         "http-proxy-middleware": "^0.20.0",
         "node-sass": "^6.0.1",
         "os": "^0.1.1",

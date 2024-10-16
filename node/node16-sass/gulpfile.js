@@ -941,14 +941,49 @@ task('server-sync', function () {
 });
 
 
+// 导入单个依赖
+function importdepend(argv){
+    argv = argv || {};
+    let targetpath = "pages/components/";
+    let componentpath = path.join(__dirname, 'node_modules', argv.name , "/");
+    let targetPath = path.join(__dirname, 'src', targetpath, argv.name);
+    
+    // nodemodule 是否存在这个组件
+    let hasNodeModule = fs.pathExistsSync(componentpath);
+    // 工程是否有存在目录
+    let hasProjectModule = fs.pathExistsSync(targetPath);
+    if( hasNodeModule ){
+        // 复制组件过去
+        fs.copySync(componentpath, targetPath); 
+    }else{
+        error(`请先执行 npm i ${argv.name} --save`);
+    }
+}
+
+// 导入npm动态组件，只针对bui开头
+task('imports', function (done) {
+    let dependkey = Object.keys(packages.dependencies);
+
+    dependkey.forEach(keyname=>{
+
+        if(keyname.indexOf('bui-') > -1){
+            importdepend({
+                name: keyname
+            });
+        }
+    })
+
+    done();
+});
+
 // 清空缓存, 重新编译
-exports.build = series('clean-tmp', 'clean-dist', 'move', 'css-minify', 'html', 'sass-build', 'less-build', 'babel-mini', 'browserify') //series是gulpV4中新方法，按顺序执行
+exports.build = series('clean-tmp', 'clean-dist', 'move', 'css-minify', 'html', 'sass-build', 'less-build','imports',  'babel-mini', 'browserify') //series是gulpV4中新方法，按顺序执行
 
 // 先编译再起服务,不需要每次都清除文件夹的内容 如果有scss目录,会在最后才生成, 如果没有,则以src/css/style.css 作为主要样式
-exports.dev = series('move', 'html', 'css', 'sass', 'less', 'babel', 'browserify', 'server-sync')
+exports.dev = series('move', 'html', 'css', 'sass', 'less','imports',  'babel', 'browserify', 'server-sync')
 // 打包成一个独立脚本,是否压缩
 if (app.package && app.package.uglify) {
-    exports.package = series('clean-tmp', 'clean-dist', 'move', 'css-minify', 'html', 'sass-build', 'less-build', 'babel-mini', 'browserify', 'mergeFile', 'index-babel-mini', 'index-browserify');
+    exports.package = series('clean-tmp', 'clean-dist', 'move', 'css-minify', 'html', 'sass-build', 'less-build','imports', 'babel-mini', 'browserify', 'mergeFile', 'index-babel-mini', 'index-browserify');
 } else {
-    exports.package = series('clean-tmp', 'clean-dist', 'move', 'css-minify', 'html', 'sass-build', 'less-build', 'babel', 'browserify', 'mergeFile', 'dist-zip');
+    exports.package = series('clean-tmp', 'clean-dist', 'move', 'css-minify', 'html', 'sass-build', 'less-build','imports', 'babel', 'browserify', 'mergeFile', 'dist-zip');
 }
