@@ -5,6 +5,7 @@
     "devServer": {
         "livereload": false
     },
+    "https": false,
     "qrcode": "/index.html",
     "package": {
         "uglify": true,
